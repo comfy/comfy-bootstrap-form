@@ -5,14 +5,40 @@ class BootstrapFormTest < ActionView::TestCase
 
   setup :setup_test_fixture
 
-  test "default-style forms" do
-    expected = <<-HTML.strip_heredoc
+  def test_default
+    expected = <<-HTML
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post" role="form">
         <input name="utf8" type="hidden" value="&#x2713;" />
       </form>
     HTML
-    assert_equivalent_xml expected, bootstrap_form_for(@user) { |f| nil }
+    actual = bootstrap_form_for(@user) { }
+    assert_equivalent_xml expected, actual
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   test "inline-style forms" do
     expected = <<-HTML.strip_heredoc
