@@ -30,14 +30,6 @@ Then:
 
 `bundle`
 
-Then require the CSS in your `application.css` file:
-
-```css
-/*
- *= require rails_bootstrap_forms
- */
-```
-
 ## Usage
 
 To get started, just use the `bootstrap_form_for` helper. Here's an example:
