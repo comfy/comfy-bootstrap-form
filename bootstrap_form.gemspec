@@ -4,21 +4,18 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "bootstrap_form/version"
 
 Gem::Specification.new do |s|
-  s.name        = "bootstrap_form"
+  s.name        = "comfy_bootstrap_form"
   s.version     = BootstrapForm::VERSION
-  s.authors     = ["Stephen Potenza", "Carlos Lopes"]
-  s.email       = ["potenza@gmail.com", "carlos.el.lopes@gmail.com"]
-  s.homepage    = "https://github.com/bootstrap-ruby/rails-bootstrap-forms"
+  s.authors     = ["Oleg Khabarov", "Stephen Potenza", "Carlos Lopes"]
+  s.email       = ["oleg@khabarov.ca", "potenza@gmail.com", "carlos.el.lopes@gmail.com"]
+  s.homepage    = "https://github.com/comfy/comfy-bootstrap-form"
   s.summary     = "Rails form builder that makes it easy to style forms using "\
                   "Bootstrap 4"
   s.description = "bootstrap_form is a rails form builder that makes it super "\
                   "easy to create beautiful-looking forms using Bootstrap 4"
   s.license     = "MIT"
 
-  s.files = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test)/})
-  end
-
+  s.files         = `git ls-files`.split("\n")
   s.bindir        = "exe"
   s.require_paths = ["lib"]
 
