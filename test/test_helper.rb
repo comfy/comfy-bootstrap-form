@@ -20,11 +20,7 @@ class ActionView::TestCase
       comments: "my comment"
     )
     @builder = BootstrapForm::FormBuilder.new(:user, @user, self, {})
-    @horizontal_builder = BootstrapForm::FormBuilder.new(:user, @user, self, {
-      layout:       :horizontal,
-      label_col:    "col-sm-2",
-      control_col:  "col-sm-10"
-    })
+    @horizontal_builder = BootstrapForm::FormBuilder.new(:user, @user, self, {layout: :horizontal})
 
     I18n.backend.store_translations(:en, {
       activerecord: {
@@ -48,9 +44,7 @@ class ActionView::TestCase
     actual_xml          = Nokogiri::XML("<test-xml>\n#{actual}\n</test-xml>")
     ignored_attributes  = %w(style data-disable-with)
 
-    equivalent = EquivalentXml.equivalent?(expected_xml, actual_xml, {
-      ignore_attr_values: ignored_attributes
-    }) do |a, b, result|
+    equivalent = EquivalentXml.equivalent?(expected_xml, actual_xml) do |a, b, result|
       if result === false && b.is_a?(Nokogiri::XML::Element)
         if b.attr('name') == 'utf8'
           # Handle wrapped utf8 hidden field for Rails 4.2+
