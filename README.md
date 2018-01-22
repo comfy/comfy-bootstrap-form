@@ -1,34 +1,23 @@
-⚠️ **This documentation is for the master branch, which is not yet stable and targets Bootstrap v4.** If you are using Bootstrap v3, refer to the stable [legacy-2.7](https://github.com/bootstrap-ruby/rails-bootstrap-forms/tree/legacy-2.7) branch.
-
----
-
-# bootstrap_form
-
-[![Build Status](https://travis-ci.org/bootstrap-ruby/rails-bootstrap-forms.svg?branch=master)](https://travis-ci.org/bootstrap-ruby/rails-bootstrap-forms)
-[![Gem Version](https://badge.fury.io/rb/bootstrap_form.svg)](https://rubygems.org/gems/bootstrap_form)
+# ComfyBootstrapForm
 
 **bootstrap_form** is a Rails form builder that makes it super easy to integrate
 Bootstrap v4-style forms into your Rails application.
 
-## Requirements
-
-* Ruby 2.3+
-* Rails 5.0+
-* Bootstrap 4.0.0+
+[![Gem Version](https://img.shields.io/gem/v/comfy_blog.svg?style=flat)](http://rubygems.org/gems/comfy_bootstrap_form)
+[![Gem Downloads](https://img.shields.io/gem/dt/comfy_blog.svg?style=flat)](http://rubygems.org/gems/comfy_bootstrap_form)
+[![Build Status](https://img.shields.io/travis/comfy/comfy-blog.svg?style=flat)](https://travis-ci.org/comfy/comfy_bootstrap_form)
+[![Dependency Status](https://img.shields.io/gemnasium/comfy/comfy-blog.svg?style=flat)](https://gemnasium.com/comfy/comfy_bootstrap_form)
+[![Code Climate](https://img.shields.io/codeclimate/maintainability/comfy/comfy-blog.svg?style=flat)](https://codeclimate.com/github/comfy/comfy_bootstrap_form)
+[![Coverage Status](https://img.shields.io/coveralls/comfy/comfy-blog.svg?style=flat)](https://coveralls.io/r/comfy/comfy-bootstrap-form?branch=master)
+[![Gitter](https://badges.gitter.im/comfy/comfortable-mexican-sofa.svg)](https://gitter.im/comfy/comfortable-mexican-sofa)
 
 ## Installation
 
-Add it to your Gemfile:
+Add it to your Gemfile and run `bundle install`:
 
 ```ruby
-gem "bootstrap_form",
-    git: "https://github.com/bootstrap-ruby/rails-bootstrap-forms.git",
-    branch: "master"
+gem "comfy_bootstrap_form", "~> 4.0.0"
 ```
-
-Then:
-
-`bundle`
 
 ## Usage
 
