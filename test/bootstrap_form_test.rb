@@ -5,13 +5,13 @@ class BootstrapFormTest < ActionView::TestCase
 
   setup :setup_test_fixture
 
-  def test_default
+  def test_form_for
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post" role="form">
         <input name="utf8" type="hidden" value="&#x2713;" />
       </form>
     HTML
-    actual = bootstrap_form_for(@user) { }
+    actual = bootstrap_form_for(@user) do |form| end
     assert_equivalent_xml expected, actual
   end
 
