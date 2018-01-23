@@ -2,17 +2,6 @@ module BootstrapForm
   module Helpers
     module Bootstrap
 
-      def alert_message(title, options = {})
-        css = options[:class] || 'alert alert-danger'
-
-        if object.respond_to?(:errors) && object.errors.full_messages.any?
-          content_tag :div, class: css do
-            concat content_tag :p, title
-            concat error_summary unless options[:error_summary] == false
-          end
-        end
-      end
-
       def error_summary
         content_tag :ul, class: 'rails-bootstrap-forms-error-summary' do
           object.errors.full_messages.each do |error|
