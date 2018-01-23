@@ -2,20 +2,53 @@ require_relative 'helpers/bootstrap'
 
 module BootstrapForm
   class FormBuilder < ActionView::Helpers::FormBuilder
+
     include BootstrapForm::Helpers::Bootstrap
+
+    # Container for bootstrap specific form builder options. It controls options
+    # that define form layout and grid sizing.
+    class BootstrapOptions
+
+      attr_accessor :layout,
+                    :label_col_class,
+                    :control_col_class,
+                    :label_align_class
+
+      def initialize(options)
+        options = {} unless options.is_a?(Hash)
+
+        @layout             = options[:layout]            || "default"
+        @label_col_class    = options[:label_col_class]   || "col-sm-4"
+        @control_col_class  = options[:control_col_class] || "col-sm-8"
+        @label_align_class  = options[:label_align_class] || "text-sm-left"
+      end
+    end
+
+
 
     attr_reader :layout, :label_col, :control_col, :has_error, :inline_errors, :label_errors, :acts_like_form_tag
 
     FIELD_HELPERS = %w{color_field date_field datetime_field datetime_local_field
       email_field month_field number_field password_field phone_field
       range_field search_field telephone_field text_area text_field time_field
-      url_field week_field date_select time_select datetime_select}
+      url_field week_field}
 
     DATE_SELECT_HELPERS = %w{date_select time_select datetime_select}
 
+
+
     delegate :content_tag, :capture, :concat, to: :@template
 
+
+
+
+    attr_accessor :bootstrap_options
+
     def initialize(object_name, object, template, options)
+      # setting bootstrap builder specific options
+      @bootstrap_options = BootstrapOptions.new(options.delete(:bootstrap))
+
+
       @layout = options[:layout]
       @label_col = options[:label_col] || default_label_col
       @control_col = options[:control_col] || default_control_col
