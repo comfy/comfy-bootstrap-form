@@ -9,9 +9,7 @@ module BootstrapForm
     FIELD_HELPERS = %w{color_field date_field datetime_field datetime_local_field
       email_field month_field number_field password_field phone_field
       range_field search_field telephone_field text_area text_field time_field
-      url_field week_field}
-
-    DATE_SELECT_HELPERS = %w{date_select time_select datetime_select}
+      url_field week_field date_select time_select datetime_select}
 
     delegate :content_tag, :capture, :concat, to: :@template
 
@@ -36,18 +34,6 @@ module BootstrapForm
           prepend_and_append_input(options) do
             super(name, options)
           end
-        end
-      end
-    end
-
-    DATE_SELECT_HELPERS.each do |method_name|
-      define_method(method_name) do |name, options = {}, html_options = {}|
-        form_group_builder(name, options, html_options) do
-          content_tag(
-            :div,
-            super(name, options, html_options),
-            class: control_specific_class(method_name)
-          )
         end
       end
     end
