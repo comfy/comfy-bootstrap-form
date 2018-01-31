@@ -62,6 +62,31 @@ module BootstrapForm
       RUBY_EVAL
     end
 
+    # Add bootstrap formatted submit button. If you need to change its type or
+    # add another css class, you need to override all css classes like so:
+    #
+    #   <%= form.submit class: "btn btn-info custom-class" %>
+    #
+    # You may add additional content that directly follows the button. Here's
+    # an example of a cancel link:
+    #
+    #   <%= form.submit do %>
+    #     <%= link_to "Cancel", "/", class: "btn btn-link" %>
+    #   <% end %>
+    #
+    def submit(value = nil, options = {}, &block)
+      out = super(value, options.reverse_merge(class: "btn"))
+      out += capture(&block) if block_given?
+
+      # TODO: do offset if needed
+      out
+    end
+
+    # Same as submit button, only with btn-primary class added
+    def primary(value = nil, options = {}, &block)
+      submit(value, append_css_class!(options, "btn btn-primary"), &block)
+    end
+
     # Wrapper for all field helpers. Example usage:
     #
     #   <%= bootstrap_form_with model: @user do |form| %>
@@ -88,9 +113,12 @@ module BootstrapForm
         yield
       end
 
+      help_text = draw_help(bootstrap_options[:help])
+
       content_tag(:div, class: "form-group") do
         concat label
         concat control
+        concat help_text
       end
     end
 
@@ -113,13 +141,8 @@ module BootstrapForm
         text = custom_text
       end
 
-      if (custom_class = bootstrap_label_options[:class]).present?
-        append_css_class!(options, custom_class)
-      end
-
-      if bootstrap_label_options[:hide]
-        append_css_class!(options, "sr-only")
-      end
+      append_css_class!(options, bootstrap_label_options[:class])
+      append_css_class!(options, "sr-only") if bootstrap_label_options[:hide]
 
       label(method, text, options)
     end
@@ -136,16 +159,26 @@ module BootstrapForm
     def draw_control(bootstrap_control_options, method, options, &block)
       append_css_class!(options, "form-control")
 
-      if (custom_class = bootstrap_control_options[:class]).present?
-        append_css_class!(options, custom_class)
-      end
+      # TODO: is this even needed? class option comes directly from field
+      append_css_class!(options, bootstrap_control_options[:class])
 
       capture(&block)
     end
 
     # todo: private
+    # Drawing boostrap form field help text. Example usage:
+    #
+    #   <%= form.text_field :value, bootstrap: {help: "help text"} %>
+    #
+    def draw_help(text)
+      return if text.blank?
+      content_tag(:small, text, class: "form-text text-muted")
+    end
+
+    # todo: private
     def append_css_class!(options, string)
-      options[:class] = [options[:class], string].compact.join(" ")
+      css_class = [options[:class], string].compact.join(" ")
+      options[:class] = css_class if css_class.present?
     end
 
 
@@ -371,31 +404,7 @@ module BootstrapForm
       super(record_name, record_object, fields_options, &block)
     end
 
-    # Add bootstrap formatted submit button. If you need to change its type or
-    # add another css class, you need to override all css classes like so:
-    #
-    #   <%= form.submit class: "btn btn-info custom-class" %>
-    #
-    # You may add additional content that directly follows the button. Here's
-    # an example of a cancel link:
-    #
-    #   <%= form.submit do %>
-    #     <%= link_to "Cancel", "/", class: "btn btn-link" %>
-    #   <% end %>
-    #
-    def submit(value = nil, options = {}, &block)
-      out = super(value, options.reverse_merge(class: "btn"))
-      out += capture(&block) if block_given?
 
-      form_group do
-        out
-      end
-    end
-
-    # Same as submit button, only with btn-primary class added
-    def primary(value = nil, options = {}, &block)
-      submit(value, options.reverse_merge(class: "btn btn-primary"), &block)
-    end
 
   private
 
