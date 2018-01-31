@@ -4,6 +4,7 @@
   <%= bootstrap_form_with model: @user, url: "/" do |form| %>
     <%= form.email_field :email, placeholder: "Enter Email", label: "Email address", help: "We'll never share your email with anyone else" %>
     <%= form.password_field :password, placeholder: "Password" %>
+    <%= form.select :select_value, ["option A", "option B"] %>
     <%= form.check_box :terms, label: "Agree to Terms" %>
     <%= form.submit %>
   <% end %>
