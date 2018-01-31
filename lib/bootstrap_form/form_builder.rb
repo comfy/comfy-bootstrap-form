@@ -62,6 +62,17 @@ module BootstrapForm
       RUBY_EVAL
     end
 
+    # Wrapper for select helper. Boostrap options are sent via html_options hash:
+    #
+    #   <%= form.select :choices, ["a", "b"], {}, {bootstrap: {label: {text: "Custom"}}} %>
+    #
+    def select(method, choices = nil, options = {}, html_options = {}, &block)
+      bootstrap_options = (html_options.delete(:bootstrap) || {}).freeze
+      draw_form_group(bootstrap_options, method, html_options) do
+        super(method, choices, options, html_options, &block)
+      end
+    end
+
     # Add bootstrap formatted submit button. If you need to change its type or
     # add another css class, you need to override all css classes like so:
     #
@@ -244,13 +255,13 @@ module BootstrapForm
       end
     end
 
-    def select(method, choices = nil, options = {}, html_options = {}, &block)
-      form_group_builder(method, options, html_options) do
-        prepend_and_append_input(options) do
-          super(method, choices, options, html_options, &block)
-        end
-      end
-    end
+    # def select(method, choices = nil, options = {}, html_options = {}, &block)
+    #   form_group_builder(method, options, html_options) do
+    #     prepend_and_append_input(options) do
+    #       super(method, choices, options, html_options, &block)
+    #     end
+    #   end
+    # end
 
     def collection_select(method, collection, value_method, text_method, options = {}, html_options = {})
       form_group_builder(method, options, html_options) do
