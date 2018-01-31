@@ -11,7 +11,7 @@ class ViewHelperTest < ActionView::TestCase
       </form>
     HTML
     actual = bootstrap_form_with(url: "/test"){ }
-    assert_equivalent_xml expected, actual
+    assert_xml_equal expected, actual
   end
 
   def test_bootstrap_form_with_and_field
@@ -27,7 +27,7 @@ class ViewHelperTest < ActionView::TestCase
     actual = bootstrap_form_with(url: "/test") do |form|
       form.text_field :value
     end
-    assert_equivalent_xml expected, actual
+    assert_xml_equal expected, actual
   end
 
   def test_bootstrap_form_with_inline
@@ -43,7 +43,7 @@ class ViewHelperTest < ActionView::TestCase
     actual = bootstrap_form_with(url: "/test", class: "custom", bootstrap: {layout: :inline}) do |form|
       form.text_field :value
     end
-    assert_equivalent_xml expected, actual
+    assert_xml_equal expected, actual
   end
 
   def test_bootstrap_form_with_horizontal
@@ -53,7 +53,7 @@ class ViewHelperTest < ActionView::TestCase
     actual = bootstrap_form_with(url: "/test", class: "custom", bootstrap: {layout: :horizontal}) do |form|
       form.text_field :value
     end
-    assert_equivalent_xml expected, actual
+    assert_xml_equal expected, actual
   end
 
   def test_bootstrap_fields

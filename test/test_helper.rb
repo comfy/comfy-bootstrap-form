@@ -4,38 +4,12 @@ require 'nokogiri'
 require 'equivalent-xml'
 require 'mocha/mini_test'
 
-
 require_relative "../demo/config/environment.rb"
 require "rails/test_help"
 
-Rails.backtrace_cleaner.remove_silencers!
+# Rails.backtrace_cleaner.remove_silencers!
 
 class ActionView::TestCase
-
-  def setup_test_fixture
-    @user = User.new(
-      email:    "steve@example.com",
-      password: "secret",
-      comments: "my comment"
-    )
-    @builder = BootstrapForm::FormBuilder.new(:user, @user, self, {})
-    @horizontal_builder = BootstrapForm::FormBuilder.new(:user, @user, self, {layout: :horizontal})
-
-    I18n.backend.store_translations(:en, {
-      activerecord: {
-        attributes: {
-          user: {
-            email: "Email"
-          }
-        },
-        help: {
-          user: {
-            password: "A good password should be at least six characters long"
-          }
-        }
-      }
-    })
-  end
 
   # Expected and actual are wrapped in a root tag to ensure proper XML structure
   def assert_xml_equal(expected, actual)
