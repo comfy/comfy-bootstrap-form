@@ -73,6 +73,34 @@ class FormBuilderFieldHelpersTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_select
+    actual = @builder.select(:test, %w[a b])
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_test">Test</label>
+        <select class="form-control" id="user_test" name="user[test]">
+          <option value="a">a</option>
+          <option value="b">b</option>
+        </select>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_select_control_css_class
+    actual = @builder.select(:test, %w[a b], {}, bootstrap: {control: {class: "custom"}})
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_test">Test</label>
+        <select class="form-control custom" id="user_test" name="user[test]">
+          <option value="a">a</option>
+          <option value="b">b</option>
+        </select>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
   def test_color_field
     actual = @builder.color_field(:test)
     expected = <<-HTML
