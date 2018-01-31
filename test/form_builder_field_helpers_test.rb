@@ -101,6 +101,18 @@ class FormBuilderFieldHelpersTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_checkbox
+    actual = @builder.check_box(:test)
+    expected = <<-HTML
+      <div class="form-check">
+        <input name="user[test]" type="hidden" value="0"/>
+        <input class="form-check-input" id="user_test" name="user[test]" type="checkbox" value="1"/>
+        <label class="form-check-label" for="user_test">Test</label>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
   def test_color_field
     actual = @builder.color_field(:test)
     expected = <<-HTML
@@ -140,6 +152,17 @@ class FormBuilderFieldHelpersTest < ActionView::TestCase
       <div class="form-group">
         <label for="user_test">Test</label>
         <input class="form-control" type="email" name="user[test]" id="user_test"/>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_file_field
+    actual = @builder.file_field(:test)
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_test">Test</label>
+        <input class="form-control" type="file" name="user[test]" id="user_test"/>
       </div>
     HTML
     assert_xml_equal expected, actual
