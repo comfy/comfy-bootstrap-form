@@ -55,4 +55,16 @@ class FormBuilderFieldHelpersTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  # TODO: move to control rendering test file
+  def test_text_field_control_css_class
+    actual = @builder.text_field(:email, bootstrap: {control: {class: "custom_class"}})
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_email">Email</label>
+        <input class="form-control custom_class" type="text" name="user[email]" id="user_email" />
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
 end
