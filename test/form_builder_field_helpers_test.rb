@@ -67,4 +67,19 @@ class FormBuilderFieldHelpersTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+
+
+
+  def test_text_field_help_text
+    actual = @builder.text_field(:email, bootstrap: {help: "help text"})
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_email">Email</label>
+        <input class="form-control" type="text" name="user[email]" id="user_email" />
+        <small class="form-text text-muted">help text</small>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
 end
