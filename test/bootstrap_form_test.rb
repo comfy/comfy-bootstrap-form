@@ -1,30 +1,9 @@
 require_relative "./test_helper"
 
 class BootstrapFormTest < ActionView::TestCase
-  include BootstrapForm::Helper
+  include BootstrapForm::ViewHelper
 
   setup :setup_test_fixture
-
-  def test_form_for
-    expected = <<-HTML
-      <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post" role="form">
-        <input name="utf8" type="hidden" value="&#x2713;" />
-      </form>
-    HTML
-    actual = bootstrap_form_for(@user) do |form| end
-    assert_equivalent_xml expected, actual
-  end
-
-
-
-
-
-
-
-
-
-
-
 
 
 
