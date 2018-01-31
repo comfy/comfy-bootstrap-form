@@ -3,7 +3,28 @@ require_relative 'helpers/bootstrap'
 module BootstrapForm
   class FormBuilder < ActionView::Helpers::FormBuilder
 
+    # TODO: Remove
     include BootstrapForm::Helpers::Bootstrap
+
+    FIELD_HELPERS = %w[
+      color_field
+      date_field
+      datetime_field
+      datetime_local_field
+      email_field
+      month_field
+      number_field
+      password_field
+      phone_field
+      range_field
+      search_field
+      telephone_field
+      text_area
+      text_field
+      time_field
+      url_field
+      week_field
+    ].freeze
 
     # Container for bootstrap specific form builder options. It controls options
     # that define form layout and grid sizing.
@@ -14,24 +35,124 @@ module BootstrapForm
                     :control_col_class,
                     :label_align_class
 
-      def initialize(options)
-        options = {} unless options.is_a?(Hash)
-
+      def initialize(options = {})
         @layout             = options[:layout]            || "default"
         @label_col_class    = options[:label_col_class]   || "col-sm-4"
         @control_col_class  = options[:control_col_class] || "col-sm-8"
         @label_align_class  = options[:label_align_class] || "text-sm-left"
       end
+
+    end
+
+    attr_accessor :bootstrap
+
+    def initialize(object_name, object, template, options)
+      @bootstrap = BootstrapOptions.new(options.delete(:bootstrap) || {})
+      super(object_name, object, template, options)
+    end
+
+    # Overriding default methods to forward everything to field_helper
+    FIELD_HELPERS.each do |field_helper|
+      class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
+        def #{field_helper}(method, options = {})
+          field_helper(method, options) do
+            super(method, options)
+          end
+        end
+      RUBY_EVAL
+    end
+
+    # Wrapper for all field helpers. Example usage:
+    #
+    #   <%= bootstrap_form_with model: @user do |form| %>
+    #     <%= form.text_field :name %>
+    #   <% end %>
+    #
+    # Output of the `text_field` will be wrapped in Bootstrap markup
+    #
+    def field_helper(method, options, &block)
+      bootstrap_options = (options.delete(:bootstrap) || {}).freeze
+      draw_form_group(bootstrap_options, method, options) do
+        yield
+      end
+    end
+
+    # todo: private
+    def draw_form_group(bootstrap_options, method, options, &block)
+      bootstrap_label_options   = (bootstrap_options[:label]    || {}).freeze
+      bootstrap_control_options = (bootstrap_options[:control]  || {}).freeze
+
+      label = draw_label(bootstrap_label_options, method)
+
+      control = draw_control(bootstrap_control_options, method, options) do
+        yield
+      end
+
+      content_tag(:div, class: "form-group") do
+        concat label
+        concat control
+      end
+    end
+
+    # todo: private
+    # Renders label for a given field. Takes following options:
+    #
+    # :text   - replace default label text
+    # :class  - css class on the label
+    # :hide   - if `true` will render for screen readers only
+    #
+    # This is how those options can be passed in:
+    #
+    #   <%= form.text_field :value, bootstrap: {label: {text: "Custom", class: "custom"}} %>
+    #
+    def draw_label(bootstrap_label_options, method)
+      text    = nil
+      options = {}
+
+      if (custom_text = bootstrap_label_options[:text]).present?
+        text = custom_text
+      end
+
+      if (custom_class = bootstrap_label_options[:class]).present?
+        append_css_class!(options, custom_class)
+      end
+
+      if bootstrap_label_options[:hide]
+        append_css_class!(options, "sr-only")
+      end
+
+      label(method, text, options)
+    end
+
+    # todo: private
+    def draw_control(bootstrap_control_options, method, options, &block)
+      append_css_class!(options, "form-control")
+      capture(&block)
+    end
+
+    # todo: private
+    def append_css_class!(options, string)
+      options[:class] = [options[:class], string].compact.join(" ")
     end
 
 
 
+
+
+
+
+
+
+
+
+
+
+    # VVV REWORK ALL OF THAT VVV
+
+
     attr_reader :layout, :label_col, :control_col, :has_error, :inline_errors, :label_errors, :acts_like_form_tag
 
-    FIELD_HELPERS = %w{color_field date_field datetime_field datetime_local_field
-      email_field month_field number_field password_field phone_field
-      range_field search_field telephone_field text_area text_field time_field
-      url_field week_field}
+
 
     DATE_SELECT_HELPERS = %w{date_select time_select datetime_select}
 
@@ -42,36 +163,22 @@ module BootstrapForm
 
 
 
-    attr_accessor :bootstrap_options
-
-    def initialize(object_name, object, template, options)
-      # setting bootstrap builder specific options
-      @bootstrap_options = BootstrapOptions.new(options.delete(:bootstrap))
 
 
-      @layout = options[:layout]
-      @label_col = options[:label_col] || default_label_col
-      @control_col = options[:control_col] || default_control_col
-      @label_errors = options[:label_errors] || false
-      @inline_errors = if options[:inline_errors].nil?
-        @label_errors != true
-      else
-        options[:inline_errors] != false
-      end
-      @acts_like_form_tag = options[:acts_like_form_tag]
 
-      super
-    end
 
-    FIELD_HELPERS.each do |method_name|
-      define_method(method_name) do |name, options = {}|
-        form_group_builder(name, options) do
-          prepend_and_append_input(options) do
-            super(name, options)
-          end
-        end
-      end
-    end
+
+
+    #   define_method(method_name) do |name, options = {}|
+    #     bootstrap_options = options.delete(:boostrap)
+
+    #     form_group_builder(name, options) do
+    #       prepend_and_append_input(options) do
+    #         super(name, options)
+    #       end
+    #     end
+    #   end
+    # end
 
     DATE_SELECT_HELPERS.each do |method_name|
       define_method(method_name) do |name, options = {}, html_options = {}|
@@ -215,31 +322,31 @@ module BootstrapForm
     end
 
     # TODO: Needs documention
-    def form_group(*args, &block)
-      options = args.extract_options!
-      name = args.first
+    # def form_group(*args, &block)
+    #   options = args.extract_options!
+    #   name = args.first
 
-      options[:class] = ["form-group", options[:class]].compact.join(' ')
-      options[:class] << " row" if get_group_layout(options[:layout]) == :horizontal
-      options[:class] << " #{feedback_class}" if options[:icon]
+    #   options[:class] = ["form-group", options[:class]].compact.join(' ')
+    #   options[:class] << " row" if get_group_layout(options[:layout]) == :horizontal
+    #   options[:class] << " #{feedback_class}" if options[:icon]
 
-      content_tag(:div, options.except(:id, :label, :help, :icon, :label_col, :control_col, :layout)) do
-        label = generate_label(options[:id], name, options[:label], options[:label_col], options[:layout]) if options[:label]
-        control = capture(&block).to_s
-        control.concat(generate_help(name, options[:help]).to_s)
+    #   content_tag(:div, options.except(:id, :label, :help, :icon, :label_col, :control_col, :layout)) do
+    #     label = generate_label(options[:id], name, options[:label], options[:label_col], options[:layout]) if options[:label]
+    #     control = capture(&block).to_s
+    #     control.concat(generate_help(name, options[:help]).to_s)
 
-        if get_group_layout(options[:layout]) == :horizontal
-          control_class = options[:control_col] || control_col
-          unless options[:label]
-            control_offset = offset_col(options[:label_col] || @label_col)
-            control_class = "#{control_class} #{control_offset}"
-          end
-          control = content_tag(:div, control, class: control_class)
-        end
+    #     if get_group_layout(options[:layout]) == :horizontal
+    #       control_class = options[:control_col] || control_col
+    #       unless options[:label]
+    #         control_offset = offset_col(options[:label_col] || @label_col)
+    #         control_class = "#{control_class} #{control_offset}"
+    #       end
+    #       control = content_tag(:div, control, class: control_class)
+    #     end
 
-        concat(label).concat(control)
-      end
-    end
+    #     concat(label).concat(control)
+    #   end
+    # end
 
     def fields_for(record_name, record_object = nil, fields_options = {}, &block)
       fields_options, record_object = record_object, nil if record_object.is_a?(Hash) && record_object.extractable_options?

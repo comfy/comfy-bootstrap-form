@@ -4,7 +4,6 @@ require 'nokogiri'
 require 'equivalent-xml'
 require 'mocha/mini_test'
 
-ENV["RAILS_ENV"] = "test"
 
 require_relative "../demo/config/environment.rb"
 require "rails/test_help"
@@ -39,10 +38,9 @@ class ActionView::TestCase
   end
 
   # Expected and actual are wrapped in a root tag to ensure proper XML structure
-  def assert_equivalent_xml(expected, actual)
-    expected_xml        = Nokogiri::XML("<test-xml>\n#{expected}\n</test-xml>")
-    actual_xml          = Nokogiri::XML("<test-xml>\n#{actual}\n</test-xml>")
-    ignored_attributes  = %w(style data-disable-with)
+  def assert_xml_equal(expected, actual)
+    expected_xml        = Nokogiri::XML("<test-xml>\n#{expected}\n</test-xml>", &:noblanks)
+    actual_xml          = Nokogiri::XML("<test-xml>\n#{actual}\n</test-xml>", &:noblanks)
 
     equivalent = EquivalentXml.equivalent?(expected_xml, actual_xml) do |a, b, result|
       if result === false && b.is_a?(Nokogiri::XML::Element)
@@ -68,9 +66,9 @@ class ActionView::TestCase
     assert equivalent, lambda {
       # using a lambda because diffing is expensive
       Diffy::Diff.new(
-        sort_attributes(expected_xml.root),
-        sort_attributes(actual_xml.root)
-      ).to_s(:color)
+        sort_attributes(expected_xml.root).to_xml(indent: 2),
+        sort_attributes(actual_xml.root).to_xml(indent: 2)
+      ).to_s
     }
   end
 
