@@ -95,7 +95,7 @@ module BootstrapForm
     end
 
     # todo: private
-    # Renders label for a given field. Takes following options:
+    # Renders label for a given field. Takes following bootstrap options:
     #
     # :text   - replace default label text
     # :class  - css class on the label
@@ -125,8 +125,21 @@ module BootstrapForm
     end
 
     # todo: private
+    # Renders control for a given field. Takes following bootstrap options:
+    #
+    # :class - custom css class
+    #
+    # Example how those options are passed in:
+    #
+    #   <%= form.text_field :value, bootstrap: {control: {class: "custom"}} %>
+    #
     def draw_control(bootstrap_control_options, method, options, &block)
       append_css_class!(options, "form-control")
+
+      if (custom_class = bootstrap_control_options[:class]).present?
+        append_css_class!(options, custom_class)
+      end
+
       capture(&block)
     end
 
