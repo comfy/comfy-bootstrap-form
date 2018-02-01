@@ -1,2 +1,0 @@
-class SuperUser < User
-end

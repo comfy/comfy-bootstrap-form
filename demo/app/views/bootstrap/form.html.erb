@@ -19,3 +19,11 @@
   <% end %>
 <% end %>
 
+<h3>Form With Errors</h3>
+
+<%= form_with_source do %>
+  <%= bootstrap_form_with model: @user_with_error, url: "/" do |form| %>
+    <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
+    <%= form.submit %>
+  <% end %>
+<% end %>
