@@ -1,10 +1,5 @@
-require_relative 'helpers/bootstrap'
-
 module BootstrapForm
   class FormBuilder < ActionView::Helpers::FormBuilder
-
-    # TODO: Remove
-    include BootstrapForm::Helpers::Bootstrap
 
     FIELD_HELPERS = %w[
       color_field     date_field  datetime_field  datetime_local_field
@@ -143,7 +138,14 @@ module BootstrapForm
 
       label = draw_label(bootstrap_label_options, method)
 
+      if (errors = object && object.errors[method]).present?
+        errors_text = content_tag(:div, class: "invalid-feedback") do
+          errors.join(", ")
+        end
+      end
+
       control = draw_control(bootstrap_control_options, method, options) do
+        add_css_class!(options, "is-invalid") if errors.present?
         yield
       end
 
@@ -152,6 +154,7 @@ module BootstrapForm
       content_tag(:div, class: "form-group") do
         concat label
         concat control
+        concat errors_text if errors_text.present?
         concat help_text
       end
     end

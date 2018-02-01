@@ -4,6 +4,8 @@ require 'nokogiri'
 require 'equivalent-xml'
 require 'mocha/mini_test'
 
+ENV["RAILS_ENV"] = "test"
+
 require_relative "../demo/config/environment.rb"
 require "rails/test_help"
 
@@ -44,6 +46,17 @@ class ActionView::TestCase
         sort_attributes(actual_xml.root).to_xml(indent: 2)
       ).to_s
     }
+  end
+
+  # By default, Rails will wrap form fields with extra html to indicate
+  # inputs with errors. We need to handle this in the builder to render
+  # Bootstrap specific markup. So we need to bypass this.
+  def supress_field_errors
+    original_proc = ActionView::Base.field_error_proc
+    ActionView::Base.field_error_proc = proc { |input, instance| input }
+    yield
+  ensure
+    ActionView::Base.field_error_proc = original_proc
   end
 
 private

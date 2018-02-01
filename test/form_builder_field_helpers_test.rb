@@ -3,7 +3,8 @@ require_relative "./test_helper"
 class FormBuilderFieldHelpersTest < ActionView::TestCase
 
   setup do
-    @builder = BootstrapForm::FormBuilder.new(:user, nil, self, {})
+    @user     = User.new
+    @builder  = BootstrapForm::FormBuilder.new(:user, @user, self, {})
   end
 
   def test_text_field
@@ -290,21 +291,36 @@ class FormBuilderFieldHelpersTest < ActionView::TestCase
   end
 
   def test_input_group
-    actual = @builder.text_field(:text, bootstrap: {
+    actual = @builder.text_field(:test, bootstrap: {
       control: {prepend: "prepend", append: "append"}
     })
     expected = <<-HTML
       <div class="form-group">
-        <label for="user_text">Text</label>
+        <label for="user_test">Test</label>
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text">prepend</span>
           </div>
-          <input class="form-control" id="user_text" name="user[text]" type="text"/>
+          <input class="form-control" id="user_test" name="user[test]" type="text"/>
           <div class="input-group-append">
             <span class="input-group-text">append</span>
           </div>
         </div>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_text_field_with_error
+    @user.errors.add(:test, "invalid")
+    actual = supress_field_errors do
+      @builder.text_field(:test)
+    end
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_test">Test</label>
+        <input class="form-control is-invalid" id="user_test" name="user[test]" type="text"/>
+        <div class="invalid-feedback">invalid</div>
       </div>
     HTML
     assert_xml_equal expected, actual
