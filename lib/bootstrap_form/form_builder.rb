@@ -102,16 +102,17 @@ module BootstrapForm
     #   <% end %>
     #
     def submit(value = nil, options = {}, &block)
-      out = super(value, options.reverse_merge(class: "btn"))
+      value, options = nil, value if value.is_a?(Hash)
+      add_css_class!(options, "btn")
+      out = super(value, options)
       out += capture(&block) if block_given?
-
-      # TODO: do offset if needed
       out
     end
 
     # Same as submit button, only with btn-primary class added
     def primary(value = nil, options = {}, &block)
-      submit(value, add_css_class!(options, "btn btn-primary"), &block)
+      add_css_class!(options, "btn-primary")
+      submit(value, options, &block)
     end
 
   private
