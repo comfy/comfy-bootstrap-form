@@ -3,7 +3,7 @@ require_relative "./test_helper"
 class FormBuilderFieldHelpersTest < ActionView::TestCase
 
   setup do
-    @builder = BootstrapForm::FormBuilder.new(:user, @user, self, {})
+    @builder = BootstrapForm::FormBuilder.new(:user, nil, self, {})
   end
 
   def test_text_field
@@ -273,6 +273,17 @@ class FormBuilderFieldHelpersTest < ActionView::TestCase
       <div class="form-group">
         <label for="user_test">Test</label>
         <input class="form-control" type="week" name="user[test]" id="user_test"/>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_plaintext
+    actual = @builder.plaintext(:test)
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_test">Test</label>
+        <input class="form-control-plaintext" readonly="readonly" type="text" name="user[test]" id="user_test"/>
       </div>
     HTML
     assert_xml_equal expected, actual
