@@ -11,6 +11,16 @@
   <% end %>
 <% end %>
 
+<h3>Checkboxes and Radio buttons</h3>
+
+<%= form_with_source do %>
+  <% @user.test = "b" %>
+  <%= bootstrap_form_with model: @user, url: "/" do |form| %>
+    <%= form.radio_buttons :test, [["a", "Label A"], ["b", "Label B"], "c", "d"] %>
+    <%= form.checkboxes :test, [[:value, "Label"]] %>
+  <% end %>
+<% end %>
+
 <h3>Input Group</h3>
 
 <%= form_with_source do %>

@@ -75,6 +75,21 @@ module BootstrapForm
       end
     end
 
+    # TODO
+    #
+    def radio_buttons(method, choices, options = {})
+      choices.map do |input_value, label_text|
+        content_tag(:div, class: "form-check") do
+          concat radio_button(method, input_value, class: "form-check-input")
+          concat label(method, label_text, value: input_value, class: "form-check-label")
+        end
+      end.join.html_safe
+    end
+
+    def checkboxes(method, choices, options = {})
+      "checkboxes"
+    end
+
     # Bootstrap wrapper for readonly text field that is shown as plain text.
     #
     #   <%= form.plaintext :value %>
