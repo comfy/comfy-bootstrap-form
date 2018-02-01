@@ -193,7 +193,44 @@ module BootstrapForm
       # TODO: is this even needed? class option comes directly from field
       append_css_class!(options, bootstrap_control_options[:class])
 
-      capture(&block)
+      draw_input_group(bootstrap_control_options) do
+        yield
+      end
+    end
+
+    # todo: private
+    # Wraps input field in input group container that allows prepending and
+    # appending text or html. Example:
+    #
+    #   <%= form.text_field :value, bootstrap: {control: {prepend: "$.$$"}} %>
+    #
+    def draw_input_group(bootstrap_control_options, &block)
+      prepend = bootstrap_control_options[:prepend]
+      append  = bootstrap_control_options[:append]
+
+      return yield if prepend.blank? && append.blank?
+
+      if prepend.present?
+        prepend_html = content_tag(:div, class: "input-group-prepend") do
+          content_tag(:span, class: "input-group-text") do
+            prepend
+          end
+        end
+      end
+
+      if append.present?
+        append_html = content_tag(:div, class: "input-group-append") do
+          content_tag(:span, class: "input-group-text") do
+            append
+          end
+        end
+      end
+
+      content_tag(:div, class: "input-group") do
+        concat prepend_html if prepend_html.present?
+        concat capture(&block)
+        concat append_html if append_html.present?
+      end
     end
 
     # todo: private
