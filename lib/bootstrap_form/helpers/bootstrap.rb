@@ -24,31 +24,6 @@ module BootstrapForm
         end
       end
 
-      def static_control(*args, &block)
-        options = args.extract_options!
-        name = args.first
-
-        html = if block_given?
-          capture(&block)
-        else
-          object.send(name)
-        end
-
-        form_group_builder(name, options) do
-          content_tag(:p, html, class: static_class)
-        end
-      end
-
-      def custom_control(*args, &block)
-        options = args.extract_options!
-        name = args.first
-
-        form_group_builder(name, options, &block)
-      end
-
-      def static_class
-        "form-control-static"
-      end
     end
   end
 end
