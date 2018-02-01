@@ -1,6 +1,6 @@
-require_relative "./test_helper"
+require_relative "../test_helper"
 
-class FormBuilderFieldHelpersTest < ActionView::TestCase
+class FieldHelpersTest < ActionView::TestCase
 
   setup do
     @user     = User.new
