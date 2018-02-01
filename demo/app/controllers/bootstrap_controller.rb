@@ -6,7 +6,7 @@ class BootstrapController < ApplicationController
       Address.new(id: 2, street: 'Bar')
     ]
 
-    @user = User.new
+    @user = User.new(comments: "Read only string")
 
     @user_with_error = User.new
     @user_with_error.errors.add(:email)

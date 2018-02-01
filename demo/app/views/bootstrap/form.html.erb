@@ -5,6 +5,7 @@
     <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
     <%= form.password_field :password, placeholder: "Password" %>
     <%= form.select :select_value, ["option A", "option B"] %>
+    <%= form.plaintext :comments %>
     <%= form.check_box :terms, label: "Agree to Terms" %>
     <%= form.submit %>
   <% end %>
