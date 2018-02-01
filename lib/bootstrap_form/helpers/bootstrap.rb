@@ -46,23 +46,6 @@ module BootstrapForm
         form_group_builder(name, options, &block)
       end
 
-      def prepend_and_append_input(options, &block)
-        options = options.extract!(:prepend, :append, :input_group_class)
-        input_group_class = ["input-group", options[:input_group_class]].compact.join(' ')
-
-        input = capture(&block)
-
-        input = content_tag(:div, input_group_content(options[:prepend]), class: 'input-group-prepend') + input if options[:prepend]
-        input << content_tag(:div, input_group_content(options[:append]), class: 'input-group-append') if options[:append]
-        input = content_tag(:div, input, class: input_group_class) unless options.empty?
-        input
-      end
-
-      def input_group_content(content)
-        return content if content.match(/btn/)
-        content_tag(:span, content, class: 'input-group-text')
-      end
-
       def static_class
         "form-control-static"
       end

@@ -7,7 +7,7 @@ require 'mocha/mini_test'
 require_relative "../demo/config/environment.rb"
 require "rails/test_help"
 
-# Rails.backtrace_cleaner.remove_silencers!
+Rails.backtrace_cleaner.remove_silencers!
 
 class ActionView::TestCase
 
