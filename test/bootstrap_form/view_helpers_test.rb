@@ -5,55 +5,37 @@ class ViewHelpersTest < ActionView::TestCase
   include BootstrapForm::ViewHelper
 
   def test_bootstrap_form_with
+    actual = bootstrap_form_with(url: "/test"){ }
     expected = <<-HTML
       <form action="/test" accept-charset="UTF-8" data-remote="true" method="post">
         <input name="utf8" type="hidden" value="&#x2713;" />
       </form>
     HTML
-    actual = bootstrap_form_with(url: "/test"){ }
     assert_xml_equal expected, actual
   end
 
   def test_bootstrap_form_with_and_field
+    actual = bootstrap_form_with(url: "/test") do |form|
+      form.text_field :value
+    end
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/test" data-remote="true" method="post">
         <input name="utf8" type="hidden" value="&#x2713;"/>
         <div class="form-group">
           <label for="value">Value</label>
-          <input class="form-control" name="value" type="text"/>
+          <input class="form-control" id="value" name="value" type="text"/>
         </div>
       </form>
     HTML
-    actual = bootstrap_form_with(url: "/test") do |form|
-      form.text_field :value
-    end
     assert_xml_equal expected, actual
   end
 
   def test_bootstrap_form_with_inline
-    expected = <<-HTML
-      <form accept-charset="UTF-8" action="/test" class="custom form-inline" data-remote="true" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;"/>
-        <div class="form-group">
-          <label for="value">Value</label>
-          <input class="form-control" name="value" type="text"/>
-        </div>
-      </form>
-    HTML
-    actual = bootstrap_form_with(url: "/test", class: "custom", bootstrap: {layout: :inline}) do |form|
-      form.text_field :value
-    end
-    assert_xml_equal expected, actual
+    flunk "todo"
   end
 
   def test_bootstrap_form_with_horizontal
-    expected = <<-HTML
-      TODO
-    HTML
-    actual = bootstrap_form_with(url: "/test", class: "custom", bootstrap: {layout: :horizontal}) do |form|
-      form.text_field :value
-    end
-    assert_xml_equal expected, actual
+    flunk "todo"
   end
 
   def test_bootstrap_fields
@@ -61,7 +43,22 @@ class ViewHelpersTest < ActionView::TestCase
   end
 
   def test_bootstrap_form_with_supress_field_errors
-    flunk "todo"
+    user = User.new
+    user.errors.add(:test, "invalid")
+    actual = bootstrap_form_with(model: user, url: "/test") do |form|
+      form.text_field :test
+    end
+    expected = <<-HTML
+      <form accept-charset="UTF-8" action="/test" data-remote="true" method="post">
+        <input name="utf8" type="hidden" value="&#x2713;"/>
+        <div class="form-group">
+          <label for="user_test">Test</label>
+          <input class="form-control is-invalid" id="user_test" name="user[test]" type="text"/>
+          <div class="invalid-feedback">invalid</div>
+        </div>
+      </form>
+    HTML
+    assert_xml_equal expected, actual
   end
 
 end
