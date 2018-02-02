@@ -395,4 +395,34 @@ class FieldHelpersTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_check_boxes
+    actual = @builder.check_boxes(:test, ["a", "b"])
+    expected = <<-HTML
+      <div class="form-check">
+        <input class="form-check-input" id="user_test_a" name="user[test][]" type="checkbox" value="a"/>
+        <label class="form-check-label" for="user_test_a">A</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" id="user_test_b" name="user[test][]" type="checkbox" value="b"/>
+        <label class="form-check-label" for="user_test_b">B</label>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_check_boxes_with_labels
+    actual = @builder.check_boxes(:test, [["a", "Label A"], ["b", "Label B"]])
+    expected = <<-HTML
+      <div class="form-check">
+        <input class="form-check-input" id="user_test_a" name="user[test][]" type="checkbox" value="a"/>
+        <label class="form-check-label" for="user_test_a">Label A</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" id="user_test_b" name="user[test][]" type="checkbox" value="b"/>
+        <label class="form-check-label" for="user_test_b">Label B</label>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
 end

@@ -16,10 +16,6 @@ module BootstrapForm
       # TODO
     end
 
-    def bootstrap_fields(scope = nil, model: nil, **options, &block)
-      # TODO
-    end
-
   private
 
     # By default, Rails will wrap form fields with extra html to indicate
