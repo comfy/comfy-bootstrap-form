@@ -31,15 +31,15 @@ class ViewHelpersTest < ActionView::TestCase
   end
 
   def test_bootstrap_form_with_inline
-    flunk "todo"
+    skip "todo"
   end
 
   def test_bootstrap_form_with_horizontal
-    flunk "todo"
+    skip "todo"
   end
 
   def test_bootstrap_fields
-    flunk "todo"
+    skip "todo"
   end
 
   def test_bootstrap_form_with_supress_field_errors
