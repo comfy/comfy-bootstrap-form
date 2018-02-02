@@ -14,10 +14,10 @@
 <h3>Checkboxes and Radio buttons</h3>
 
 <%= form_with_source do %>
-  <% @user.test = "b" %>
+  <% @user.test = "c" %>
   <%= bootstrap_form_with model: @user, url: "/" do |form| %>
     <%= form.radio_buttons :test, [["a", "Label A"], ["b", "Label B"], "c", "d"] %>
-    <%= form.checkboxes :test, [[:value, "Label"]] %>
+    <%= form.check_boxes :test, [["e", "Label E"], ["f", "Label F"], "g", "h"] %>
   <% end %>
 <% end %>
 

@@ -78,16 +78,36 @@ module BootstrapForm
     # TODO
     #
     def radio_buttons(method, choices, options = {})
+      bootstrap_options = (options.delete(:bootstrap) || {})
+      add_css_class!(options, "form-check-input")
+
       choices.map do |input_value, label_text|
         content_tag(:div, class: "form-check") do
-          concat radio_button(method, input_value, class: "form-check-input")
+          concat radio_button(method, input_value, options)
           concat label(method, label_text, value: input_value, class: "form-check-label")
         end
       end.join.html_safe
     end
 
-    def checkboxes(method, choices, options = {})
-      "checkboxes"
+    # TODO
+    #
+    def check_boxes(method, choices, options = {})
+      bootstrap_options = (options.delete(:bootstrap) || {})
+
+      add_css_class!(options, "form-check-input")
+      options[:multiple]       = true
+      options[:include_hidden] = false
+
+      choices.map do |input_value, label_text|
+        content_tag(:div, class: "form-check") do
+
+          checkbox = ActionView::Helpers::FormBuilder.instance_method(:check_box).bind(self)
+            .call(method, options, input_value)
+
+          concat checkbox
+          concat label(method, label_text, value: input_value, class: "form-check-label")
+        end
+      end.join.html_safe
     end
 
     # Bootstrap wrapper for readonly text field that is shown as plain text.
