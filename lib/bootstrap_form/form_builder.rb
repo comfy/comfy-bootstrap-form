@@ -174,13 +174,8 @@ module BootstrapForm
       bootstrap_label_options   = (bootstrap_options[:label]    || {})
       bootstrap_control_options = (bootstrap_options[:control]  || {})
 
-      label = draw_label(bootstrap_label_options, method)
-
-      if (errors = object && object.errors[method]).present?
-        errors_text = content_tag(:div, class: "invalid-feedback") do
-          errors.join(", ")
-        end
-      end
+      label   = draw_label(bootstrap_label_options, method)
+      errors  = draw_errors(method)
 
       control = draw_control(bootstrap_control_options, method, options) do
         add_css_class!(options, "is-invalid") if errors.present?
@@ -192,8 +187,16 @@ module BootstrapForm
       content_tag(:div, class: "form-group") do
         concat label
         concat control
-        concat errors_text if errors_text.present?
+        concat errors if errors.present?
         concat help_text
+      end
+    end
+
+    def draw_errors(method)
+      return unless (errors = object && object.errors[method]).present?
+
+      content_tag(:div, class: "invalid-feedback") do
+        errors.join(", ")
       end
     end
 
@@ -292,10 +295,16 @@ module BootstrapForm
         form_check_css_class = "form-check"
         form_check_css_class << " form-check-inline" if bootstrap_options[:inline]
 
-        choices.map do |input_value, label_text|
+        errors = draw_errors(method)
+        add_css_class!(options, "is-invalid") if errors.present?
+
+        choices.each_with_index.map do |(input_value, label_text), index|
           content_tag(:div, class: form_check_css_class) do
             concat input.call(method, input_value, options)
             concat label(method, label_text, value: input_value, class: "form-check-label")
+            if errors.present? && (choices.count - 1) == index
+              concat errors
+            end
           end
         end.join.html_safe
       end
