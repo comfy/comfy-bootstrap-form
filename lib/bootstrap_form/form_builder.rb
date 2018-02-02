@@ -49,7 +49,7 @@ module BootstrapForm
 
     # Wrapper for select helper. Boostrap options are sent via html_options hash:
     #
-    #   <%= form.select :choices, ["a", "b"], {}, {bootstrap: {label: {text: "Custom"}}} %>
+    #   select :choices, ["a", "b"], {}, bootstrap: {label: {text: "Custom"}}
     #
     def select(method, choices = nil, options = {}, html_options = {}, &block)
       bootstrap_options = (html_options.delete(:bootstrap) || {})
@@ -60,7 +60,7 @@ module BootstrapForm
 
     # Wrapper around checkbox. Example usage:
     #
-    #   <%= form.checkbox :agree, {bootstrap: {label: {text: "Do you agree?"}}} %>
+    #   checkbox :agree, bootstrap: {label: {text: "Do you agree?"}}
     #
     def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
       bootstrap_options         = (options.delete(:bootstrap)   || {})
@@ -75,15 +75,25 @@ module BootstrapForm
       end
     end
 
-    # TODO
+    # Helper to generate multiple radio buttons. Example usage:
+    #
+    #   radio_buttons :choices, ["a", "b"] %>
+    #   radio_buttons :choices, [["a", "Label A"], ["b", "Label B"]]
+    #
+    # Takes bootstrap options:
+    #   :inline - set to true to render inputs inline
     #
     def radio_buttons(method, choices, options = {})
       bootstrap_options = (options.delete(:bootstrap) || {})
       add_css_class!(options, "form-check-input")
 
       draw_form_group_fieldset(bootstrap_options, method, options) do
+
+        form_check_css_class = "form-check"
+        form_check_css_class << " form-check-inline" if bootstrap_options[:inline]
+
         choices.map do |input_value, label_text|
-          content_tag(:div, class: "form-check") do
+          content_tag(:div, class: form_check_css_class) do
             concat radio_button(method, input_value, options)
             concat label(method, label_text, value: input_value, class: "form-check-label")
           end
@@ -91,7 +101,10 @@ module BootstrapForm
       end
     end
 
-    # TODO
+    # Helper to generate multiple checkboxes. Example usage:
+    #
+    #   check_boxes :choices, ["a", "b"] %>
+    #   check_boxes :choices, [["a", "Label A"], ["b", "Label B"]]
     #
     def check_boxes(method, choices, options = {})
       bootstrap_options = (options.delete(:bootstrap) || {})
@@ -101,8 +114,12 @@ module BootstrapForm
       options[:include_hidden] = false
 
       draw_form_group_fieldset(bootstrap_options, method, options) do
+
+        form_check_css_class = "form-check"
+        form_check_css_class << " form-check-inline" if bootstrap_options[:inline]
+
         choices.map do |input_value, label_text|
-          content_tag(:div, class: "form-check") do
+          content_tag(:div, class: form_check_css_class) do
 
             checkbox = ActionView::Helpers::FormBuilder.instance_method(:check_box).bind(self)
               .call(method, options, input_value)
@@ -116,7 +133,7 @@ module BootstrapForm
 
     # Bootstrap wrapper for readonly text field that is shown as plain text.
     #
-    #   <%= form.plaintext :value %>
+    #   plaintext(:value)
     #
     def plaintext(method, options = {})
       bootstrap_options = (options.delete(:bootstrap) || {})
@@ -131,14 +148,14 @@ module BootstrapForm
     # Add bootstrap formatted submit button. If you need to change its type or
     # add another css class, you need to override all css classes like so:
     #
-    #   <%= form.submit class: "btn btn-info custom-class" %>
+    #   submit(class: "btn btn-info custom-class")
     #
     # You may add additional content that directly follows the button. Here's
     # an example of a cancel link:
     #
-    #   <%= form.submit do %>
-    #     <%= link_to "Cancel", "/", class: "btn btn-link" %>
-    #   <% end %>
+    #   submit do
+    #     link_to("Cancel", "/", class: "btn btn-link")
+    #   end
     #
     def submit(value = nil, options = {}, &block)
       value, options = nil, value if value.is_a?(Hash)
@@ -158,9 +175,9 @@ module BootstrapForm
 
     # Wrapper for all field helpers. Example usage:
     #
-    #   <%= bootstrap_form_with model: @user do |form| %>
-    #     <%= form.text_field :name %>
-    #   <% end %>
+    #   bootstrap_form_with model: @user do |form|
+    #     form.text_field :name
+    #   end
     #
     # Output of the `text_field` will be wrapped in Bootstrap markup
     #
@@ -220,7 +237,7 @@ module BootstrapForm
     #
     # This is how those options can be passed in:
     #
-    #   <%= form.text_field :value, bootstrap: {label: {text: "Custom", class: "custom"}} %>
+    #   text_field(:value, bootstrap: {label: {text: "Custom", class: "custom"}})
     #
     def draw_label(bootstrap_label_options, method)
       text    = nil
@@ -242,7 +259,7 @@ module BootstrapForm
     #
     # Example how those options are passed in:
     #
-    #   <%= form.text_field :value, bootstrap: {control: {class: "custom"}} %>
+    #   text_field(:value, bootstrap: {control: {class: "custom"}})
     #
     def draw_control(bootstrap_control_options, method, options, &block)
       add_css_class!(options, "form-control")
@@ -258,7 +275,7 @@ module BootstrapForm
     # Wraps input field in input group container that allows prepending and
     # appending text or html. Example:
     #
-    #   <%= form.text_field :value, bootstrap: {control: {prepend: "$.$$"}} %>
+    #   text_field(:value, bootstrap: {control: {prepend: "$.$$"}})
     #
     def draw_input_group(bootstrap_control_options, &block)
       prepend = bootstrap_control_options[:prepend]
@@ -291,7 +308,7 @@ module BootstrapForm
 
     # Drawing boostrap form field help text. Example usage:
     #
-    #   <%= form.text_field :value, bootstrap: {help: "help text"} %>
+    #   text_field(:value, bootstrap: {help: "help text"})
     #
     def draw_help(text)
       return if text.blank?
