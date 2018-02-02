@@ -105,11 +105,13 @@ class FieldHelpersTest < ActionView::TestCase
   def test_checkbox
     actual = @builder.check_box(:test)
     expected = <<-HTML
-      <div class="form-check">
-        <input name="user[test]" type="hidden" value="0"/>
-        <input class="form-check-input" id="user_test" name="user[test]" type="checkbox" value="1"/>
-        <label class="form-check-label" for="user_test">Test</label>
-      </div>
+      <fieldset class="form-group">
+        <div class="form-check">
+          <input name="user[test]" type="hidden" value="0"/>
+          <input class="form-check-input" id="user_test" name="user[test]" type="checkbox" value="1"/>
+          <label class="form-check-label" for="user_test">Test</label>
+        </div>
+      </fieldset>
     HTML
     assert_xml_equal expected, actual
   end
