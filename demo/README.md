@@ -11,7 +11,7 @@
 - db/schema.rb
 - config/{application, routes, boot}.rb
 - config/environments/{development, test}.rb
-- app/models/{address,user,super_user,faux_user}.rb
+- app/models/user.rb
 - app/controllers/bootstrap_controller.rb
 - app/views/layouts/application.html.erb
 - app/views/bootstrap/form.html.erb
