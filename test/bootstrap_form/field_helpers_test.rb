@@ -368,14 +368,17 @@ class FieldHelpersTest < ActionView::TestCase
   def test_radio_buttons
     actual = @builder.radio_buttons(:test, ["a", "b"])
     expected = <<-HTML
-      <div class="form-check">
-        <input class="form-check-input" id="user_test_a" name="user[test]" type="radio" value="a"/>
-        <label class="form-check-label" for="user_test_a">A</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" id="user_test_b" name="user[test]" type="radio" value="b"/>
-        <label class="form-check-label" for="user_test_b">B</label>
-      </div>
+      <fieldset class="form-group">
+        <legend class="col-form-label">Test</legend>
+        <div class="form-check">
+          <input class="form-check-input" id="user_test_a" name="user[test]" type="radio" value="a"/>
+          <label class="form-check-label" for="user_test_a">A</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" id="user_test_b" name="user[test]" type="radio" value="b"/>
+          <label class="form-check-label" for="user_test_b">B</label>
+        </div>
+      </fieldset>
     HTML
     assert_xml_equal expected, actual
   end
@@ -383,14 +386,17 @@ class FieldHelpersTest < ActionView::TestCase
   def test_radio_buttons_with_labels
     actual = @builder.radio_buttons(:test, [["a", "Label A"], ["b", "Label B"]])
     expected = <<-HTML
-      <div class="form-check">
-        <input class="form-check-input" id="user_test_a" name="user[test]" type="radio" value="a"/>
-        <label class="form-check-label" for="user_test_a">Label A</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" id="user_test_b" name="user[test]" type="radio" value="b"/>
-        <label class="form-check-label" for="user_test_b">Label B</label>
-      </div>
+      <fieldset class="form-group">
+        <legend class="col-form-label">Test</legend>
+        <div class="form-check">
+          <input class="form-check-input" id="user_test_a" name="user[test]" type="radio" value="a"/>
+          <label class="form-check-label" for="user_test_a">Label A</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" id="user_test_b" name="user[test]" type="radio" value="b"/>
+          <label class="form-check-label" for="user_test_b">Label B</label>
+        </div>
+      </fieldset>
     HTML
     assert_xml_equal expected, actual
   end
@@ -398,14 +404,17 @@ class FieldHelpersTest < ActionView::TestCase
   def test_check_boxes
     actual = @builder.check_boxes(:test, ["a", "b"])
     expected = <<-HTML
-      <div class="form-check">
-        <input class="form-check-input" id="user_test_a" name="user[test][]" type="checkbox" value="a"/>
-        <label class="form-check-label" for="user_test_a">A</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" id="user_test_b" name="user[test][]" type="checkbox" value="b"/>
-        <label class="form-check-label" for="user_test_b">B</label>
-      </div>
+      <fieldset class="form-group">
+        <legend class="col-form-label">Test</legend>
+        <div class="form-check">
+          <input class="form-check-input" id="user_test_a" name="user[test][]" type="checkbox" value="a"/>
+          <label class="form-check-label" for="user_test_a">A</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" id="user_test_b" name="user[test][]" type="checkbox" value="b"/>
+          <label class="form-check-label" for="user_test_b">B</label>
+        </div>
+      </fieldset>
     HTML
     assert_xml_equal expected, actual
   end
@@ -413,14 +422,17 @@ class FieldHelpersTest < ActionView::TestCase
   def test_check_boxes_with_labels
     actual = @builder.check_boxes(:test, [["a", "Label A"], ["b", "Label B"]])
     expected = <<-HTML
-      <div class="form-check">
-        <input class="form-check-input" id="user_test_a" name="user[test][]" type="checkbox" value="a"/>
-        <label class="form-check-label" for="user_test_a">Label A</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" id="user_test_b" name="user[test][]" type="checkbox" value="b"/>
-        <label class="form-check-label" for="user_test_b">Label B</label>
-      </div>
+      <fieldset class="form-group">
+        <legend class="col-form-label">Test</legend>
+        <div class="form-check">
+          <input class="form-check-input" id="user_test_a" name="user[test][]" type="checkbox" value="a"/>
+          <label class="form-check-label" for="user_test_a">Label A</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" id="user_test_b" name="user[test][]" type="checkbox" value="b"/>
+          <label class="form-check-label" for="user_test_b">Label B</label>
+        </div>
+      </fieldset>
     HTML
     assert_xml_equal expected, actual
   end
