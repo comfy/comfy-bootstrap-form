@@ -8,7 +8,7 @@ Bootstrap v4-style forms into your Rails application.
 [![Build Status](https://img.shields.io/travis/comfy/comfy-bootstrap-form.svg?style=flat)](https://travis-ci.org/comfy/comfy-bootstrap-form)
 [![Dependency Status](https://img.shields.io/gemnasium/comfy/comfy-bootstrap-form.svg?style=flat)](https://gemnasium.com/comfy/comfy-bootstrap-form)
 [![Code Climate](https://img.shields.io/codeclimate/maintainability/comfy/comfy-bootstrap-form.svg?style=flat)](https://codeclimate.com/github/comfy/comfy-bootstrap-form)
-[![Coverage Status](https://img.shields.io/coveralls/comfy/comfy-blog.svg?style=flat)](https://coveralls.io/r/comfy/comfy-bootstrap-form?branch=master)
+[![Coverage Status](https://img.shields.io/coveralls/comfy/comfy-bootstrap-form.svg?style=flat)](https://coveralls.io/r/comfy/comfy-bootstrap-form?branch=master)
 [![Gitter](https://badges.gitter.im/comfy/comfortable-mexican-sofa.svg)](https://gitter.im/comfy/comfortable-mexican-sofa)
 
 ## Installation

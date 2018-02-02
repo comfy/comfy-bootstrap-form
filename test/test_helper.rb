@@ -1,10 +1,13 @@
+ENV["RAILS_ENV"] = "test"
+
+require 'coveralls'
+Coveralls.wear!
+
 require 'timecop'
 require 'diffy'
 require 'nokogiri'
 require 'equivalent-xml'
 require 'mocha/mini_test'
-
-ENV["RAILS_ENV"] = "test"
 
 require_relative "../demo/config/environment.rb"
 require "rails/test_help"
