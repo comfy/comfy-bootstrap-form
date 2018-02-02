@@ -48,17 +48,6 @@ class ActionView::TestCase
     }
   end
 
-  # By default, Rails will wrap form fields with extra html to indicate
-  # inputs with errors. We need to handle this in the builder to render
-  # Bootstrap specific markup. So we need to bypass this.
-  def supress_field_errors
-    original_proc = ActionView::Base.field_error_proc
-    ActionView::Base.field_error_proc = proc { |input, instance| input }
-    yield
-  ensure
-    ActionView::Base.field_error_proc = original_proc
-  end
-
 private
 
   def sort_attributes(doc)

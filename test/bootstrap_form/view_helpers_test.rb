@@ -1,6 +1,6 @@
 require_relative "../test_helper"
 
-class ViewHelperTest < ActionView::TestCase
+class ViewHelpersTest < ActionView::TestCase
 
   include BootstrapForm::ViewHelper
 
