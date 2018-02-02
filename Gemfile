@@ -14,4 +14,5 @@ group :test do
   gem "mocha"
   gem "sqlite3"
   gem "timecop", "~> 0.7.1"
+  gem "coveralls", require: false
 end

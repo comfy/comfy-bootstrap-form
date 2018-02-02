@@ -9,3 +9,4 @@ demo/tmp/
 *.swp
 Gemfile.lock
 .ruby-version
+coverage/
