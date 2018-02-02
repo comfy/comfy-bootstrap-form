@@ -20,20 +20,10 @@ class ActionView::TestCase
     actual_xml          = Nokogiri::XML("<test-xml>\n#{actual}\n</test-xml>", &:noblanks)
 
     equivalent = EquivalentXml.equivalent?(expected_xml, actual_xml) do |a, b, result|
+      # Bug with gem. Can't exclude dashed attributes.
+      # See: https://github.com/mbklein/equivalent-xml/pull/36
       if result === false && b.is_a?(Nokogiri::XML::Element)
-        if b.attr('name') == 'utf8'
-          # Handle wrapped utf8 hidden field for Rails 4.2+
-          result = EquivalentXml.equivalent?(a.child, b)
-        end
         if b.delete('data-disable-with')
-          # Remove data-disable-with for Rails 5+
-          # Workaround because ignoring in EquivalentXml doesn't work
-          result = EquivalentXml.equivalent?(a, b)
-        end
-        if a.attr('type') == 'datetime' && b.attr('type') == 'datetime-local'
-          a.delete('type')
-          b.delete('type')
-          # Handle new datetime type for Rails 5+
           result = EquivalentXml.equivalent?(a, b)
         end
       end
