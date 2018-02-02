@@ -253,11 +253,13 @@ module BootstrapForm
     # appending text or html. Example:
     #
     #   text_field(:value, bootstrap: {control: {prepend: "$.$$"}})
+    #   text_field(:value, bootstrap: {control: {prepend: {html: "<button>Go</button>"}}})
     #
     def draw_input_group(bootstrap_control_options, errors, &block)
       prepend = bootstrap_control_options[:prepend]
       append  = bootstrap_control_options[:append]
 
+      # Not prepending or appending anything. Bail.
       if prepend.blank? && append.blank?
         out = capture(&block)
         out << errors if errors.present?
@@ -266,16 +268,20 @@ module BootstrapForm
 
       if prepend.present?
         prepend_html = content_tag(:div, class: "input-group-prepend") do
-          content_tag(:span, class: "input-group-text") do
-            prepend
+          if prepend.is_a?(Hash) && prepend[:html].present?
+            prepend[:html]
+          else
+            content_tag(:span, prepend, class: "input-group-text")
           end
         end
       end
 
       if append.present?
         append_html = content_tag(:div, class: "input-group-append") do
-          content_tag(:span, class: "input-group-text") do
-            append
+          if append.is_a?(Hash) && append[:html].present?
+            append[:html]
+          else
+            content_tag(:span, append, class: "input-group-text")
           end
         end
       end

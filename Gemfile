@@ -6,13 +6,9 @@ gemspec
 # gem "rails", "~> 5.2.0.beta2"
 
 group :test do
-  # can relax version requirement for Rails 5.2.beta3+
-  gem "minitest", "~> 5.10.3"
-
+  gem "minitest"
   gem "diffy"
   gem "equivalent-xml"
-  gem "mocha"
   gem "sqlite3"
-  gem "timecop", "~> 0.7.1"
   gem "coveralls", require: false
 end
