@@ -192,19 +192,6 @@ module BootstrapForm
       end
     end
 
-    # Wrapper for collections of radio buttons and checkboxes
-    def draw_form_group_fieldset(bootstrap_options, method, options, &block)
-      label = content_tag(:legend, class: "col-form-label") do
-        ActionView::Helpers::Tags::Label::LabelBuilder
-          .new(@template, @object_name.to_s, method, @object, nil).translation
-      end
-
-      content_tag(:fieldset, class: "form-group") do
-        concat label
-        concat yield
-      end
-    end
-
     # Renders label for a given field. Takes following bootstrap options:
     #
     # :text   - replace default label text
@@ -306,6 +293,29 @@ module BootstrapForm
             concat label(method, label_text, value: input_value, class: "form-check-label")
           end
         end.join.html_safe
+      end
+    end
+
+    # Wrapper for collections of radio buttons and checkboxes
+    def draw_form_group_fieldset(bootstrap_options, method, options, &block)
+      bootstrap_label_options = bootstrap_options[:label] || {}
+
+      unless bootstrap_label_options[:hide]
+        label_text = if bootstrap_label_options[:text].present?
+          bootstrap_label_options[:text]
+        else
+          ActionView::Helpers::Tags::Label::LabelBuilder
+            .new(@template, @object_name.to_s, method, @object, nil).translation
+        end
+
+        label = content_tag(:legend, class: "col-form-label") do
+          label_text
+        end
+      end
+
+      content_tag(:fieldset, class: "form-group") do
+        concat label
+        concat yield
       end
     end
 
