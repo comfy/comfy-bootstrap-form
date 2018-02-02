@@ -6,7 +6,7 @@
     <%= form.password_field :password, placeholder: "Password" %>
     <%= form.select :select_value, ["option A", "option B"] %>
     <%= form.plaintext :test %>
-    <%= form.check_box :terms, label: "Agree to Terms" %>
+    <%= form.check_box :terms, bootstrap: {label: {text: "Agree to Terms"}} %>
     <%= form.submit %>
   <% end %>
 <% end %>
@@ -36,6 +36,8 @@
 <%= form_with_source do %>
   <%= bootstrap_form_with model: @user_with_error, url: "/" do |form| %>
     <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
+    <%= form.check_box :terms %>
+    <%= form.radio_buttons :test, ["a", "b", "c"] %>
     <%= form.submit %>
   <% end %>
 <% end %>

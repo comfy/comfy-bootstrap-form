@@ -66,12 +66,14 @@ module BootstrapForm
       bootstrap_options         = (options.delete(:bootstrap)   || {})
       bootstrap_label_options   = (bootstrap_options[:label]    || {})
 
-      content_tag(:div, class: "form-check") do
-        add_css_class!(options, "form-check-input")
-        concat super(method, options, checked_value, unchecked_value)
+      content_tag(:fieldset, class: "form-group") do
+        content_tag(:div, class: "form-check") do
+          add_css_class!(options, "form-check-input")
+          concat super(method, options, checked_value, unchecked_value)
 
-        add_css_class!(bootstrap_label_options, "form-check-label")
-        concat draw_label(bootstrap_label_options, method)
+          add_css_class!(bootstrap_label_options, "form-check-label")
+          concat draw_label(bootstrap_label_options, method)
+        end
       end
     end
 
@@ -82,6 +84,8 @@ module BootstrapForm
     #
     # Takes bootstrap options:
     #   :inline - set to true to render inputs inline
+    #   label: {text: "Custom"} - to specify a label
+    #   label: {hide: true}     - to not render label at all
     #
     def radio_buttons(method, choices, options = {})
       bootstrap_options = (options.delete(:bootstrap) || {})
@@ -91,7 +95,8 @@ module BootstrapForm
       end
     end
 
-    # Helper to generate multiple checkboxes. Example usage:
+    # Helper to generate multiple checkboxes. Same options as for radio buttons.
+    # Example usage:
     #
     #   check_boxes :choices, ["a", "b"] %>
     #   check_boxes :choices, [["a", "Label A"], ["b", "Label B"]]
