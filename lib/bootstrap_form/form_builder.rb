@@ -66,13 +66,19 @@ module BootstrapForm
       bootstrap_options         = (options.delete(:bootstrap)   || {})
       bootstrap_label_options   = (bootstrap_options[:label]    || {})
 
+      errors = draw_errors(method)
+
+      add_css_class!(options, "form-check-input")
+      add_css_class!(options, "is-invalid") if errors.present?
+
+      add_css_class!(bootstrap_label_options, "form-check-label")
+
       content_tag(:fieldset, class: "form-group") do
         content_tag(:div, class: "form-check") do
-          add_css_class!(options, "form-check-input")
-          concat super(method, options, checked_value, unchecked_value)
 
-          add_css_class!(bootstrap_label_options, "form-check-label")
+          concat super(method, options, checked_value, unchecked_value)
           concat draw_label(bootstrap_label_options, method)
+          concat errors if errors.present?
         end
       end
     end
