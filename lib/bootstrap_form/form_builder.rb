@@ -85,19 +85,9 @@ module BootstrapForm
     #
     def radio_buttons(method, choices, options = {})
       bootstrap_options = (options.delete(:bootstrap) || {})
-      add_css_class!(options, "form-check-input")
 
-      draw_form_group_fieldset(bootstrap_options, method, options) do
-
-        form_check_css_class = "form-check"
-        form_check_css_class << " form-check-inline" if bootstrap_options[:inline]
-
-        choices.map do |input_value, label_text|
-          content_tag(:div, class: form_check_css_class) do
-            concat radio_button(method, input_value, options)
-            concat label(method, label_text, value: input_value, class: "form-check-label")
-          end
-        end.join.html_safe
+      draw_choices(bootstrap_options, method, choices, options) do |m, v, opts|
+        radio_button(m, v, opts)
       end
     end
 
@@ -109,25 +99,11 @@ module BootstrapForm
     def check_boxes(method, choices, options = {})
       bootstrap_options = (options.delete(:bootstrap) || {})
 
-      add_css_class!(options, "form-check-input")
-      options[:multiple]       = true
-      options[:include_hidden] = false
-
-      draw_form_group_fieldset(bootstrap_options, method, options) do
-
-        form_check_css_class = "form-check"
-        form_check_css_class << " form-check-inline" if bootstrap_options[:inline]
-
-        choices.map do |input_value, label_text|
-          content_tag(:div, class: form_check_css_class) do
-
-            checkbox = ActionView::Helpers::FormBuilder.instance_method(:check_box).bind(self)
-              .call(method, options, input_value)
-
-            concat checkbox
-            concat label(method, label_text, value: input_value, class: "form-check-label")
-          end
-        end.join.html_safe
+      draw_choices(bootstrap_options, method, choices, options) do |m, v, opts|
+        opts[:multiple]       = true
+        opts[:include_hidden] = false
+        ActionView::Helpers::FormBuilder.instance_method(:check_box).bind(self)
+          .call(m, opts, v)
       end
     end
 
@@ -220,7 +196,7 @@ module BootstrapForm
     def draw_form_group_fieldset(bootstrap_options, method, options, &block)
       label = content_tag(:legend, class: "col-form-label") do
         ActionView::Helpers::Tags::Label::LabelBuilder
-        .new(@template, @object_name.to_s, method, @object, nil).translation
+          .new(@template, @object_name.to_s, method, @object, nil).translation
       end
 
       content_tag(:fieldset, class: "form-group") do
@@ -313,6 +289,24 @@ module BootstrapForm
     def draw_help(text)
       return if text.blank?
       content_tag(:small, text, class: "form-text text-muted")
+    end
+
+    # Rendering of choices for checkboxes and radio buttons
+    def draw_choices(bootstrap_options, method, choices, options = {}, &input)
+      add_css_class!(options, "form-check-input")
+
+      draw_form_group_fieldset(bootstrap_options, method, options) do
+
+        form_check_css_class = "form-check"
+        form_check_css_class << " form-check-inline" if bootstrap_options[:inline]
+
+        choices.map do |input_value, label_text|
+          content_tag(:div, class: form_check_css_class) do
+            concat input.call(method, input_value, options)
+            concat label(method, label_text, value: input_value, class: "form-check-label")
+          end
+        end.join.html_safe
+      end
     end
 
     def add_css_class!(options, string)
