@@ -1,43 +1,35 @@
 <h3>Simple Form</h3>
 
-<%= form_with_source do %>
-  <%= bootstrap_form_with model: @user, url: "/" do |form| %>
-    <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
-    <%= form.password_field :password, placeholder: "Password" %>
-    <%= form.select :select_value, ["option A", "option B"] %>
-    <%= form.plaintext :test %>
-    <%= form.check_box :terms, bootstrap: {label: {text: "Agree to Terms"}} %>
-    <%= form.submit %>
-  <% end %>
+<%= bootstrap_form_with model: @user, url: "/" do |form| %>
+  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
+  <%= form.password_field :password, placeholder: "Password" %>
+  <%= form.select :select_value, ["option A", "option B"] %>
+  <%= form.plaintext :test %>
+  <%= form.check_box :terms, bootstrap: {label: {text: "Agree to Terms"}} %>
+  <%= form.submit %>
 <% end %>
 
 <h3>Checkboxes and Radio buttons</h3>
 
-<%= form_with_source do %>
-  <% @user.test = "c" %>
-  <%= bootstrap_form_with model: @user, url: "/" do |form| %>
-    <%= form.radio_buttons :test, [["a", "Label A"], ["b", "Label B"], "c", "d"] %>
-    <%= form.check_boxes :test, [["e", "Label E"], ["f", "Label F"], "g", "h"] %>
-    <%= form.radio_buttons :test, ["u", "v", "w"], bootstrap: {inline: true, label: {text: "Custom Label"}} %>
-    <%= form.check_boxes :test, ["x", "y", "z"], bootstrap: {inline: true, label: {hide: true}} %>
-  <% end %>
+<% @user.test = "c" %>
+<%= bootstrap_form_with model: @user, url: "/" do |form| %>
+  <%= form.radio_buttons :test, [["a", "Label A"], ["b", "Label B"], "c", "d"] %>
+  <%= form.check_boxes :test, [["e", "Label E"], ["f", "Label F"], "g", "h"] %>
+  <%= form.radio_buttons :test, ["u", "v", "w"], bootstrap: {inline: true, label: {text: "Custom Label"}} %>
+  <%= form.check_boxes :test, ["x", "y", "z"], bootstrap: {inline: true, label: {hide: true}} %>
 <% end %>
 
 <h3>Input Group</h3>
 
-<%= form_with_source do %>
-  <%= bootstrap_form_with model: @user, url: "/" do |form| %>
-    <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {control: {prepend: "Prepend", append: "Append"}} %>
-  <% end %>
+<%= bootstrap_form_with model: @user, url: "/" do |form| %>
+  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {control: {prepend: "Prepend", append: "Append"}} %>
 <% end %>
 
 <h3>Form With Errors</h3>
 
-<%= form_with_source do %>
-  <%= bootstrap_form_with model: @user_with_error, url: "/" do |form| %>
-    <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
-    <%= form.check_box :terms %>
-    <%= form.radio_buttons :test, ["a", "b", "c"] %>
-    <%= form.submit %>
-  <% end %>
+<%= bootstrap_form_with model: @user_with_error, url: "/" do |form| %>
+  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
+  <%= form.check_box :terms %>
+  <%= form.radio_buttons :test, ["a", "b", "c"] %>
+  <%= form.submit %>
 <% end %>
