@@ -183,8 +183,7 @@ module BootstrapForm
       label   = draw_label(bootstrap_label_options, method)
       errors  = draw_errors(method)
 
-      control = draw_control(bootstrap_control_options, method, options) do
-        add_css_class!(options, "is-invalid") if errors.present?
+      control = draw_control(bootstrap_control_options, errors, method, options) do
         yield
       end
 
@@ -193,7 +192,7 @@ module BootstrapForm
       content_tag(:div, class: "form-group") do
         concat label
         concat control
-        concat errors if errors.present?
+        # concat errors if errors.present?
         concat help_text
       end
     end
@@ -238,13 +237,14 @@ module BootstrapForm
     #
     #   text_field(:value, bootstrap: {control: {class: "custom"}})
     #
-    def draw_control(bootstrap_control_options, method, options, &block)
+    def draw_control(bootstrap_control_options, errors, method, options, &block)
       add_css_class!(options, "form-control")
+      add_css_class!(options, "is-invalid") if errors.present?
 
       # TODO: is this even needed? class option comes directly from field
       add_css_class!(options, bootstrap_control_options[:class])
 
-      draw_input_group(bootstrap_control_options) do
+      draw_input_group(bootstrap_control_options, errors) do
         yield
       end
     end
@@ -254,11 +254,15 @@ module BootstrapForm
     #
     #   text_field(:value, bootstrap: {control: {prepend: "$.$$"}})
     #
-    def draw_input_group(bootstrap_control_options, &block)
+    def draw_input_group(bootstrap_control_options, errors, &block)
       prepend = bootstrap_control_options[:prepend]
       append  = bootstrap_control_options[:append]
 
-      return yield if prepend.blank? && append.blank?
+      if prepend.blank? && append.blank?
+        out = capture(&block)
+        out << errors if errors.present?
+        return out
+      end
 
       if prepend.present?
         prepend_html = content_tag(:div, class: "input-group-prepend") do
@@ -280,6 +284,7 @@ module BootstrapForm
         concat prepend_html if prepend_html.present?
         concat capture(&block)
         concat append_html if append_html.present?
+        concat errors if errors.present?
       end
     end
 

@@ -62,4 +62,24 @@ class FieldsWithErrorsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_text_field_with_input_group_error
+    actual = @builder.text_field(:test, bootstrap: {control: {prepend: "A", append: "Z"}})
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_test">Test</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">A</span>
+          </div>
+          <input class="form-control is-invalid" id="user_test" name="user[test]" type="text"/>
+          <div class="input-group-append">
+            <span class="input-group-text">Z</span>
+          </div>
+          <div class="invalid-feedback">invalid</div>
+        </div>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
 end
