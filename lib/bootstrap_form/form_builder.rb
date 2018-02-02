@@ -81,12 +81,14 @@ module BootstrapForm
       bootstrap_options = (options.delete(:bootstrap) || {})
       add_css_class!(options, "form-check-input")
 
-      choices.map do |input_value, label_text|
-        content_tag(:div, class: "form-check") do
-          concat radio_button(method, input_value, options)
-          concat label(method, label_text, value: input_value, class: "form-check-label")
-        end
-      end.join.html_safe
+      draw_form_group_fieldset(bootstrap_options, method, options) do
+        choices.map do |input_value, label_text|
+          content_tag(:div, class: "form-check") do
+            concat radio_button(method, input_value, options)
+            concat label(method, label_text, value: input_value, class: "form-check-label")
+          end
+        end.join.html_safe
+      end
     end
 
     # TODO
@@ -98,16 +100,18 @@ module BootstrapForm
       options[:multiple]       = true
       options[:include_hidden] = false
 
-      choices.map do |input_value, label_text|
-        content_tag(:div, class: "form-check") do
+      draw_form_group_fieldset(bootstrap_options, method, options) do
+        choices.map do |input_value, label_text|
+          content_tag(:div, class: "form-check") do
 
-          checkbox = ActionView::Helpers::FormBuilder.instance_method(:check_box).bind(self)
-            .call(method, options, input_value)
+            checkbox = ActionView::Helpers::FormBuilder.instance_method(:check_box).bind(self)
+              .call(method, options, input_value)
 
-          concat checkbox
-          concat label(method, label_text, value: input_value, class: "form-check-label")
-        end
-      end.join.html_safe
+            concat checkbox
+            concat label(method, label_text, value: input_value, class: "form-check-label")
+          end
+        end.join.html_safe
+      end
     end
 
     # Bootstrap wrapper for readonly text field that is shown as plain text.
@@ -192,6 +196,19 @@ module BootstrapForm
         concat control
         concat errors_text if errors_text.present?
         concat help_text
+      end
+    end
+
+    # Wrapper for collections of radio buttons and checkboxes
+    def draw_form_group_fieldset(bootstrap_options, method, options, &block)
+      label = content_tag(:legend, class: "col-form-label") do
+        ActionView::Helpers::Tags::Label::LabelBuilder
+        .new(@template, @object_name.to_s, method, @object, nil).translation
+      end
+
+      content_tag(:fieldset, class: "form-group") do
+        concat label
+        concat yield
       end
     end
 
