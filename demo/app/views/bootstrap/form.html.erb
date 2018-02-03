@@ -1,3 +1,13 @@
+<h3>Horizontal Form</h3>
+
+<%= bootstrap_form_with model: @user, url: "/", bootstrap: {layout: :horizontal} do |form| %>
+  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
+  <%= form.email_field :email, bootstrap: {prepend: "Prepend", append: "Append"} %>
+  <%= form.check_box :terms %>
+  <%= form.radio_buttons :test, ["1", "2", "3"] %>
+  <%= form.submit %>
+<% end %>
+
 <h3>Simple Form</h3>
 
 <%= bootstrap_form_with model: @user, url: "/" do |form| %>
@@ -23,21 +33,21 @@
 <h3>Input Group</h3>
 
 <%= bootstrap_form_with model: @user, url: "/" do |form| %>
-  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {control: {prepend: "Prepend", append: "Append"}} %>
+  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {prepend: "Prepend", append: "Append"} %>
   <% prepend_button = capture do %>
     <button class="btn btn-success">Go</button>
   <% end %>
   <% append_button = capture do %>
     <button class="btn btn-danger">Stop</button>
   <% end %>
-  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {hide: true}, control: {prepend: {html: prepend_button}, append: {html: append_button}}} %>
+  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {hide: true}, prepend: {html: prepend_button}, append: {html: append_button}} %>
 <% end %>
 
 <h3>Form With Errors</h3>
 
 <%= bootstrap_form_with model: @user_with_error, url: "/" do |form| %>
   <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
-  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {help: "Help me!", control: {prepend: "Prepend", append: "Append"}} %>
+  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {help: "Help me!", prepend: "Prepend", append: "Append"} %>
   <%= form.check_box :terms %>
   <%= form.radio_buttons :test, ["a", "b", "c"] %>
   <%= form.submit %>

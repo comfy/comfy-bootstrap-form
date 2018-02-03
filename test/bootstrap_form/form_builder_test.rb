@@ -6,9 +6,13 @@ class FormBuilderTest < ActionView::TestCase
     builder = BootstrapForm::FormBuilder.new(nil, nil, self, {})
 
     assert_equal "default",       builder.bootstrap.layout
-    assert_equal "col-sm-4",      builder.bootstrap.label_col_class
-    assert_equal "col-sm-8",      builder.bootstrap.control_col_class
-    assert_equal "text-sm-left",  builder.bootstrap.label_align_class
+    assert_equal "col-sm-2",      builder.bootstrap.label_col_class
+    assert_equal "col-sm-10",      builder.bootstrap.control_col_class
+    assert_equal "text-sm-right",  builder.bootstrap.label_align_class
+
+    refute builder.bootstrap.horizontal?
+
+    assert_equal "offset-sm-2", builder.bootstrap.offset_col_class
   end
 
   def test_initialization_with_options
@@ -26,6 +30,10 @@ class FormBuilderTest < ActionView::TestCase
     assert_equal "col-md-2",      builder.bootstrap.label_col_class
     assert_equal "col-md-10",     builder.bootstrap.control_col_class
     assert_equal "text-md-right", builder.bootstrap.label_align_class
+
+    assert builder.bootstrap.horizontal?
+
+    assert_equal "offset-md-2", builder.bootstrap.offset_col_class
   end
 
 end

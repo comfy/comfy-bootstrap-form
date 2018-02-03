@@ -9,7 +9,7 @@ class InputGroupTest < ActionView::TestCase
 
   def test_input_group
     actual = @builder.text_field(:test, bootstrap: {
-      control: {prepend: "prepend", append: "append"}
+      prepend: "prepend", append: "append"
     })
     expected = <<-HTML
       <div class="form-group">
@@ -30,10 +30,8 @@ class InputGroupTest < ActionView::TestCase
 
   def test_input_group_with_html
     actual = @builder.text_field(:test, bootstrap: {
-      control: {
-        prepend: {html: "<button>Go</button>".html_safe},
-        append: {html: "<button>Stop</button>".html_safe}
-      }
+      prepend: {html: "<button>Go</button>".html_safe},
+      append: {html: "<button>Stop</button>".html_safe}
     })
     expected = <<-HTML
       <div class="form-group">

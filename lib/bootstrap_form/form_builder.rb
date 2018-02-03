@@ -20,9 +20,17 @@ module BootstrapForm
 
       def initialize(options = {})
         @layout             = options[:layout]            || "default"
-        @label_col_class    = options[:label_col_class]   || "col-sm-4"
-        @control_col_class  = options[:control_col_class] || "col-sm-8"
-        @label_align_class  = options[:label_align_class] || "text-sm-left"
+        @label_col_class    = options[:label_col_class]   || "col-sm-2"
+        @control_col_class  = options[:control_col_class] || "col-sm-10"
+        @label_align_class  = options[:label_align_class] || "text-sm-right"
+      end
+
+      def horizontal?
+        @layout.to_s == "horizontal"
+      end
+
+      def offset_col_class
+        label_col_class.sub(/\Acol-(\w+)-(\d+)\z/, 'offset-\1-\2')
       end
 
     end
@@ -63,22 +71,29 @@ module BootstrapForm
     #   checkbox :agree, bootstrap: {label: {text: "Do you agree?"}}
     #
     def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
-      bootstrap_options         = (options.delete(:bootstrap)   || {})
-      bootstrap_label_options   = (bootstrap_options[:label]    || {})
+      bootstrap_options       = options.delete(:bootstrap) || {}
+      bootstrap_label_options = bootstrap_options[:label] || {}
 
       errors = draw_errors(method)
 
       add_css_class!(options, "form-check-input")
       add_css_class!(options, "is-invalid") if errors.present?
 
-      add_css_class!(bootstrap_label_options, "form-check-label")
+      label_text = nil
+      if (custom_text = bootstrap_label_options[:text]).present?
+        label_text = custom_text
+      end
 
-      content_tag(:fieldset, class: "form-group") do
-        content_tag(:div, class: "form-check") do
+      fieldset_css_class  = "form-group"
+      fieldset_css_class  << " row" if bootstrap.horizontal?
 
-          concat super(method, options, checked_value, unchecked_value)
-          concat draw_label(bootstrap_label_options, method)
-          concat errors if errors.present?
+      content_tag(:fieldset, class: fieldset_css_class) do
+        draw_control_column(offset: true) do
+          content_tag(:div, class: "form-check") do
+            concat super(method, options, checked_value, unchecked_value)
+            concat label(method, label_text, class: "form-check-label")
+            concat errors if errors.present?
+          end
         end
       end
     end
@@ -177,23 +192,19 @@ module BootstrapForm
 
     # form group wrapper for input fields
     def draw_form_group(bootstrap_options, method, options, &block)
-      bootstrap_label_options   = (bootstrap_options[:label]    || {})
-      bootstrap_control_options = (bootstrap_options[:control]  || {})
+      label     = draw_label(bootstrap_options, method)
+      errors    = draw_errors(method)
 
-      label   = draw_label(bootstrap_label_options, method)
-      errors  = draw_errors(method)
-
-      control = draw_control(bootstrap_control_options, errors, method, options) do
+      control = draw_control(bootstrap_options, errors, method, options) do
         yield
       end
 
-      help_text = draw_help(bootstrap_options[:help])
+      form_group_class = "form-group"
+      form_group_class << " row" if bootstrap.horizontal?
 
-      content_tag(:div, class: "form-group") do
+      content_tag(:div, class: form_group_class) do
         concat label
         concat control
-        # concat errors if errors.present?
-        concat help_text
       end
     end
 
@@ -215,7 +226,9 @@ module BootstrapForm
     #
     #   text_field(:value, bootstrap: {label: {text: "Custom", class: "custom"}})
     #
-    def draw_label(bootstrap_label_options, method)
+    def draw_label(bootstrap_options, method)
+      bootstrap_label_options = bootstrap_options[:label] || {}
+
       text    = nil
       options = {}
 
@@ -225,6 +238,12 @@ module BootstrapForm
 
       add_css_class!(options, bootstrap_label_options[:class])
       add_css_class!(options, "sr-only") if bootstrap_label_options[:hide]
+
+      if bootstrap.horizontal?
+        add_css_class!(options, "col-form-label")
+        add_css_class!(options, bootstrap.label_col_class)
+        add_css_class!(options, bootstrap.label_align_class)
+      end
 
       label(method, text, options)
     end
@@ -237,14 +256,29 @@ module BootstrapForm
     #
     #   text_field(:value, bootstrap: {control: {class: "custom"}})
     #
-    def draw_control(bootstrap_control_options, errors, method, options, &block)
+    def draw_control(bootstrap_options, errors, method, options, &block)
+      bootstrap_control_options = (bootstrap_options[:control]  || {})
+
       add_css_class!(options, "form-control")
       add_css_class!(options, "is-invalid") if errors.present?
 
       # TODO: is this even needed? class option comes directly from field
       add_css_class!(options, bootstrap_control_options[:class])
 
-      draw_input_group(bootstrap_control_options, errors) do
+      draw_control_column(offset: false) do
+        draw_input_group(bootstrap_options, errors) do
+          yield
+        end
+      end
+    end
+
+    # Wrapping in control in column wrapper
+    #
+    def draw_control_column(offset:, &block)
+      return yield unless bootstrap.horizontal?
+      css_class = "#{bootstrap.control_col_class}"
+      css_class << " #{bootstrap.offset_col_class} #{offset}" if offset
+      content_tag(:div, class: css_class) do
         yield
       end
     end
@@ -252,45 +286,42 @@ module BootstrapForm
     # Wraps input field in input group container that allows prepending and
     # appending text or html. Example:
     #
-    #   text_field(:value, bootstrap: {control: {prepend: "$.$$"}})
-    #   text_field(:value, bootstrap: {control: {prepend: {html: "<button>Go</button>"}}})
+    #   text_field(:value, bootstrap: {prepend: "$.$$"}})
+    #   text_field(:value, bootstrap: {append: {html: "<button>Go</button>"}}})
     #
-    def draw_input_group(bootstrap_control_options, errors, &block)
-      prepend = bootstrap_control_options[:prepend]
-      append  = bootstrap_control_options[:append]
+    def draw_input_group(bootstrap_options, errors, &block)
+      prepend_html  = draw_input_group_content(bootstrap_options, :prepend)
+      append_html   = draw_input_group_content(bootstrap_options, :append)
+
+      help_text = draw_help(bootstrap_options[:help])
 
       # Not prepending or appending anything. Bail.
-      if prepend.blank? && append.blank?
-        out = capture(&block)
-        out << errors if errors.present?
-        return out
-      end
-
-      if prepend.present?
-        prepend_html = content_tag(:div, class: "input-group-prepend") do
-          if prepend.is_a?(Hash) && prepend[:html].present?
-            prepend[:html]
-          else
-            content_tag(:span, prepend, class: "input-group-text")
-          end
-        end
-      end
-
-      if append.present?
-        append_html = content_tag(:div, class: "input-group-append") do
-          if append.is_a?(Hash) && append[:html].present?
-            append[:html]
-          else
-            content_tag(:span, append, class: "input-group-text")
-          end
-        end
+      if prepend_html.blank? && append_html.blank?
+        content = capture(&block)
+        content << errors     if errors.present?
+        content << help_text  if help_text.present?
+        return content
       end
 
       content_tag(:div, class: "input-group") do
         concat prepend_html if prepend_html.present?
         concat capture(&block)
-        concat append_html if append_html.present?
-        concat errors if errors.present?
+        concat append_html  if append_html.present?
+        concat errors       if errors.present?
+        concat help_text    if help_text.present?
+      end
+    end
+
+    def draw_input_group_content(bootstrap_options, type)
+      value = bootstrap_options[type]
+      return unless value.present?
+
+      content_tag(:div, class: "input-group-#{type}") do
+        if value.is_a?(Hash) && value[:html].present?
+          value[:html]
+        else
+          content_tag(:span, value, class: "input-group-text")
+        end
       end
     end
 
@@ -339,14 +370,30 @@ module BootstrapForm
             .new(@template, @object_name.to_s, method, @object, nil).translation
         end
 
-        label = content_tag(:legend, class: "col-form-label") do
+        add_css_class!(bootstrap_label_options, "col-form-label pt-0")
+
+        if bootstrap.horizontal?
+          add_css_class!(bootstrap_label_options, bootstrap.label_col_class)
+          add_css_class!(bootstrap_label_options, bootstrap.label_align_class)
+        end
+
+        label = content_tag(:legend, bootstrap_label_options) do
           label_text
         end
       end
 
       content_tag(:fieldset, class: "form-group") do
-        concat label
-        concat yield
+        content = ""
+        content << label if label.present?
+        content << draw_control_column(offset: false) do
+          yield
+        end
+
+        if bootstrap.horizontal?
+          content_tag(:div, content.html_safe, class: "row")
+        else
+          content.html_safe
+        end
       end
     end
 
