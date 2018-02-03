@@ -52,11 +52,11 @@ class FieldsTest < ActionView::TestCase
   end
 
   def test_text_field_control_css_class
-    actual = @builder.text_field(:email, bootstrap: {control: {class: "custom_class"}})
+    actual = @builder.text_field(:email, class: "custom-class")
     expected = <<-HTML
       <div class="form-group">
         <label for="user_email">Email</label>
-        <input class="form-control custom_class" type="text" name="user[email]" id="user_email" />
+        <input class="custom-class form-control" type="text" name="user[email]" id="user_email" />
       </div>
     HTML
     assert_xml_equal expected, actual
@@ -89,11 +89,11 @@ class FieldsTest < ActionView::TestCase
   end
 
   def test_select_control_css_class
-    actual = @builder.select(:test, %w[a b], {}, bootstrap: {control: {class: "custom"}})
+    actual = @builder.select(:test, %w[a b], {}, class: "custom")
     expected = <<-HTML
       <div class="form-group">
         <label for="user_test">Test</label>
-        <select class="form-control custom" id="user_test" name="user[test]">
+        <select class="custom form-control" id="user_test" name="user[test]">
           <option value="a">a</option>
           <option value="b">b</option>
         </select>

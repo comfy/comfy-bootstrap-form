@@ -21,6 +21,20 @@ class RadiosAndCheckboxessTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_checkbox_with_label
+    actual = @builder.check_box(:test, bootstrap: {label: {text: "Custom"}})
+    expected = <<-HTML
+      <fieldset class="form-group">
+        <div class="form-check">
+          <input name="user[test]" type="hidden" value="0"/>
+          <input class="form-check-input" id="user_test" name="user[test]" type="checkbox" value="1"/>
+          <label class="form-check-label" for="user_test">Custom</label>
+        </div>
+      </fieldset>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
   def test_check_boxes
     actual = @builder.check_boxes(:test, ["a", "b"])
     expected = <<-HTML

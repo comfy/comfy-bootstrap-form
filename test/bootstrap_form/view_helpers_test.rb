@@ -30,15 +30,25 @@ class ViewHelpersTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_bootstrap_form_as_horizontal
+    actual = bootstrap_form_with(url: "/test", bootstrap: {layout: :horizontal}) do |form|
+      form.text_field :value
+    end
+    expected = <<-HTML
+      <form accept-charset="UTF-8" action="/test" data-remote="true" method="post">
+        <input name="utf8" type="hidden" value="&#x2713;"/>
+        <div class="form-group row">
+          <label class="col-form-label col-sm-2 text-sm-right" for="value">Value</label>
+          <div class="col-sm-10">
+            <input class="form-control" id="value" name="value" type="text"/>
+          </div>
+        </div>
+      </form>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
   def test_bootstrap_form_with_inline
-    skip "todo"
-  end
-
-  def test_bootstrap_form_with_horizontal
-    skip "todo"
-  end
-
-  def test_bootstrap_fields
     skip "todo"
   end
 

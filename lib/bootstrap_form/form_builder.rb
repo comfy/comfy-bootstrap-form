@@ -256,24 +256,16 @@ module BootstrapForm
       label(method, text, options)
     end
 
-    # Renders control for a given field. Takes following bootstrap options:
-    #
-    # :class - custom css class
-    #
-    # Example how those options are passed in:
-    #
-    #   text_field(:value, bootstrap: {control: {class: "custom"}})
-    #
+    # Renders control for a given field
     def draw_control(bootstrap_options, errors, method, options, &block)
-      bootstrap_control_options = (bootstrap_options[:control]  || {})
+      bootstrap_label_options  = bootstrap_options[:label] || {}
 
       add_css_class!(options, "form-control")
       add_css_class!(options, "is-invalid") if errors.present?
 
-      # TODO: is this even needed? class option comes directly from field
-      add_css_class!(options, bootstrap_control_options[:class])
+      offset = !!bootstrap_label_options[:hide]
 
-      draw_control_column(offset: false) do
+      draw_control_column(offset: offset) do
         draw_input_group(bootstrap_options, errors) do
           yield
         end
@@ -285,7 +277,7 @@ module BootstrapForm
     def draw_control_column(offset:, &block)
       return yield unless bootstrap.horizontal?
       css_class = "#{bootstrap.control_col_class}"
-      css_class << " #{bootstrap.offset_col_class} #{offset}" if offset
+      css_class << " #{bootstrap.offset_col_class}" if offset
       content_tag(:div, class: css_class) do
         yield
       end
@@ -390,7 +382,7 @@ module BootstrapForm
       content_tag(:fieldset, class: "form-group") do
         content = ""
         content << label if label.present?
-        content << draw_control_column(offset: false) do
+        content << draw_control_column(offset: bootstrap_label_options[:hide]) do
           yield
         end
 
