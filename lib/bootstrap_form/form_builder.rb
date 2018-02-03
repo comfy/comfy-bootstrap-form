@@ -162,9 +162,17 @@ module BootstrapForm
     def submit(value = nil, options = {}, &block)
       value, options = nil, value if value.is_a?(Hash)
       add_css_class!(options, "btn")
-      out = super(value, options)
-      out += capture(&block) if block_given?
-      out
+
+      form_group_class = "form-group"
+      form_group_class << " row" if bootstrap.horizontal?
+
+      content_tag(:div, class: form_group_class) do
+        draw_control_column(offset: true) do
+          out = super(value, options)
+          out << capture(&block) if block_given?
+          out
+        end
+      end
     end
 
     # Same as submit button, only with btn-primary class added
@@ -363,12 +371,9 @@ module BootstrapForm
       bootstrap_label_options = bootstrap_options[:label] || {}
 
       unless bootstrap_label_options[:hide]
-        label_text = if bootstrap_label_options[:text].present?
-          bootstrap_label_options[:text]
-        else
-          ActionView::Helpers::Tags::Label::LabelBuilder
-            .new(@template, @object_name.to_s, method, @object, nil).translation
-        end
+        label_text = bootstrap_label_options.delete(:text)
+        label_text ||= ActionView::Helpers::Tags::Label::LabelBuilder
+          .new(@template, @object_name.to_s, method, @object, nil).translation
 
         add_css_class!(bootstrap_label_options, "col-form-label pt-0")
 
