@@ -14,6 +14,15 @@
         border: .2rem solid #f7f7f9;
         margin-bottom: 2em;
       }
+
+      /*
+        Due to how Bootstrap renders inline checkboxes with errors we have to add this
+        See: https://github.com/twbs/bootstrap/issues/25540
+      */
+      .invalid-feedback {
+        display: block;
+      }
+
     </style>
 
     <title>Hello, world!</title>

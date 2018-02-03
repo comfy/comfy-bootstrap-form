@@ -8,7 +8,18 @@
   <%= form.text_field :test, bootstrap: {label: {hide: true}} %>
   <%= form.check_boxes :test, ["11", "22", "33"], bootstrap: {help: "help text", inline: true, label: {hide: true}} %>
   <%= form.primary "Smash That Button" do %>
-    <a href="/" class="btn btn-link ml-1">Cancel</a>
+    <a href="/" class="btn btn-link">Unsubcribe</a>
+  <% end %>
+<% end %>
+
+<h3>Inline Form</h3>
+
+<%= bootstrap_form_with model: @user, url: "/", bootstrap: {layout: :inline} do |form| %>
+  <%= form.email_field :email, placeholder: "Enter Email" %>
+  <%= form.password_field :password, placeholder: "Password", bootstrap: {label: {hide: true}, prepend: "???", append: "???"} %>
+  <%= form.check_box :terms %>
+  <%= form.primary "Submit" do %>
+    <a href="/" class="btn btn-link">Cancel</a>
   <% end %>
 <% end %>
 
@@ -16,10 +27,11 @@
 
 <%= bootstrap_form_with model: @user, url: "/" do |form| %>
   <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
-  <%= form.password_field :password, placeholder: "Password" %>
+  <%= form.password_field :password, placeholder: "Password"%>
   <%= form.select :select_value, ["option A", "option B"] %>
-  <%= form.text_area :test %>
-  <%= form.plaintext :test %>
+  <%= form.text_area :test, bootstrap: {label: {text: "Text Area"}} %>
+  <%= form.file_field :test, bootstrap: {label: {text: "File Field"}} %>
+  <%= form.plaintext :test, bootstrap: {label: {text: "Plain Text"}} %>
   <%= form.check_box :terms, bootstrap: {label: {text: "Agree to Terms"}} %>
   <%= form.submit %>
 <% end %>

@@ -36,4 +36,11 @@ class FormBuilderTest < ActionView::TestCase
     assert_equal "offset-md-2", builder.bootstrap.offset_col_class
   end
 
+  def test_initialization_for_inline
+    builder = BootstrapForm::FormBuilder.new(nil, nil, self, {
+      bootstrap: {layout: :inline}
+    })
+    assert builder.bootstrap.inline?
+  end
+
 end

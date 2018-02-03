@@ -16,20 +16,10 @@ class ActionView::TestCase
 
   # Expected and actual are wrapped in a root tag to ensure proper XML structure
   def assert_xml_equal(expected, actual)
-    expected_xml        = Nokogiri::XML("<test-xml>\n#{expected}\n</test-xml>", &:noblanks)
-    actual_xml          = Nokogiri::XML("<test-xml>\n#{actual}\n</test-xml>", &:noblanks)
+    expected_xml = Nokogiri::XML("<test-xml>\n#{expected}\n</test-xml>", &:noblanks)
+    actual_xml   = Nokogiri::XML("<test-xml>\n#{actual}\n</test-xml>", &:noblanks)
 
-    equivalent = EquivalentXml.equivalent?(expected_xml, actual_xml) do |a, b, result|
-      # Bug with gem. Can't exclude dashed attributes.
-      # See: https://github.com/mbklein/equivalent-xml/pull/36
-      if result === false && b.is_a?(Nokogiri::XML::Element)
-        if b.delete('data-disable-with')
-          result = EquivalentXml.equivalent?(a, b)
-        end
-      end
-      result
-    end
-
+    equivalent = EquivalentXml.equivalent?(expected_xml, actual_xml)
     assert equivalent, lambda {
       # using a lambda because diffing is expensive
       Diffy::Diff.new(

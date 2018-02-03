@@ -16,17 +16,23 @@ module BootstrapForm
       attr_accessor :layout,
                     :label_col_class,
                     :control_col_class,
-                    :label_align_class
+                    :label_align_class,
+                    :inline_margin_class
 
       def initialize(options = {})
-        @layout             = options[:layout]            || "default"
-        @label_col_class    = options[:label_col_class]   || "col-sm-2"
-        @control_col_class  = options[:control_col_class] || "col-sm-10"
-        @label_align_class  = options[:label_align_class] || "text-sm-right"
+        @layout               = options[:layout]              || "default"
+        @label_col_class      = options[:label_col_class]     || "col-sm-2"
+        @control_col_class    = options[:control_col_class]   || "col-sm-10"
+        @label_align_class    = options[:label_align_class]   || "text-sm-right"
+        @inline_margin_class  = options[:inline_margin_class] || "mr-sm-2"
       end
 
       def horizontal?
         @layout.to_s == "horizontal"
+      end
+
+      def inline?
+        @layout.to_s == "inline"
       end
 
       def offset_col_class
@@ -85,8 +91,9 @@ module BootstrapForm
         label_text = custom_text
       end
 
-      fieldset_css_class  = "form-group"
-      fieldset_css_class  << " row" if bootstrap.horizontal?
+      fieldset_css_class = "form-group"
+      fieldset_css_class << " row" if bootstrap.horizontal?
+      fieldset_css_class << " #{bootstrap.inline_margin_class}" if bootstrap.inline?
 
       content_tag(:fieldset, class: fieldset_css_class) do
         draw_control_column(offset: true) do
@@ -210,7 +217,8 @@ module BootstrapForm
       end
 
       form_group_class = "form-group"
-      form_group_class << " row" if bootstrap.horizontal?
+      form_group_class << " row"      if bootstrap.horizontal?
+      form_group_class << " mr-sm-2"  if bootstrap.inline?
 
       content_tag(:div, class: form_group_class) do
         concat label
@@ -248,6 +256,7 @@ module BootstrapForm
 
       add_css_class!(options, bootstrap_label_options[:class])
       add_css_class!(options, "sr-only") if bootstrap_label_options[:hide]
+      add_css_class!(options, bootstrap.inline_margin_class) if bootstrap.inline?
 
       if bootstrap.horizontal?
         add_css_class!(options, "col-form-label")

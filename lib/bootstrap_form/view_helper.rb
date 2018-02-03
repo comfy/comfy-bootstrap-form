@@ -4,7 +4,16 @@ module BootstrapForm
     # Wrapper for `form_with`. Passing in Bootstrap form builder.
     def bootstrap_form_with(**options, &block)
       supress_field_errors do
-        form_with(**options.merge(builder: BootstrapForm::FormBuilder), &block)
+        css_classes       = options.delete(:class) || ""
+        bootstrap_options = options[:bootstrap] || {}
+
+        if bootstrap_options[:layout].to_s == "inline"
+          css_classes << " form-inline"
+        end
+
+        form_options = options.merge(builder: BootstrapForm::FormBuilder)
+        form_options.merge!(class: css_classes) unless css_classes.blank?
+        form_with(**form_options, &block)
       end
     end
 
