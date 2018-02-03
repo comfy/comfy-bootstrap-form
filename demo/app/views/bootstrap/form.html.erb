@@ -5,6 +5,8 @@
   <%= form.email_field :email, bootstrap: {prepend: "Prepend", append: "Append"} %>
   <%= form.check_box :terms %>
   <%= form.radio_buttons :test, ["1", "2", "3"] %>
+  <%= form.text_field :test, bootstrap: {label: {hide: true}} %>
+  <%= form.check_boxes :test, ["11", "22", "33"], bootstrap: {inline: true, label: {hide: true}} %>
   <%= form.primary "Smash That Button" do %>
     <a href="/" class="btn btn-link ml-1">Cancel</a>
   <% end %>
