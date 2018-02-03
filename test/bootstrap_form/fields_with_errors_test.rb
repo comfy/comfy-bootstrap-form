@@ -47,7 +47,7 @@ class FieldsWithErrorsTest < ActionView::TestCase
     actual = @builder.radio_buttons(:test, ["a", "b"])
     expected = <<-HTML
       <fieldset class="form-group">
-        <legend class="col-form-label">Test</legend>
+        <legend class="col-form-label pt-0">Test</legend>
         <div class="form-check">
           <input class="form-check-input is-invalid" id="user_test_a" name="user[test]" type="radio" value="a"/>
           <label class="form-check-label" for="user_test_a">A</label>
