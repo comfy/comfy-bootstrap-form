@@ -49,7 +49,19 @@ class ViewHelpersTest < ActionView::TestCase
   end
 
   def test_bootstrap_form_with_inline
-    skip "todo"
+    actual = bootstrap_form_with(url: "/test", bootstrap: {layout: :inline}) do |form|
+      form.text_field :value
+      form.submit
+    end
+    expected = <<-HTML
+      <form accept-charset="UTF-8" action="/test" class=" form-inline" data-remote="true" method="post">
+        <input name="utf8" type="hidden" value="&#x2713;"/>
+        <div class="form-group">
+          <input class="btn" data-disable-with="Save " name="commit" type="submit" value="Save "/>
+        </div>
+      </form>
+    HTML
+    assert_xml_equal expected, actual
   end
 
   def test_bootstrap_form_with_supress_field_errors

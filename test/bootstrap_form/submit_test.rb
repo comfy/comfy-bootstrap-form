@@ -10,7 +10,7 @@ class SubmitTest < ActionView::TestCase
   def test_submit
     expected = <<-HTML
       <div class="form-group">
-        <input class="btn" name="commit" type="submit" value="Create User" />
+        <input class="btn" data-disable-with="Create User" name="commit" type="submit" value="Create User" />
       </div>
     HTML
     assert_xml_equal expected, @builder.submit
@@ -19,7 +19,7 @@ class SubmitTest < ActionView::TestCase
   def test_primary
     expected = <<-HTML
       <div class="form-group">
-        <input class="btn-primary btn" name="commit" type="submit" value="Create User" />
+        <input class="btn-primary btn" data-disable-with="Create User" name="commit" type="submit" value="Create User" />
       </div>
     HTML
     assert_xml_equal expected, @builder.primary
@@ -28,7 +28,7 @@ class SubmitTest < ActionView::TestCase
   def test_submit_with_label
     expected = <<-HTML
       <div class="form-group">
-        <input class="btn" name="commit" type="submit" value="Test" />
+        <input class="btn" data-disable-with="Test" name="commit" type="submit" value="Test" />
       </div>
     HTML
     assert_xml_equal expected, @builder.submit("Test")
@@ -37,7 +37,7 @@ class SubmitTest < ActionView::TestCase
   def test_submit_with_css_class
     expected = <<-HTML
       <div class="form-group">
-        <input class="custom btn" name="commit" type="submit" value="Create User" />
+        <input class="custom btn" data-disable-with="Create User" name="commit" type="submit" value="Create User" />
       </div>
     HTML
     assert_xml_equal expected, @builder.submit(class: "custom")
@@ -49,7 +49,7 @@ class SubmitTest < ActionView::TestCase
     end
     expected = <<-HTML
       <div class="form-group">
-        <input class="btn" name="commit" type="submit" value="Create User"/>
+        <input class="btn" data-disable-with="Create User" name="commit" type="submit" value="Create User"/>
         <a href="/" class="btn btn-link">Cancel</a>
       </div>
     HTML
