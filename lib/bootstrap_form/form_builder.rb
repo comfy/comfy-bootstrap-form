@@ -74,7 +74,8 @@ module BootstrapForm
       bootstrap_options       = options.delete(:bootstrap) || {}
       bootstrap_label_options = bootstrap_options[:label] || {}
 
-      errors = draw_errors(method)
+      help_text = draw_help(bootstrap_options[:help])
+      errors    = draw_errors(method)
 
       add_css_class!(options, "form-check-input")
       add_css_class!(options, "is-invalid") if errors.present?
@@ -92,7 +93,8 @@ module BootstrapForm
           content_tag(:div, class: "form-check") do
             concat super(method, options, checked_value, unchecked_value)
             concat label(method, label_text, class: "form-check-label")
-            concat errors if errors.present?
+            concat errors     if errors.present?
+            concat help_text  if help_text.present?
           end
         end
       end
@@ -343,18 +345,28 @@ module BootstrapForm
         form_check_css_class = "form-check"
         form_check_css_class << " form-check-inline" if bootstrap_options[:inline]
 
-        errors = draw_errors(method)
+        errors    = draw_errors(method)
+        help_text = draw_help(bootstrap_options[:help])
+
         add_css_class!(options, "is-invalid") if errors.present?
 
-        choices.each_with_index.map do |(input_value, label_text), index|
+        content = choices.each_with_index.map do |(input_value, label_text), index|
           content_tag(:div, class: form_check_css_class) do
             concat input.call(method, input_value, options)
             concat label(method, label_text, value: input_value, class: "form-check-label")
-            if errors.present? && (choices.count - 1) == index
-              concat errors
+            if ((choices.count - 1) == index) && !bootstrap_options[:inline]
+              concat errors     if errors.present?
+              concat help_text  if help_text.present?
             end
           end
         end.join.html_safe
+
+        if bootstrap_options[:inline]
+          content << errors     if errors.present?
+          content << help_text  if help_text.present?
+        end
+
+        content
       end
     end
 

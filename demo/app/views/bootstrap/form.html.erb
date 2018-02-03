@@ -3,10 +3,10 @@
 <%= bootstrap_form_with model: @user, url: "/", bootstrap: {layout: :horizontal} do |form| %>
   <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
   <%= form.email_field :email, bootstrap: {prepend: "Prepend", append: "Append"} %>
-  <%= form.check_box :terms %>
-  <%= form.radio_buttons :test, ["1", "2", "3"] %>
+  <%= form.check_box :terms, bootstrap: {help: "You better check this"} %>
+  <%= form.radio_buttons :test, ["1", "2", "3"], bootstrap: {help: "help text"} %>
   <%= form.text_field :test, bootstrap: {label: {hide: true}} %>
-  <%= form.check_boxes :test, ["11", "22", "33"], bootstrap: {inline: true, label: {hide: true}} %>
+  <%= form.check_boxes :test, ["11", "22", "33"], bootstrap: {help: "help text", inline: true, label: {hide: true}} %>
   <%= form.primary "Smash That Button" do %>
     <a href="/" class="btn btn-link ml-1">Cancel</a>
   <% end %>
@@ -29,7 +29,7 @@
 <% @user.test = "c" %>
 <%= bootstrap_form_with model: @user, url: "/" do |form| %>
   <%= form.radio_buttons :test, [["a", "Label A"], ["b", "Label B"], "c", "d"] %>
-  <%= form.check_boxes :test, [["e", "Label E"], ["f", "Label F"], "g", "h"] %>
+  <%= form.check_boxes :test, [["e", "Label E"], ["f", "Label F"], "g", "h"], bootstrap: {help: "help text"} %>
   <%= form.radio_buttons :test, ["u", "v", "w"], bootstrap: {inline: true, label: {text: "Custom Label"}} %>
   <%= form.check_boxes :test, ["x", "y", "z"], bootstrap: {inline: true, label: {hide: true}} %>
 <% end %>
@@ -52,7 +52,8 @@
 <%= bootstrap_form_with model: @user_with_error, url: "/", bootstrap: {layout: :horizontal} do |form| %>
   <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
   <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {help: "Help me!", prepend: "Prepend", append: "Append"} %>
-  <%= form.check_box :terms %>
-  <%= form.radio_buttons :test, ["a", "b", "c"] %>
+  <%= form.check_box :terms, bootstrap: {help: "help text"}%>
+  <%= form.radio_buttons :test, ["a", "b", "c"], bootstrap: {help: "help text"} %>
+  <%= form.check_boxes :test, ["x", "y", "z"], bootstrap: {inline: true, help: "help text"} %>
   <%= form.submit %>
 <% end %>
