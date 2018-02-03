@@ -11,6 +11,19 @@ Bootstrap v4-style forms into your Rails application.
 [![Coverage Status](https://img.shields.io/coveralls/comfy/comfy-bootstrap-form.svg?style=flat)](https://coveralls.io/r/comfy/comfy-bootstrap-form?branch=master)
 [![Gitter](https://badges.gitter.im/comfy/comfortable-mexican-sofa.svg)](https://gitter.im/comfy/comfortable-mexican-sofa)
 
+
+**Gotcha**: For inline radio buttons and check boxes you need to add custom css for error
+messages show up (see: https://github.com/twbs/bootstrap/issues/25540):
+
+```css
+.invalid-feeback {
+  display: block
+}
+```
+
+
+VVV REWORK VVV
+
 ## Installation
 
 Add it to your Gemfile and run `bundle install`:

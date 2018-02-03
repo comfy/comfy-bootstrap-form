@@ -43,8 +43,8 @@ class FieldsWithErrorsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
-  def test_radio_buttons_with_error
-    actual = @builder.radio_buttons(:test, ["a", "b"])
+  def test_radio_buttons_with_error_and_help
+    actual = @builder.radio_buttons(:test, ["a", "b"], bootstrap: {help: "help text"})
     expected = <<-HTML
       <fieldset class="form-group">
         <legend class="col-form-label pt-0">Test</legend>
@@ -56,7 +56,28 @@ class FieldsWithErrorsTest < ActionView::TestCase
           <input class="form-check-input is-invalid" id="user_test_b" name="user[test]" type="radio" value="b"/>
           <label class="form-check-label" for="user_test_b">B</label>
           <div class="invalid-feedback">invalid</div>
+          <small class="form-text text-muted">help text</small>
         </div>
+      </fieldset>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_radio_buttons_inline_with_error_and_help
+    actual = @builder.radio_buttons(:test, ["a", "b"], bootstrap: {inline: true, help: "help text"})
+    expected = <<-HTML
+      <fieldset class="form-group">
+        <legend class="col-form-label pt-0">Test</legend>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input is-invalid" id="user_test_a" name="user[test]" type="radio" value="a"/>
+          <label class="form-check-label" for="user_test_a">A</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input is-invalid" id="user_test_b" name="user[test]" type="radio" value="b"/>
+          <label class="form-check-label" for="user_test_b">B</label>
+        </div>
+        <div class="invalid-feedback">invalid</div>
+        <small class="form-text text-muted">help text</small>
       </fieldset>
     HTML
     assert_xml_equal expected, actual
