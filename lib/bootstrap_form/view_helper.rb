@@ -8,14 +8,6 @@ module BootstrapForm
       end
     end
 
-    def horizontal_bootstrap_form_with(**options, &block)
-      # TODO
-    end
-
-    def inline_boostrap_form_with(**options, &block)
-      # TODO
-    end
-
   private
 
     # By default, Rails will wrap form fields with extra html to indicate

@@ -63,7 +63,7 @@ class FieldsWithErrorsTest < ActionView::TestCase
   end
 
   def test_text_field_with_input_group_error
-    actual = @builder.text_field(:test, bootstrap: {control: {prepend: "A", append: "Z"}})
+    actual = @builder.text_field(:test, bootstrap: {prepend: "A", append: "Z"})
     expected = <<-HTML
       <div class="form-group">
         <label for="user_test">Test</label>
