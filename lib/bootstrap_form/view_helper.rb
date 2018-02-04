@@ -11,7 +11,7 @@ module BootstrapForm
           css_classes << " form-inline"
         end
 
-        form_options = options.merge(builder: BootstrapForm::FormBuilder)
+        form_options = options.reverse_merge(builder: BootstrapForm::FormBuilder)
         form_options.merge!(class: css_classes) unless css_classes.blank?
         form_with(**form_options, &block)
       end
