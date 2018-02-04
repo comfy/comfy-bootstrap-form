@@ -5,6 +5,7 @@
 - `rake db:schema:load`
 - `rails s`
 - Navigate to http://localhost:3000
+- Start changing stuff in [/demo/app/views/bootstrap/form.html.erb](/demo/app/views/bootstrap/form.html.erb)
 
 ### Following files were added or changed:
 
