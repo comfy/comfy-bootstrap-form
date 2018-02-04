@@ -134,6 +134,27 @@ There's an additional field helper that render read-only plain text values:
 <%= form.plaintext :value %>
 ```
 
+#### Form Group
+
+When you need to wrap arbitrary content in markup that renders correctly in
+Bootstrap form:
+
+```erb
+<%= form.form_group do %>
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua.
+<% end %>
+```
+
+If you need to add a label:
+
+```erb
+<%= form.form_group bootstrap: {label: {text: "Lorem"}} do %>
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua.
+<% end %>
+```
+
 ## Bootstrap options
 
 #### Horizontal Form

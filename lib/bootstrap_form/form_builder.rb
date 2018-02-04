@@ -189,6 +189,48 @@ module BootstrapForm
       submit(value, options, &block)
     end
 
+    # Helper method to put arbitrary content in markup that renders correctly
+    # for the Bootstrap form. Example:
+    #
+    #   form_group bootstrap: {label: {text: "Label"}} do
+    #     "Some content"
+    #   end
+    #
+    def form_group(options = {}, &block)
+      bootstrap_options       = options.delete(:bootstrap) || {}
+      bootstrap_label_options = bootstrap_options.delete(:label) || {}
+
+      label_text = bootstrap_label_options[:text]
+
+      label = if label_text.present?
+        label_options = {}
+        add_css_class!(label_options, bootstrap_label_options[:class])
+
+        if bootstrap.horizontal?
+          add_css_class!(label_options, "col-form-label")
+          add_css_class!(label_options, bootstrap.label_col_class)
+          add_css_class!(label_options, bootstrap.label_align_class)
+        elsif bootstrap.inline?
+          add_css_class!(label_options, bootstrap.inline_margin_class)
+        end
+
+        content_tag(:label, label_text, label_options)
+      end
+
+      form_group_class = "form-group"
+      form_group_class << " row"      if bootstrap.horizontal?
+      form_group_class << " mr-sm-2"  if bootstrap.inline?
+
+      content_tag(:div, class: form_group_class) do
+        content = ""
+        content << label if label.present?
+        content << draw_control_column(offset: label.blank?) do
+          yield
+        end
+        content.html_safe
+      end
+    end
+
   private
 
     # Wrapper for all field helpers. Example usage:
@@ -208,8 +250,8 @@ module BootstrapForm
 
     # form group wrapper for input fields
     def draw_form_group(bootstrap_options, method, options, &block)
-      label     = draw_label(bootstrap_options, method)
-      errors    = draw_errors(method)
+      label  = draw_label(bootstrap_options, method)
+      errors = draw_errors(method)
 
       control = draw_control(bootstrap_options, errors, method, options) do
         yield

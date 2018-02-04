@@ -130,4 +130,29 @@ class HorizontalFormTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_form_group
+    actual = @builder.form_group do
+      "test"
+    end
+    expected = <<-HTML
+      <div class="form-group row">
+        <div class="col-sm-10 offset-sm-2">test</div>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_form_group_with_label
+    actual = @builder.form_group(bootstrap: {label: {text: "Test"}}) do
+      "test"
+    end
+    expected = <<-HTML
+      <div class="form-group row">
+        <label class="col-form-label col-sm-2 text-sm-right">Test</label>
+        <div class="col-sm-10">test</div>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
 end
