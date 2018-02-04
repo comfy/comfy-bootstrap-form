@@ -83,4 +83,17 @@ class ViewHelpersTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_bootstrap_form_with_builder_override
+    actual = bootstrap_form_with(url: "/test", builder: ActionView::Helpers::FormBuilder) do |form|
+      form.text_field :value
+    end
+    expected = <<-HTML
+      <form accept-charset="UTF-8" action="/test" data-remote="true" method="post">
+        <input name="utf8" type="hidden" value="&#x2713;"/>
+        <input id="value" name="value" type="text"/>
+      </form>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
 end
