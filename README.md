@@ -11,6 +11,11 @@
 [![Coverage Status](https://img.shields.io/coveralls/comfy/comfy-bootstrap-form.svg?style=flat)](https://coveralls.io/r/comfy/comfy-bootstrap-form?branch=master)
 [![Gitter](https://badges.gitter.im/comfy/comfortable-mexican-sofa.svg)](https://gitter.im/comfy/comfortable-mexican-sofa)
 
+## Requirements
+
+- Rails 5.2+
+- Bootstrap 4.0.0+
+
 ## Installation
 
 Add gem to your Gemfile and run `bundle install`
@@ -59,15 +64,9 @@ This will generate HTML similar to this:
 </form>
 ```
 
-## Form Layouts
+## Supported form field helpers
 
-- default
-- horizontal
-- inline
-
-## Supported form helpers
-
-This gem wraps most of the default form helpers. Here's the current list:
+This gem wraps most of the default form field helpers. Here's the current list:
 
 ```
 color_field     file_field      phone_field   text_field
@@ -85,11 +84,41 @@ radio button input in Bootstrap markup.
 
 ## Radio Buttons and Checkboxes
 
-- inline
+To render collection of radio buttons or checkboxes there are two corresponding
+helpers:
+
+```erb
+<%= form.check_boxes :choices, ["red", "green", "blue"] %>
+<%= form.radio_buttons :choices, ["mild", "hot", "lava"] %>
+```
+
+You can define custom labels by sending tuples:
+
+```erb
+<%= form.check_boxes :choices, [["yes", "Yay"], ["no", "Nay"]] %>
+```
+
+You may choose to render inputs inline:
+
+```erb
+<%= form.check_boxes :choices, ["red", "green", "blue"], bootstrap: {inline: true} %>
+```
+
+## Plaintext Helper
+
+There's an additional field helper that render read-only plain text values:
+
+```erb
+<%= form.plaintext :value %>
+```
 
 ## Bootstrap options
 
 ### Form
+
+- default
+- horizontal
+- inline
 
 - layout
 - label_col_class
