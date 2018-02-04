@@ -86,7 +86,7 @@ is a good one.
 Singular `radio_button` is not implemented as it doesn't make sense to wrap one
 radio button input in Bootstrap markup.
 
-### Radio Buttons and Checkboxes
+#### Radio Buttons and Checkboxes
 
 To render collection of radio buttons or checkboxes there are two corresponding
 helpers:
@@ -108,7 +108,7 @@ You may choose to render inputs inline:
 <%= form.check_boxes :choices, ["red", "green", "blue"], bootstrap: {inline: true} %>
 ```
 
-### Submit
+#### Submit
 
 Submit button is automatically wrapped with Bootstrap markup. Here's how it looks:
 
@@ -126,7 +126,7 @@ You can also pass in a block of content that will be appended next to the button
 <% end %>
 ```
 
-### Plaintext helper
+#### Plaintext helper
 
 There's an additional field helper that render read-only plain text values:
 
@@ -136,7 +136,7 @@ There's an additional field helper that render read-only plain text values:
 
 ## Bootstrap options
 
-### Horizontal Form
+#### Horizontal Form
 
 By default form is rendered as a stack. Labels are above inputs, and inputs
 take up 100% of the width. You can change form layout to `horizontal` to put
@@ -165,7 +165,7 @@ bootstrap_options = {
 <% end %>
 ```
 
-### Inline Form
+#### Inline Form
 
 You may choose to render form elements in one line. Please note that this layout
 won't render all form elements. Things like errors messages won't show up right.
@@ -176,8 +176,6 @@ won't render all form elements. Things like errors messages won't show up right.
   <%= form.submit "Search" %>
 <% end %>
 ```
-
-### Form Fields
 
 #### Label
 
@@ -225,7 +223,7 @@ If you want to use something like a button, or other html content do this:
 <%= form.text_field :value, bootstrap: {append: {html: button_html}} %>
 ```
 
-#### Gotchas
+### Gotchas
 
 For inline radio buttons and check boxes you need to add custom css for error
 messages show up (see: https://github.com/twbs/bootstrap/issues/25540):
