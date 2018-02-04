@@ -1,3 +1,11 @@
+<%= bootstrap_form_with model: @user do |f| %>
+  <%= f.email_field :email %>
+  <%= f.password_field :password %>
+  <%= f.check_box :remember_me %>
+  <%= f.submit "Log In" %>
+<% end %>
+
+
 <h3>Horizontal Form</h3>
 
 <%= bootstrap_form_with model: @user, url: "/", bootstrap: {layout: :horizontal} do |form| %>
@@ -43,7 +51,7 @@
   <%= form.radio_buttons :test, [["a", "Label A"], ["b", "Label B"], "c", "d"] %>
   <%= form.check_boxes :test, [["e", "Label E"], ["f", "Label F"], "g", "h"], bootstrap: {help: "help text"} %>
   <%= form.radio_buttons :test, ["u", "v", "w"], bootstrap: {inline: true, label: {text: "Custom Label"}} %>
-  <%= form.check_boxes :test, ["x", "y", "z"], bootstrap: {inline: true, label: {hide: true}} %>
+  <%= form.check_boxes :test, ["x", "y", "z"], bootstrap: {inline: true, help: "help text", label: {hide: true}} %>
 <% end %>
 
 <h3>Input Group</h3>
