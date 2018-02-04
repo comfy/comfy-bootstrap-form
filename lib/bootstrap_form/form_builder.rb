@@ -2,11 +2,10 @@ module BootstrapForm
   class FormBuilder < ActionView::Helpers::FormBuilder
 
     FIELD_HELPERS = %w[
-      color_field     date_field  datetime_field  datetime_local_field
-      email_field     file_field  month_field     number_field
-      password_field  phone_field range_field     search_field
-      text_area       text_field  time_field      url_field
-      week_field
+      color_field     file_field      phone_field   text_field
+      date_field      month_field     range_field   time_field
+      datetime_field  number_field    search_field  url_field
+      email_field     password_field  text_area     week_field
     ].freeze
 
     # Container for bootstrap specific form builder options. It controls options

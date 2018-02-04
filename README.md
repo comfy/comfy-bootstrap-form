@@ -32,7 +32,7 @@ Here's a simple example:
 <% end %>
 ```
 
-This generates HTML similar to this:
+This will generate HTML similar to this:
 
 ```html
 <form action="/users" accept-charset="UTF-8" data-remote="true" method="post">
@@ -70,11 +70,10 @@ This generates HTML similar to this:
 This gem wraps most of the default form helpers. Here's the current list:
 
 ```
-color_field     date_field  datetime_field  datetime_local_field
-email_field     file_field  month_field     number_field
-password_field  phone_field range_field     search_field
-text_area       text_field  time_field      url_field
-week_field
+color_field     file_field      phone_field   text_field
+date_field      month_field     range_field   time_field
+datetime_field  number_field    search_field  url_field
+email_field     password_field  text_area     week_field
 ```
 
 Helpers for DateTime selects are not implemented as it's better to choose one of

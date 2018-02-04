@@ -1,11 +1,3 @@
-<%= bootstrap_form_with model: @user do |f| %>
-  <%= f.email_field :email %>
-  <%= f.password_field :password %>
-  <%= f.check_box :remember_me %>
-  <%= f.submit "Log In" %>
-<% end %>
-
-
 <h3>Horizontal Form</h3>
 
 <%= bootstrap_form_with model: @user, url: "/", bootstrap: {layout: :horizontal} do |form| %>
