@@ -7,6 +7,10 @@
   <%= form.radio_buttons :test, ["1", "2", "3"], bootstrap: {help: "help text"} %>
   <%= form.text_field :test, bootstrap: {label: {hide: true}} %>
   <%= form.check_boxes :test, ["11", "22", "33"], bootstrap: {help: "help text", inline: true, label: {hide: true}} %>
+  <%= form.form_group bootstrap: {label: {text: "Lorem", class: "lorem pt-0"}} do %>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua.
+  <% end %>
   <%= form.primary "Smash That Button" do %>
     <a href="/" class="btn btn-link">Unsubcribe</a>
   <% end %>
@@ -18,6 +22,9 @@
   <%= form.email_field :email, placeholder: "Enter Email" %>
   <%= form.password_field :password, placeholder: "Password", bootstrap: {label: {hide: true}, prepend: "???", append: "???"} %>
   <%= form.check_box :terms %>
+  <%= form.form_group do %>
+    Lorem
+  <% end %>
   <%= form.primary "Submit" do %>
     <a href="/" class="btn btn-link">Cancel</a>
   <% end %>
@@ -33,6 +40,10 @@
   <%= form.file_field :test, bootstrap: {label: {text: "File Field"}} %>
   <%= form.plaintext :test, bootstrap: {label: {text: "Plain Text"}} %>
   <%= form.check_box :terms, bootstrap: {label: {text: "Agree to Terms"}} %>
+  <%= form.form_group do %>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua.
+  <% end %>
   <%= form.submit %>
 <% end %>
 

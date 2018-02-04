@@ -278,4 +278,27 @@ class FieldsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_form_group
+    actual = @builder.form_group do
+      "test"
+    end
+    expected = <<-HTML
+      <div class="form-group">test</div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_form_group_with_label
+    actual = @builder.form_group(bootstrap: {label: {text: "Test"}}) do
+      "test"
+    end
+    expected = <<-HTML
+      <div class="form-group">
+        <label>Test</label>
+        test
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
 end
