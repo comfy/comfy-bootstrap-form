@@ -104,6 +104,24 @@ You may choose to render inputs inline:
 <%= form.check_boxes :choices, ["red", "green", "blue"], bootstrap: {inline: true} %>
 ```
 
+## Submit
+
+Submit button is automatically wrapped with Bootstrap markup. Here's how it looks:
+
+```erb
+<%= form.submit %>
+<%= form.submit "Submit" %>
+<%= form.primary %>
+```
+
+You can also pass in a block of content that will be appended next to the button:
+
+```erb
+<%= form.submit "Save" do %>
+  <a href="/" class="btn btn-link">Cancel</a>
+<% end %>
+```
+
 ## Plaintext Helper
 
 There's an additional field helper that render read-only plain text values:
