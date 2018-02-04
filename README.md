@@ -64,6 +64,10 @@ This will generate HTML similar to this:
 </form>
 ```
 
+Feel free to take a look at the [Demo App](/demo) to see how everything renders.
+Specifically see [form.html.erb](/demo/app/views/bootstrap/form.html.erb) template
+for all kinds of different form configurations you can have.
+
 ## Supported form field helpers
 
 This gem wraps most of the default form field helpers. Here's the current list:
