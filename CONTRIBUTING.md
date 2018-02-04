@@ -1,17 +1,5 @@
 # Contributing
 
-The release of Bootstrap 4 and Rails 5.1 have implications for the future
-direction of `bootstrap_form`. Don't worry. We plan to move this gem forward to
-Bootstrap 4 and to support Rails 5.1 and beyond. If you're thinking of
-contributing to `bootstrap_form`, please read
-[issue #361](https://github.com/bootstrap-ruby/rails-bootstrap-forms/issues/361).
-
-Your comments are welcome.
-
-Thanks so much for considering a contribution to bootstrap_form. We love pull requests!
-
-Here's a quick guide for contributing:
-
 ### 1. Check if issue or feature is available to work on
 
 Make sure no one else is working on the same issue or feature. Search the issues
@@ -33,7 +21,6 @@ For the project. Optionally, create a branch you want to work on
 - Try to keep your changes small. Consider making several smaller pull requests.
 - Don't forget to add necessary tests.
 - Update the README if necessary.
-- Add a line to the CHANGELOG for your bug fix or feature.
 
 You may find using demo application useful for development and debugging.
 
@@ -51,7 +38,3 @@ You may find using demo application useful for development and debugging.
 
 Somebody will shortly review your pull request and if everything is good will be
 merged into master brach. Eventually gem will be published with your changes.
-
----
-
-Thanks to all the great contributors over the years: https://github.com/bootstrap-ruby/rails-bootstrap-forms/graphs/contributors
