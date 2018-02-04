@@ -82,7 +82,7 @@ is a good one.
 Singular `radio_button` is not implemented as it doesn't make sense to wrap one
 radio button input in Bootstrap markup.
 
-## Radio Buttons and Checkboxes
+### Radio Buttons and Checkboxes
 
 To render collection of radio buttons or checkboxes there are two corresponding
 helpers:
@@ -104,7 +104,7 @@ You may choose to render inputs inline:
 <%= form.check_boxes :choices, ["red", "green", "blue"], bootstrap: {inline: true} %>
 ```
 
-## Submit
+### Submit
 
 Submit button is automatically wrapped with Bootstrap markup. Here's how it looks:
 
@@ -122,7 +122,7 @@ You can also pass in a block of content that will be appended next to the button
 <% end %>
 ```
 
-## Plaintext Helper
+### Plaintext helper
 
 There's an additional field helper that render read-only plain text values:
 
@@ -134,15 +134,48 @@ There's an additional field helper that render read-only plain text values:
 
 ### Form
 
-- default
-- horizontal
-- inline
+By default form is rendered as a stack. Labels are above inputs, and inputs
+take up 100% of the width.
 
-- layout
-- label_col_class
-- control_col_class
-- label_align_class
-- inline_margin_class
+### Horizontal Form
+
+You can change form layout to `horizontal` to put labels and corresponding
+inputs side by side:
+
+```erb
+<%= bootstrap_form_with model: @user, bootstrap: {layout: :horizontal} do |form|
+  <%= form.text_field :email %>
+<% end %>
+```
+
+There are options that control column width and label alignment. Here's how it
+would look with all the defaults:
+
+```erb
+<%
+bootstrap_options = {
+  layout:             "horizontal",
+  label_col_class:    "col-sm-2",
+  control_col_class:  "col-sm-10",
+  label_align_class:  "text-sm-right"
+}
+%>
+<%= bootstrap_form_with model: @user, bootstrap: bootstrap_options do |form|
+  <%= form.text_field :email %>
+<% end %>
+```
+
+### Inline Form
+
+You may choose to render form elements in one line. Please note that this layout
+won't render all form elements. Things like errors messages won't show up right.
+
+```erb
+<%= bootstrap_form_with url: "/search" do |form|
+  <%= form.text_field :query %>
+  <%= form.submit "Search" %>
+<% end %>
+```
 
 ### Inputs
 
