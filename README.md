@@ -132,12 +132,10 @@ There's an additional field helper that render read-only plain text values:
 
 ## Bootstrap options
 
-### Form
+### Horizontal Form
 
 By default form is rendered as a stack. Labels are above inputs, and inputs
 take up 100% of the width.
-
-### Horizontal Form
 
 You can change form layout to `horizontal` to put labels and corresponding
 inputs side by side:
@@ -177,11 +175,37 @@ won't render all form elements. Things like errors messages won't show up right.
 <% end %>
 ```
 
-### Inputs
+### Form Fields
+
+#### Help Text
+
+You may attach help text for pretty much any field type:
+
+```erb
+<%= form.text_field :value, bootstrap: {help: "Short helpful message"} %>
+```
+
+#### Label
 
 - label
-- help
-- prepend/append
+
+### Append and Prepend
+
+Bootstrap allows prepending and appending content to fields via `input-group`.
+Here's how this looks:
+
+```erb
+<%= form.text_field :value, bootstrap: {prepend: "$", append: "%"} %>
+```
+
+If you want to use something like a button, or other html content do this:
+
+```erb
+<% button_html = capture do %>
+  <button class="btn btn-danger">Don't Press</button>
+<% end %>
+<%= form.text_field :value, bootstrap: {append: {html: button_html}} %>
+```
 
 #### Gotchas
 
