@@ -12,11 +12,11 @@ module BootstrapForm
     # that define form layout and grid sizing.
     class BootstrapOptions
 
-      attr_accessor :layout,
-                    :label_col_class,
-                    :control_col_class,
-                    :label_align_class,
-                    :inline_margin_class
+      attr_reader :layout,
+                  :label_col_class,
+                  :control_col_class,
+                  :label_align_class,
+                  :inline_margin_class
 
       def initialize(options = {})
         @layout               = options[:layout]              || "default"
