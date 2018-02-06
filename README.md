@@ -77,6 +77,7 @@ color_field     file_field      phone_field   text_field
 date_field      month_field     range_field   time_field
 datetime_field  number_field    search_field  url_field
 email_field     password_field  text_area     week_field
+collection_radio_buttons        collection_check_boxes
 ```
 
 Helpers for DateTime selects are not implemented as it's better to choose one of
@@ -88,24 +89,19 @@ radio button input in Bootstrap markup.
 
 #### Radio Buttons and Checkboxes
 
-To render collection of radio buttons or checkboxes there are two corresponding
-helpers:
+To render collection of radio buttons or checkboxes we use the same helper that
+comes with Rails. The only difference is that it doesn't accept a block. This
+gem takes care of rendering of labels and inputs for you.
 
 ```erb
-<%= form.check_boxes :choices, ["red", "green", "blue"] %>
-<%= form.radio_buttons :choices, ["mild", "hot", "lava"] %>
-```
-
-You can define custom labels by sending tuples:
-
-```erb
-<%= form.check_boxes :choices, [["yes", "Yay"], ["no", "Nay"]] %>
+<%= form.collection_radio_buttons :choices, ["red", "green", "blue"], :to_s, :to_s %>
+<%= form.collection_check_boxes   :choices, Choices.all, :id, :label %>
 ```
 
 You may choose to render inputs inline:
 
 ```erb
-<%= form.check_boxes :choices, ["red", "green", "blue"], bootstrap: {inline: true} %>
+<%= form.check_boxes :choices, Choices.all, :id, :label, bootstrap: {inline: true} %>
 ```
 
 #### Submit
