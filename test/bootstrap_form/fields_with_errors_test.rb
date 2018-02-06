@@ -43,8 +43,8 @@ class FieldsWithErrorsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
-  def test_radio_buttons_with_error_and_help
-    actual = @builder.radio_buttons(:test, ["a", "b"], bootstrap: {help: "help text"})
+  def test_collection_radio_buttons_with_error_and_help
+    actual = @builder.collection_radio_buttons(:test, ["a", "b"], :to_s, :titleize, bootstrap: {help: "help text"})
     expected = <<-HTML
       <fieldset class="form-group">
         <legend class="col-form-label pt-0">Test</legend>
@@ -63,8 +63,11 @@ class FieldsWithErrorsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
-  def test_radio_buttons_inline_with_error_and_help
-    actual = @builder.radio_buttons(:test, ["a", "b"], bootstrap: {inline: true, help: "help text"})
+  def test_collection_radio_buttons_inline_with_error_and_help
+    actual = @builder.collection_radio_buttons(:test, ["a", "b"], :to_s, :titleize, bootstrap: {
+      inline: true,
+      help:   "help text"
+    })
     expected = <<-HTML
       <fieldset class="form-group">
         <legend class="col-form-label pt-0">Test</legend>

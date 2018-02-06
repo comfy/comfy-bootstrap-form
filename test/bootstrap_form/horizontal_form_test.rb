@@ -49,8 +49,8 @@ class HorizontalFormTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
-  def test_radio_buttons
-    actual = @builder.radio_buttons(:test, ["a", "b"])
+  def test_collection_radio_buttons
+    actual = @builder.collection_radio_buttons(:test, ["a", "b"], :to_s, :titleize)
     expected = <<-HTML
       <fieldset class="form-group">
         <div class="row">
@@ -71,9 +71,10 @@ class HorizontalFormTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
-  def test_check_boxes_with_no_label
-    actual = @builder.check_boxes(:test, ["a", "b"], bootstrap: {label: {hide: true}})
+  def test_collection_check_boxes_with_no_label
+    actual = @builder.collection_check_boxes(:test, ["a", "b"], :to_s, :titleize, bootstrap: {label: {hide: true}})
     expected = <<-HTML
+      <input id="user_test" multiple="multiple" name="user[test][]" type="hidden" value=""/>
       <fieldset class="form-group">
         <div class="row">
           <div class="col-sm-10 offset-sm-2">

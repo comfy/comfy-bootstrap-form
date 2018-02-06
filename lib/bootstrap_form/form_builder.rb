@@ -108,18 +108,20 @@ module BootstrapForm
 
     # Helper to generate multiple radio buttons. Example usage:
     #
-    #   radio_buttons :choices, ["a", "b"] %>
-    #   radio_buttons :choices, [["a", "Label A"], ["b", "Label B"]]
+    #   collection_radio_buttons :choices, ["a", "b"], :to_s, :to_s %>
+    #   collection_radio_buttons :choices, [["a", "Label A"], ["b", "Label B"]], :first, :second
+    #   collection_radio_buttons :choices, Choice.all, :id, :label
     #
     # Takes bootstrap options:
-    #   :inline - set to true to render inputs inline
+    #   inline: true            - to render inputs inline
     #   label: {text: "Custom"} - to specify a label
     #   label: {hide: true}     - to not render label at all
     #
-    def radio_buttons(method, choices, options = {})
+    def collection_radio_buttons(method, collection, value_method, text_method, options = {}, html_options = {})
       bootstrap_options = (options.delete(:bootstrap) || {})
 
-      draw_choices(bootstrap_options, method, choices, options) do |m, v, opts|
+      args = [bootstrap_options, method, collection, value_method, text_method, options, html_options]
+      draw_choices(*args) do |m, v, opts|
         radio_button(m, v, opts)
       end
     end
@@ -127,17 +129,21 @@ module BootstrapForm
     # Helper to generate multiple checkboxes. Same options as for radio buttons.
     # Example usage:
     #
-    #   check_boxes :choices, ["a", "b"] %>
-    #   check_boxes :choices, [["a", "Label A"], ["b", "Label B"]]
+    #   collection_check_boxes :choices, Choice.all, :id, :label
     #
-    def check_boxes(method, choices, options = {})
+    def collection_check_boxes(method, collection, value_method, text_method, options = {}, html_options = {})
       bootstrap_options = (options.delete(:bootstrap) || {})
 
-      draw_choices(bootstrap_options, method, choices, options) do |m, v, opts|
+      content = "".html_safe
+      unless options[:include_hidden] == false
+        content << hidden_field(method, multiple: true, value: "")
+      end
+
+      args = [bootstrap_options, method, collection, value_method, text_method, options, html_options]
+      content << draw_choices(*args) do |m, v, opts|
         opts[:multiple]       = true
         opts[:include_hidden] = false
-        ActionView::Helpers::FormBuilder.instance_method(:check_box).bind(self)
-          .call(m, opts, v)
+        ActionView::Helpers::FormBuilder.instance_method(:check_box).bind(self).call(m, opts, v)
       end
     end
 
@@ -222,12 +228,11 @@ module BootstrapForm
       form_group_class << " mr-sm-2"  if bootstrap.inline?
 
       content_tag(:div, class: form_group_class) do
-        content = ""
+        content = "".html_safe
         content << label if label.present?
         content << draw_control_column(offset: label.blank?) do
           yield
         end
-        content.html_safe
       end
     end
 
@@ -387,10 +392,10 @@ module BootstrapForm
     end
 
     # Rendering of choices for checkboxes and radio buttons
-    def draw_choices(bootstrap_options, method, choices, options = {}, &input)
-      add_css_class!(options, "form-check-input")
+    def draw_choices(bootstrap_options, method, collection, value_method, text_method, options, html_options, &input)
+      add_css_class!(html_options, "form-check-input")
 
-      draw_form_group_fieldset(bootstrap_options, method, options) do
+      draw_form_group_fieldset(bootstrap_options, method, html_options) do
 
         form_check_css_class = "form-check"
         form_check_css_class << " form-check-inline" if bootstrap_options[:inline]
@@ -398,18 +403,22 @@ module BootstrapForm
         errors    = draw_errors(method)
         help_text = draw_help(bootstrap_options[:help])
 
-        add_css_class!(options, "is-invalid") if errors.present?
+        add_css_class!(html_options, "is-invalid") if errors.present?
 
-        content = choices.each_with_index.map do |(input_value, label_text), index|
-          content_tag(:div, class: form_check_css_class) do
-            concat input.call(method, input_value, options)
-            concat label(method, label_text, value: input_value, class: "form-check-label")
-            if ((choices.count - 1) == index) && !bootstrap_options[:inline]
+        content = "".html_safe
+        collection.each_with_index.map do |item, index|
+          item_value  = item.send(value_method)
+          item_text   = item.send(text_method)
+
+          content << content_tag(:div, class: form_check_css_class) do
+            concat input.call(method, item_value, html_options)
+            concat label(method, item_text, value: item_value, class: "form-check-label")
+            if ((collection.count - 1) == index) && !bootstrap_options[:inline]
               concat errors     if errors.present?
               concat help_text  if help_text.present?
             end
           end
-        end.join.html_safe
+        end
 
         if bootstrap_options[:inline]
           content << errors     if errors.present?
@@ -442,16 +451,16 @@ module BootstrapForm
       end
 
       content_tag(:fieldset, class: "form-group") do
-        content = ""
+        content = "".html_safe
         content << label if label.present?
         content << draw_control_column(offset: bootstrap_label_options[:hide]) do
           yield
         end
 
         if bootstrap.horizontal?
-          content_tag(:div, content.html_safe, class: "row")
+          content_tag(:div, content, class: "row")
         else
-          content.html_safe
+          content
         end
       end
     end

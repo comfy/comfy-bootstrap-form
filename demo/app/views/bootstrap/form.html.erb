@@ -4,9 +4,9 @@
   <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
   <%= form.email_field :email, bootstrap: {prepend: "Prepend", append: "Append"} %>
   <%= form.check_box :terms, bootstrap: {help: "You better check this"} %>
-  <%= form.radio_buttons :test, ["1", "2", "3"], bootstrap: {help: "help text"} %>
+  <%= form.collection_radio_buttons :test, ["1", "2", "3"], :to_s, :to_s, bootstrap: {help: "help text"} %>
   <%= form.text_field :test, bootstrap: {label: {hide: true}} %>
-  <%= form.check_boxes :test, ["11", "22", "33"], bootstrap: {help: "help text", inline: true, label: {hide: true}} %>
+  <%= form.collection_check_boxes :test, ["11", "22", "33"], :to_s, :to_s, bootstrap: {help: "help text", inline: true, label: {hide: true}} %>
   <%= form.form_group bootstrap: {label: {text: "Lorem", class: "lorem pt-0"}} do %>
     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua.
@@ -51,10 +51,10 @@
 
 <% @user.test = "c" %>
 <%= bootstrap_form_with model: @user, url: "/" do |form| %>
-  <%= form.radio_buttons :test, [["a", "Label A"], ["b", "Label B"], "c", "d"] %>
-  <%= form.check_boxes :test, [["e", "Label E"], ["f", "Label F"], "g", "h"], bootstrap: {help: "help text"} %>
-  <%= form.radio_buttons :test, ["u", "v", "w"], bootstrap: {inline: true, label: {text: "Custom Label"}} %>
-  <%= form.check_boxes :test, ["x", "y", "z"], bootstrap: {inline: true, help: "help text", label: {hide: true}} %>
+  <%= form.collection_radio_buttons :test, [["a", "Label A"], ["b", "Label B"]], :first, :second %>
+  <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {help: "help text"} %>
+  <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {inline: true, label: {text: "Custom Label"}} %>
+  <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {inline: true, help: "help text", label: {hide: true}} %>
 <% end %>
 
 <h3>Input Group</h3>
@@ -76,7 +76,7 @@
   <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
   <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {help: "Help me!", prepend: "Prepend", append: "Append"} %>
   <%= form.check_box :terms, bootstrap: {help: "help text"}%>
-  <%= form.radio_buttons :test, ["a", "b", "c"], bootstrap: {help: "help text"} %>
-  <%= form.check_boxes :test, ["x", "y", "z"], bootstrap: {inline: true, help: "help text"} %>
+  <%= form.collection_radio_buttons :test, ["a", "b", "c"], :to_s, :to_s, bootstrap: {help: "help text"} %>
+  <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {inline: true, help: "help text"} %>
   <%= form.submit %>
 <% end %>
