@@ -27,11 +27,7 @@ module BootstrapForm
 
     def initialize(options = {})
       set_defaults
-
-      # Applying custom settings
-      options.each do |key, value|
-        instance_variable_set("@#{key}", value)
-      end
+      set_options(options)
     end
 
     def horizontal?
@@ -46,6 +42,21 @@ module BootstrapForm
       label_col_class.sub(/\Acol-(\w+)-(\d+)\z/, 'offset-\1-\2')
     end
 
+    # This will return a copy of BootstrapOptions object with new options set
+    # that don't affect original object. This way we can have options specific
+    # to a given form field. For example, we can change grid just for one field:
+    #
+    #   bootstrap_form_with scope: :login do |f|
+    #     f.text_field :email, bootstrap: {label_col_class: "col-md-6", control_col_class: "col-md-6"}
+    #     f.password_field :password
+    #   end
+    #
+    def scoped(options = {})
+      scope = self.clone
+      scope.set_options(options)
+      scope
+    end
+
   private
 
     def set_defaults
@@ -54,6 +65,12 @@ module BootstrapForm
       @control_col_class    = "col-sm-10"
       @label_align_class    = "text-sm-right"
       @inline_margin_class  = "mr-sm-2"
+    end
+
+    def set_options(options = {})
+      options.is_a?(Hash) && options.each do |key, value|
+        instance_variable_set("@#{key}", value)
+      end
     end
 
   end
