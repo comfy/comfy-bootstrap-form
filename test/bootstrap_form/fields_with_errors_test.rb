@@ -65,8 +65,8 @@ class FieldsWithErrorsTest < ActionView::TestCase
 
   def test_collection_radio_buttons_inline_with_error_and_help
     actual = @builder.collection_radio_buttons(:test, ["a", "b"], :to_s, :titleize, bootstrap: {
-      inline: true,
-      help:   "help text"
+      check_inline: true,
+      help:         "help text"
     })
     expected = <<-HTML
       <fieldset class="form-group">

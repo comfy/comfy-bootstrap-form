@@ -9,6 +9,11 @@ class BootstrapOptionsTest < ActiveSupport::TestCase
     assert_equal "col-sm-10",     options.control_col_class
     assert_equal "text-sm-right", options.label_align_class
     assert_equal "mr-sm-2",       options.inline_margin_class
+    assert_equal ({}),            options.label
+    assert_nil                    options.append
+    assert_nil                    options.prepend
+    assert_nil                    options.help
+    refute                        options.check_inline
   end
 
   def test_with_set_options
@@ -17,13 +22,23 @@ class BootstrapOptionsTest < ActiveSupport::TestCase
       label_col_class:      "col-md-4",
       control_col_class:    "col-md-8",
       label_align_class:    "text-md-left",
-      inline_margin_class:  "mr-md-4"
+      inline_margin_class:  "mr-md-4",
+      label:                {text: "test"},
+      append:               "a",
+      prepend:              "z",
+      help:                 "help text",
+      check_inline:         "true"
     )
-    assert_equal "horizontal",    options.layout
-    assert_equal "col-md-4",      options.label_col_class
-    assert_equal "col-md-8",      options.control_col_class
-    assert_equal "text-md-left",  options.label_align_class
-    assert_equal "mr-md-4",       options.inline_margin_class
+    assert_equal "horizontal",      options.layout
+    assert_equal "col-md-4",        options.label_col_class
+    assert_equal "col-md-8",        options.control_col_class
+    assert_equal "text-md-left",    options.label_align_class
+    assert_equal "mr-md-4",         options.inline_margin_class
+    assert_equal ({text: "test"}),  options.label
+    assert_equal "a",               options.append
+    assert_equal "z",               options.prepend
+    assert_equal "help text",       options.help
+    assert                          options.check_inline
   end
 
   def test_with_set_invalid_options
