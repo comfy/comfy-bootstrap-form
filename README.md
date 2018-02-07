@@ -29,11 +29,11 @@ gem "comfy_bootstrap_form", "~> 4.0.0"
 Here's a simple example:
 
 ```erb
-<%= bootstrap_form_with model: @user do |f| %>
-  <%= f.email_field :email %>
-  <%= f.password_field :password %>
-  <%= f.check_box :remember_me %>
-  <%= f.submit "Log In" %>
+<%= bootstrap_form_with model: @user do |form| %>
+  <%= form.email_field :email %>
+  <%= form.password_field :password %>
+  <%= form.check_box :remember_me %>
+  <%= form.submit "Log In" %>
 <% end %>
 ```
 
