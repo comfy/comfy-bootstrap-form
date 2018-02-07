@@ -19,11 +19,19 @@ module BootstrapForm
       super(object_name, object, template, options)
     end
 
-    # Overriding default methods to forward everything to field_helper
+    # Wrapper for all field helpers. Example usage:
+    #
+    #   bootstrap_form_with model: @user do |form|
+    #     form.text_field :name
+    #   end
+    #
+    # Output of the `text_field` will be wrapped in Bootstrap markup
+    #
     FIELD_HELPERS.each do |field_helper|
       class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
         def #{field_helper}(method, options = {})
-          field_helper(method, options) do
+          bootstrap_options = (options.delete(:bootstrap) || {})
+          draw_form_group(bootstrap_options, method, options) do
             super(method, options)
           end
         end
@@ -207,21 +215,6 @@ module BootstrapForm
     end
 
   private
-
-    # Wrapper for all field helpers. Example usage:
-    #
-    #   bootstrap_form_with model: @user do |form|
-    #     form.text_field :name
-    #   end
-    #
-    # Output of the `text_field` will be wrapped in Bootstrap markup
-    #
-    def field_helper(method, options, &block)
-      bootstrap_options = (options.delete(:bootstrap) || {})
-      draw_form_group(bootstrap_options, method, options) do
-        yield
-      end
-    end
 
     # form group wrapper for input fields
     def draw_form_group(bootstrap_options, method, options, &block)
