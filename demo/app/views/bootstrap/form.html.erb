@@ -1,10 +1,25 @@
 <h3>Horizontal Form</h3>
 
-<%= bootstrap_form_with model: @user, url: "/", bootstrap: {layout: :horizontal} do |form| %>
+<%= bootstrap_form_with model: @user, scope: "user_a", url: "/", bootstrap: {layout: :horizontal} do |form| %>
   <%= form.email_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
   <%= form.email_field :email, placeholder: "you@example.com" %>
   <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
-  <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {inline: true, help: "Choose your favorite color"} %>
+  <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
+  <%= form.text_area :bio, placeholder: "Tell us your life story" %>
+  <%= form.select :locale, [["English", "en"], ["French", "fr"]], {}, bootstrap: {label: {text: "Language"}} %>
+  <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
+  <%= form.primary "Press to Register" do %>
+    <a href="/" class="btn btn-link">Maybe Later</a>
+  <% end %>
+<% end %>
+
+<h3>Horizontal Form With Errors</h3>
+
+<%= bootstrap_form_with model: @user_with_error, scope: "user_b", url: "/", bootstrap: {layout: :horizontal} do |form| %>
+  <%= form.email_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
+  <%= form.email_field :email, placeholder: "you@example.com" %>
+  <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
+  <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
   <%= form.text_area :bio, placeholder: "Tell us your life story" %>
   <%= form.select :locale, [["English", "en"], ["French", "fr"]], {}, bootstrap: {label: {text: "Language"}} %>
   <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
@@ -15,61 +30,98 @@
 
 <h3>Inline Form</h3>
 
-<%= bootstrap_form_with scope: :login, url: "/", bootstrap: {layout: :inline} do |form| %>
-  <%= form.email_field :username, placeholder: "Username", bootstrap: {label: {hide: true}, prepend: "@"} %>
-  <%= form.password_field :password, placeholder: "Password", bootstrap: {label: {hide: true}} %>
+<%= bootstrap_form_with scope: :login, url: "/", bootstrap: {layout: :inline, label: {hide: true}} do |form| %>
+  <%= form.email_field :username, placeholder: "Username", bootstrap: {prepend: "@"} %>
+  <%= form.password_field :password, placeholder: "Password" %>
   <%= form.check_box :remember_me %>
   <%= form.primary "Sign in", class: "ml-3" %>
 <% end %>
 
+<div class="row">
+  <div class="col-6">
+    <h3>Vertical Form</h3>
 
-<h3>Default Form</h3>
+    <%= bootstrap_form_with model: @user, scope: "user_c", url: "/" do |form| %>
+      <%= form.email_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
+      <%= form.email_field :email, placeholder: "you@example.com" %>
+      <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
+      <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
+      <%= form.text_area :bio, placeholder: "Tell us your life story" %>
+      <%= form.select :locale, [["English", "en"], ["French", "fr"]], {}, bootstrap: {label: {text: "Language"}} %>
+      <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
+      <%= form.primary "Press to Register" do %>
+        <a href="/" class="btn btn-link">Maybe Later</a>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-6">
+    <h3>With Errors</h3>
 
-<%= bootstrap_form_with model: @user, url: "/" do |form| %>
-  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
-  <%= form.password_field :password, placeholder: "Password"%>
-  <%= form.select :select_value, ["option A", "option B"] %>
-  <%= form.text_area :test, bootstrap: {label: {text: "Text Area"}} %>
-  <%= form.file_field :test, bootstrap: {label: {text: "File Field"}} %>
-  <%= form.plaintext :test, bootstrap: {label: {text: "Plain Text"}} %>
-  <%= form.check_box :terms, bootstrap: {label: {text: "Agree to Terms"}} %>
-  <%= form.form_group do %>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua.
-  <% end %>
-  <%= form.submit %>
-<% end %>
+    <%= bootstrap_form_with model: @user_with_error, scope: "user_c", url: "/" do |form| %>
+      <%= form.email_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
+      <%= form.email_field :email, placeholder: "you@example.com" %>
+      <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
+      <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
+      <%= form.text_area :bio, placeholder: "Tell us your life story" %>
+      <%= form.select :locale, [["English", "en"], ["French", "fr"]], {}, bootstrap: {label: {text: "Language"}} %>
+      <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
+      <%= form.primary "Press to Register" do %>
+        <a href="/" class="btn btn-link">Maybe Later</a>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 
-<h3>Checkboxes and Radio buttons</h3>
+<div class="row">
+  <div class="col-6">
+    <h3>Checkboxes and Radio buttons</h3>
+    <% @user.test = "b" %>
+    <%= bootstrap_form_with model: @user, scope: "user_d", url: "/" do |form| %>
+      <%= form.collection_radio_buttons :test, [["a", "Label A"], ["b", "Label B"]], :first, :second %>
+      <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {help: "help text"} %>
+      <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {inline: true, label: {text: "Custom Label"}} %>
+      <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {inline: true, help: "help text", label: {hide: true}} %>
+    <% end %>
+  </div>
+  <div class="col-6">
+    <h3>With Errors</h3>
+    <% @user_with_error.test = "b" %>
+    <%= bootstrap_form_with model: @user_with_error, scope: "user_e", url: "/" do |form| %>
+      <%= form.collection_radio_buttons :test, [["a", "Label A"], ["b", "Label B"]], :first, :second %>
+      <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {help: "help text"} %>
+      <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {inline: true, label: {text: "Custom Label"}} %>
+      <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {inline: true, help: "help text", label: {hide: true}} %>
+    <% end %>
+  </div>
+</div>
 
-<% @user.test = "c" %>
-<%= bootstrap_form_with model: @user, url: "/" do |form| %>
-  <%= form.collection_radio_buttons :test, [["a", "Label A"], ["b", "Label B"]], :first, :second %>
-  <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {help: "help text"} %>
-  <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {inline: true, label: {text: "Custom Label"}} %>
-  <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {inline: true, help: "help text", label: {hide: true}} %>
-<% end %>
+<div class="row">
+  <div class="col-6">
+    <h3>Input Group</h3>
 
-<h3>Input Group</h3>
+    <%= bootstrap_form_with model: @user, scope: "user_f", url: "/" do |form| %>
+      <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {prepend: "Prepend", append: "Append", help: "help text"} %>
+      <% prepend_button = capture do %>
+        <button class="btn btn-success">Go</button>
+      <% end %>
+      <% append_button = capture do %>
+        <button class="btn btn-danger">Stop</button>
+      <% end %>
+      <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {hide: true}, prepend: {html: prepend_button}, append: {html: append_button}} %>
+    <% end %>
+  </div>
+  <div class="col-6">
+    <h3>With Errors</h3>
 
-<%= bootstrap_form_with model: @user, url: "/" do |form| %>
-  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {prepend: "Prepend", append: "Append"} %>
-  <% prepend_button = capture do %>
-    <button class="btn btn-success">Go</button>
-  <% end %>
-  <% append_button = capture do %>
-    <button class="btn btn-danger">Stop</button>
-  <% end %>
-  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {hide: true}, prepend: {html: prepend_button}, append: {html: append_button}} %>
-<% end %>
-
-<h3>Horizontal Form With Errors</h3>
-
-<%= bootstrap_form_with model: @user_with_error, url: "/", bootstrap: {layout: :horizontal} do |form| %>
-  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
-  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {help: "Help me!", prepend: "Prepend", append: "Append"} %>
-  <%= form.check_box :terms, bootstrap: {help: "help text"}%>
-  <%= form.collection_radio_buttons :test, ["a", "b", "c"], :to_s, :to_s, bootstrap: {help: "help text"} %>
-  <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {inline: true, help: "help text"} %>
-  <%= form.submit %>
-<% end %>
+    <%= bootstrap_form_with model: @user_with_error, scope: "user_g", url: "/" do |form| %>
+      <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {prepend: "Prepend", append: "Append", help: "help text"} %>
+      <% prepend_button = capture do %>
+        <button class="btn btn-success">Go</button>
+      <% end %>
+      <% append_button = capture do %>
+        <button class="btn btn-danger">Stop</button>
+      <% end %>
+      <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {hide: true}, prepend: {html: prepend_button}, append: {html: append_button}} %>
+    <% end %>
+  <div>
+</div>
