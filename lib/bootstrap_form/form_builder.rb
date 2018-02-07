@@ -12,10 +12,11 @@ module BootstrapForm
 
     delegate :content_tag, :capture, :concat, to: :@template
 
-    attr_accessor :bootstrap
+    # Bootstrap settings set on the form itself
+    attr_accessor :form_bootstrap
 
     def initialize(object_name, object, template, options)
-      @bootstrap = BootstrapForm::BootstrapOptions.new(options.delete(:bootstrap))
+      @form_bootstrap = BootstrapForm::BootstrapOptions.new(options.delete(:bootstrap))
       super(object_name, object, template, options)
     end
 
@@ -30,8 +31,8 @@ module BootstrapForm
     FIELD_HELPERS.each do |field_helper|
       class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
         def #{field_helper}(method, options = {})
-          bootstrap_options = bootstrap.scoped(options.delete(:bootstrap))
-          draw_form_group(bootstrap_options, method, options) do
+          bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+          draw_form_group(bootstrap, method, options) do
             super(method, options)
           end
         end
@@ -43,8 +44,8 @@ module BootstrapForm
     #   select :choices, ["a", "b"], {}, bootstrap: {label: {text: "Custom"}}
     #
     def select(method, choices = nil, options = {}, html_options = {}, &block)
-      bootstrap_options = bootstrap.scoped(options.delete(:bootstrap))
-      draw_form_group(bootstrap_options, method, html_options) do
+      bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+      draw_form_group(bootstrap, method, html_options) do
         super(method, choices, options, html_options, &block)
       end
     end
@@ -54,17 +55,16 @@ module BootstrapForm
     #   checkbox :agree, bootstrap: {label: {text: "Do you agree?"}}
     #
     def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
-      bootstrap_options       = bootstrap.scoped(options.delete(:bootstrap))
-      bootstrap_label_options = bootstrap_options.label
+      bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
 
-      help_text = draw_help(bootstrap_options.help)
+      help_text = draw_help(bootstrap.help)
       errors    = draw_errors(method)
 
       add_css_class!(options, "form-check-input")
       add_css_class!(options, "is-invalid") if errors.present?
 
       label_text = nil
-      if (custom_text = bootstrap_label_options[:text]).present?
+      if (custom_text = bootstrap.label[:text]).present?
         label_text = custom_text
       end
 
@@ -73,7 +73,7 @@ module BootstrapForm
       fieldset_css_class << " #{bootstrap.inline_margin_class}" if bootstrap.inline?
 
       content_tag(:fieldset, class: fieldset_css_class) do
-        draw_control_column(offset: true) do
+        draw_control_column(bootstrap, offset: true) do
           content_tag(:div, class: "form-check") do
             concat super(method, options, checked_value, unchecked_value)
             concat label(method, label_text, class: "form-check-label")
@@ -96,9 +96,9 @@ module BootstrapForm
     #   label: {hide: true}     - to not render label at all
     #
     def collection_radio_buttons(method, collection, value_method, text_method, options = {}, html_options = {})
-      bootstrap_options = bootstrap.scoped(options.delete(:bootstrap))
+      bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
 
-      args = [bootstrap_options, method, collection, value_method, text_method, options, html_options]
+      args = [bootstrap, method, collection, value_method, text_method, options, html_options]
       draw_choices(*args) do |m, v, opts|
         radio_button(m, v, opts)
       end
@@ -110,14 +110,14 @@ module BootstrapForm
     #   collection_check_boxes :choices, Choice.all, :id, :label
     #
     def collection_check_boxes(method, collection, value_method, text_method, options = {}, html_options = {})
-      bootstrap_options = bootstrap.scoped(options.delete(:bootstrap))
+      bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
 
       content = "".html_safe
       unless options[:include_hidden] == false
         content << hidden_field(method, multiple: true, value: "")
       end
 
-      args = [bootstrap_options, method, collection, value_method, text_method, options, html_options]
+      args = [bootstrap, method, collection, value_method, text_method, options, html_options]
       content << draw_choices(*args) do |m, v, opts|
         opts[:multiple]       = true
         opts[:include_hidden] = false
@@ -130,8 +130,8 @@ module BootstrapForm
     #   plaintext(:value)
     #
     def plaintext(method, options = {})
-      bootstrap_options = bootstrap.scoped(options.delete(:bootstrap))
-      draw_form_group(bootstrap_options, method, options) do
+      bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+      draw_form_group(bootstrap, method, options) do
         remove_css_class!(options, "form-control")
         add_css_class!(options, "form-control-plaintext")
         options[:readonly] = true
@@ -152,6 +152,8 @@ module BootstrapForm
     #   end
     #
     def submit(value = nil, options = {}, &block)
+      bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+
       value, options = nil, value if value.is_a?(Hash)
       add_css_class!(options, "btn")
 
@@ -159,7 +161,7 @@ module BootstrapForm
       form_group_class << " row" if bootstrap.horizontal?
 
       content_tag(:div, class: form_group_class) do
-        draw_control_column(offset: true) do
+        draw_control_column(bootstrap, offset: true) do
           out = super(value, options)
           out << capture(&block) if block_given?
           out
@@ -181,14 +183,13 @@ module BootstrapForm
     #   end
     #
     def form_group(options = {}, &block)
-      bootstrap_options = bootstrap.scoped(options.delete(:bootstrap))
-      bootstrap_label_options = bootstrap_options.label
+      bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
 
-      label_text = bootstrap_label_options[:text]
+      label_text = bootstrap.label[:text]
 
       label = if label_text.present?
         label_options = {}
-        add_css_class!(label_options, bootstrap_label_options[:class])
+        add_css_class!(label_options, bootstrap.label[:class])
 
         if bootstrap.horizontal?
           add_css_class!(label_options, "col-form-label")
@@ -208,7 +209,7 @@ module BootstrapForm
       content_tag(:div, class: form_group_class) do
         content = "".html_safe
         content << label if label.present?
-        content << draw_control_column(offset: label.blank?) do
+        content << draw_control_column(bootstrap, offset: label.blank?) do
           yield
         end
       end
@@ -217,11 +218,11 @@ module BootstrapForm
   private
 
     # form group wrapper for input fields
-    def draw_form_group(bootstrap_options, method, options, &block)
-      label  = draw_label(bootstrap_options, method)
+    def draw_form_group(bootstrap, method, options, &block)
+      label  = draw_label(bootstrap, method)
       errors = draw_errors(method)
 
-      control = draw_control(bootstrap_options, errors, method, options) do
+      control = draw_control(bootstrap, errors, method, options) do
         yield
       end
 
@@ -253,18 +254,16 @@ module BootstrapForm
     #
     #   text_field(:value, bootstrap: {label: {text: "Custom", class: "custom"}})
     #
-    def draw_label(bootstrap_options, method)
-      bootstrap_label_options = bootstrap_options.label
-
+    def draw_label(bootstrap, method)
       text    = nil
       options = {}
 
-      if (custom_text = bootstrap_label_options[:text]).present?
+      if (custom_text = bootstrap.label[:text]).present?
         text = custom_text
       end
 
-      add_css_class!(options, bootstrap_label_options[:class])
-      add_css_class!(options, "sr-only") if bootstrap_label_options[:hide]
+      add_css_class!(options, bootstrap.label[:class])
+      add_css_class!(options, "sr-only") if bootstrap.label[:hide]
       add_css_class!(options, bootstrap.inline_margin_class) if bootstrap.inline?
 
       if bootstrap.horizontal?
@@ -277,16 +276,14 @@ module BootstrapForm
     end
 
     # Renders control for a given field
-    def draw_control(bootstrap_options, errors, method, options, &block)
-      bootstrap_label_options  = bootstrap_options.label
-
+    def draw_control(bootstrap, errors, method, options, &block)
       add_css_class!(options, "form-control")
       add_css_class!(options, "is-invalid") if errors.present?
 
-      offset = !!bootstrap_label_options[:hide]
+      offset = !!bootstrap.label[:hide]
 
-      draw_control_column(offset: offset) do
-        draw_input_group(bootstrap_options, errors) do
+      draw_control_column(bootstrap, offset: offset) do
+        draw_input_group(bootstrap, errors) do
           yield
         end
       end
@@ -294,7 +291,7 @@ module BootstrapForm
 
     # Wrapping in control in column wrapper
     #
-    def draw_control_column(offset:, &block)
+    def draw_control_column(bootstrap, offset:, &block)
       return yield unless bootstrap.horizontal?
       css_class = "#{bootstrap.control_col_class}"
       css_class << " #{bootstrap.offset_col_class}" if offset
@@ -309,11 +306,11 @@ module BootstrapForm
     #   text_field(:value, bootstrap: {prepend: "$.$$"}})
     #   text_field(:value, bootstrap: {append: {html: "<button>Go</button>"}}})
     #
-    def draw_input_group(bootstrap_options, errors, &block)
-      prepend_html  = draw_input_group_content(bootstrap_options, :prepend)
-      append_html   = draw_input_group_content(bootstrap_options, :append)
+    def draw_input_group(bootstrap, errors, &block)
+      prepend_html  = draw_input_group_content(bootstrap, :prepend)
+      append_html   = draw_input_group_content(bootstrap, :append)
 
-      help_text = draw_help(bootstrap_options.help)
+      help_text = draw_help(bootstrap.help)
 
       # Not prepending or appending anything. Bail.
       if prepend_html.blank? && append_html.blank?
@@ -332,8 +329,8 @@ module BootstrapForm
       end
     end
 
-    def draw_input_group_content(bootstrap_options, type)
-      value = bootstrap_options.send(type)
+    def draw_input_group_content(bootstrap, type)
+      value = bootstrap.send(type)
       return unless value.present?
 
       content_tag(:div, class: "input-group-#{type}") do
@@ -355,16 +352,16 @@ module BootstrapForm
     end
 
     # Rendering of choices for checkboxes and radio buttons
-    def draw_choices(bootstrap_options, method, collection, value_method, text_method, options, html_options, &input)
+    def draw_choices(bootstrap, method, collection, value_method, text_method, options, html_options, &input)
       add_css_class!(html_options, "form-check-input")
 
-      draw_form_group_fieldset(bootstrap_options, method, html_options) do
+      draw_form_group_fieldset(bootstrap, method, html_options) do
 
         form_check_css_class = "form-check"
-        form_check_css_class << " form-check-inline" if bootstrap_options.check_inline
+        form_check_css_class << " form-check-inline" if bootstrap.check_inline
 
         errors    = draw_errors(method)
-        help_text = draw_help(bootstrap_options.help)
+        help_text = draw_help(bootstrap.help)
 
         add_css_class!(html_options, "is-invalid") if errors.present?
 
@@ -376,14 +373,14 @@ module BootstrapForm
           content << content_tag(:div, class: form_check_css_class) do
             concat input.call(method, item_value, html_options)
             concat label(method, item_text, value: item_value, class: "form-check-label")
-            if ((collection.count - 1) == index) && !bootstrap_options.check_inline
+            if ((collection.count - 1) == index) && !bootstrap.check_inline
               concat errors     if errors.present?
               concat help_text  if help_text.present?
             end
           end
         end
 
-        if bootstrap_options.check_inline
+        if bootstrap.check_inline
           content << errors     if errors.present?
           content << help_text  if help_text.present?
         end
@@ -393,22 +390,24 @@ module BootstrapForm
     end
 
     # Wrapper for collections of radio buttons and checkboxes
-    def draw_form_group_fieldset(bootstrap_options, method, options, &block)
-      bootstrap_label_options = bootstrap_options.label
+    def draw_form_group_fieldset(bootstrap, method, options, &block)
 
-      unless bootstrap_label_options[:hide]
-        label_text = bootstrap_label_options.delete(:text)
+      options = {}
+
+      unless bootstrap.label[:hide]
+        label_text = bootstrap.label[:text]
         label_text ||= ActionView::Helpers::Tags::Label::LabelBuilder
           .new(@template, @object_name.to_s, method, @object, nil).translation
 
-        add_css_class!(bootstrap_label_options, "col-form-label pt-0")
+        add_css_class!(options, "col-form-label pt-0")
+        add_css_class!(options, bootstrap.label[:class])
 
         if bootstrap.horizontal?
-          add_css_class!(bootstrap_label_options, bootstrap.label_col_class)
-          add_css_class!(bootstrap_label_options, bootstrap.label_align_class)
+          add_css_class!(options, bootstrap.label_col_class)
+          add_css_class!(options, bootstrap.label_align_class)
         end
 
-        label = content_tag(:legend, bootstrap_label_options) do
+        label = content_tag(:legend, options) do
           label_text
         end
       end
@@ -416,7 +415,7 @@ module BootstrapForm
       content_tag(:fieldset, class: "form-group") do
         content = "".html_safe
         content << label if label.present?
-        content << draw_control_column(offset: bootstrap_label_options[:hide]) do
+        content << draw_control_column(bootstrap, offset: bootstrap.label[:hide]) do
           yield
         end
 
