@@ -280,9 +280,7 @@ module BootstrapForm
       add_css_class!(options, "form-control")
       add_css_class!(options, "is-invalid") if errors.present?
 
-      offset = !!bootstrap.label[:hide]
-
-      draw_control_column(bootstrap, offset: offset) do
+      draw_control_column(bootstrap, offset: !!bootstrap.label[:hide]) do
         draw_input_group(bootstrap, errors) do
           yield
         end

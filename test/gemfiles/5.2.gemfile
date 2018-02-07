@@ -5,6 +5,7 @@ gemspec path: "../../"
 gem "rails", "~> 5.2.0.rc1"
 
 group :test do
+  gem "rubocop", "~> 0.51.0", require: false
   gem "minitest"
   gem "diffy"
   gem "equivalent-xml"
