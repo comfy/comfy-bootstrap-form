@@ -5,7 +5,7 @@ class ViewHelpersTest < ActionView::TestCase
   include BootstrapForm::ViewHelper
 
   def test_bootstrap_form_with
-    actual = bootstrap_form_with(url: "/test"){ }
+    actual = bootstrap_form_with(url: "/test"){}
     expected = <<-HTML
       <form action="/test" accept-charset="UTF-8" data-remote="true" method="post">
         <input name="utf8" type="hidden" value="&#x2713;" />
