@@ -320,13 +320,15 @@ module BootstrapForm
         return content
       end
 
-      content_tag(:div, class: "input-group") do
+      content = "".html_safe
+      content << content_tag(:div, class: "input-group") do
         concat prepend_html if prepend_html.present?
         concat capture(&block)
         concat append_html  if append_html.present?
-        concat errors       if errors.present?
-        concat help_text    if help_text.present?
       end
+      content << errors     if errors.present?
+      content << help_text  if help_text.present?
+      content
     end
 
     def draw_input_group_content(bootstrap, type)
