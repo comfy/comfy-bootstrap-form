@@ -25,6 +25,40 @@ module BootstrapForm
     # CSS class used to space out form groups for inline forms. Default: "mr-sm-2"
     attr_reader :inline_margin_class
 
+    # Label specific options. Default is and empty hash. Options are as follows:
+    #   text:   "Label Text"  - override automatically generated label text
+    #   hide:   true          - label only visible to screen readers
+    #   class:  "custom"      - append custom CSS class
+    # Example:
+    #
+    #   form.label :username, bootstrap: {label: {text: "Name", class: "important"}}
+    #
+    attr_reader :label
+
+    # Input groups allow prepending and appending arbitrary html. By default
+    # these are nil. Example usage:
+    #
+    #   form.text_field :dollars, bootstrap: {prepend: "$", append: ".00"}
+    #
+    # For non-text values, use hash like so:
+    #
+    #   form.text_field :search, bootstrap: {append: {html: "<button>Go</button>".html_safe}}
+    #
+    attr_reader :prepend
+    attr_reader :append
+
+    # Help text that goes under the form field. Example usage:
+    #
+    #   form.password_field :password, bootstrap: {help: "Password should be more than 8 characters in length"}
+    #
+    attr_reader :help
+
+    # Options to render checkboxes and radio buttons inline. Default is false. Example:
+    #
+    #   form.collection_radio_buttons :choices, ["yes", "no"], :to_s, :to_s, bootstrap: {check_inline: true}
+    #
+    attr_reader :check_inline
+
     def initialize(options = {})
       set_defaults
       set_options(options)
@@ -57,6 +91,12 @@ module BootstrapForm
       scope
     end
 
+    def set_options(options = {})
+      options.is_a?(Hash) && options.each do |key, value|
+        instance_variable_set("@#{key}", value)
+      end
+    end
+
   private
 
     def set_defaults
@@ -65,12 +105,11 @@ module BootstrapForm
       @control_col_class    = "col-sm-10"
       @label_align_class    = "text-sm-right"
       @inline_margin_class  = "mr-sm-2"
-    end
-
-    def set_options(options = {})
-      options.is_a?(Hash) && options.each do |key, value|
-        instance_variable_set("@#{key}", value)
-      end
+      @label                = {}
+      @append               = nil
+      @prepend              = nil
+      @help                 = nil
+      @check_inline         = false
     end
 
   end

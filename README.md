@@ -101,7 +101,7 @@ gem takes care of rendering of labels and inputs for you.
 You may choose to render inputs inline:
 
 ```erb
-<%= form.collection_check_boxes :choices, Choices.all, :id, :label, bootstrap: {inline: true} %>
+<%= form.collection_check_boxes :choices, Choices.all, :id, :label, bootstrap: {check_inline: true} %>
 ```
 
 #### Submit

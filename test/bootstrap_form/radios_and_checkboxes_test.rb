@@ -107,7 +107,7 @@ class RadiosAndCheckboxessTest < ActionView::TestCase
 
   def test_radio_buttons_inline
     actual = @builder.collection_radio_buttons(:test, ["a", "b"], :to_s, :titleize, bootstrap: {
-      inline: true
+      check_inline: true
     })
     expected = <<-HTML
       <fieldset class="form-group">
@@ -187,7 +187,7 @@ class RadiosAndCheckboxessTest < ActionView::TestCase
 
   def test_radio_buttons_with_inline_help
     actual = @builder.collection_radio_buttons(:test, ["a", "b"], :to_s, :titleize, bootstrap: {
-      inline: true, help: "help me"
+      check_inline: true, help: "help me"
     })
     expected = <<-HTML
       <fieldset class="form-group">

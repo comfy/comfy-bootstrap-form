@@ -30,7 +30,7 @@ module BootstrapForm
     FIELD_HELPERS.each do |field_helper|
       class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
         def #{field_helper}(method, options = {})
-          bootstrap_options = (options.delete(:bootstrap) || {})
+          bootstrap_options = bootstrap.scoped(options.delete(:bootstrap))
           draw_form_group(bootstrap_options, method, options) do
             super(method, options)
           end
@@ -43,7 +43,7 @@ module BootstrapForm
     #   select :choices, ["a", "b"], {}, bootstrap: {label: {text: "Custom"}}
     #
     def select(method, choices = nil, options = {}, html_options = {}, &block)
-      bootstrap_options = (html_options.delete(:bootstrap) || {})
+      bootstrap_options = bootstrap.scoped(options.delete(:bootstrap))
       draw_form_group(bootstrap_options, method, html_options) do
         super(method, choices, options, html_options, &block)
       end
@@ -54,10 +54,10 @@ module BootstrapForm
     #   checkbox :agree, bootstrap: {label: {text: "Do you agree?"}}
     #
     def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
-      bootstrap_options       = options.delete(:bootstrap) || {}
-      bootstrap_label_options = bootstrap_options[:label] || {}
+      bootstrap_options       = bootstrap.scoped(options.delete(:bootstrap))
+      bootstrap_label_options = bootstrap_options.label
 
-      help_text = draw_help(bootstrap_options[:help])
+      help_text = draw_help(bootstrap_options.help)
       errors    = draw_errors(method)
 
       add_css_class!(options, "form-check-input")
@@ -96,7 +96,7 @@ module BootstrapForm
     #   label: {hide: true}     - to not render label at all
     #
     def collection_radio_buttons(method, collection, value_method, text_method, options = {}, html_options = {})
-      bootstrap_options = (options.delete(:bootstrap) || {})
+      bootstrap_options = bootstrap.scoped(options.delete(:bootstrap))
 
       args = [bootstrap_options, method, collection, value_method, text_method, options, html_options]
       draw_choices(*args) do |m, v, opts|
@@ -110,7 +110,7 @@ module BootstrapForm
     #   collection_check_boxes :choices, Choice.all, :id, :label
     #
     def collection_check_boxes(method, collection, value_method, text_method, options = {}, html_options = {})
-      bootstrap_options = (options.delete(:bootstrap) || {})
+      bootstrap_options = bootstrap.scoped(options.delete(:bootstrap))
 
       content = "".html_safe
       unless options[:include_hidden] == false
@@ -130,7 +130,7 @@ module BootstrapForm
     #   plaintext(:value)
     #
     def plaintext(method, options = {})
-      bootstrap_options = (options.delete(:bootstrap) || {})
+      bootstrap_options = bootstrap.scoped(options.delete(:bootstrap))
       draw_form_group(bootstrap_options, method, options) do
         remove_css_class!(options, "form-control")
         add_css_class!(options, "form-control-plaintext")
@@ -181,8 +181,8 @@ module BootstrapForm
     #   end
     #
     def form_group(options = {}, &block)
-      bootstrap_options       = options.delete(:bootstrap) || {}
-      bootstrap_label_options = bootstrap_options.delete(:label) || {}
+      bootstrap_options = bootstrap.scoped(options.delete(:bootstrap))
+      bootstrap_label_options = bootstrap_options.label
 
       label_text = bootstrap_label_options[:text]
 
@@ -254,7 +254,7 @@ module BootstrapForm
     #   text_field(:value, bootstrap: {label: {text: "Custom", class: "custom"}})
     #
     def draw_label(bootstrap_options, method)
-      bootstrap_label_options = bootstrap_options[:label] || {}
+      bootstrap_label_options = bootstrap_options.label
 
       text    = nil
       options = {}
@@ -278,7 +278,7 @@ module BootstrapForm
 
     # Renders control for a given field
     def draw_control(bootstrap_options, errors, method, options, &block)
-      bootstrap_label_options  = bootstrap_options[:label] || {}
+      bootstrap_label_options  = bootstrap_options.label
 
       add_css_class!(options, "form-control")
       add_css_class!(options, "is-invalid") if errors.present?
@@ -313,7 +313,7 @@ module BootstrapForm
       prepend_html  = draw_input_group_content(bootstrap_options, :prepend)
       append_html   = draw_input_group_content(bootstrap_options, :append)
 
-      help_text = draw_help(bootstrap_options[:help])
+      help_text = draw_help(bootstrap_options.help)
 
       # Not prepending or appending anything. Bail.
       if prepend_html.blank? && append_html.blank?
@@ -333,7 +333,7 @@ module BootstrapForm
     end
 
     def draw_input_group_content(bootstrap_options, type)
-      value = bootstrap_options[type]
+      value = bootstrap_options.send(type)
       return unless value.present?
 
       content_tag(:div, class: "input-group-#{type}") do
@@ -361,10 +361,10 @@ module BootstrapForm
       draw_form_group_fieldset(bootstrap_options, method, html_options) do
 
         form_check_css_class = "form-check"
-        form_check_css_class << " form-check-inline" if bootstrap_options[:inline]
+        form_check_css_class << " form-check-inline" if bootstrap_options.check_inline
 
         errors    = draw_errors(method)
-        help_text = draw_help(bootstrap_options[:help])
+        help_text = draw_help(bootstrap_options.help)
 
         add_css_class!(html_options, "is-invalid") if errors.present?
 
@@ -376,14 +376,14 @@ module BootstrapForm
           content << content_tag(:div, class: form_check_css_class) do
             concat input.call(method, item_value, html_options)
             concat label(method, item_text, value: item_value, class: "form-check-label")
-            if ((collection.count - 1) == index) && !bootstrap_options[:inline]
+            if ((collection.count - 1) == index) && !bootstrap_options.check_inline
               concat errors     if errors.present?
               concat help_text  if help_text.present?
             end
           end
         end
 
-        if bootstrap_options[:inline]
+        if bootstrap_options.check_inline
           content << errors     if errors.present?
           content << help_text  if help_text.present?
         end
@@ -394,7 +394,7 @@ module BootstrapForm
 
     # Wrapper for collections of radio buttons and checkboxes
     def draw_form_group_fieldset(bootstrap_options, method, options, &block)
-      bootstrap_label_options = bootstrap_options[:label] || {}
+      bootstrap_label_options = bootstrap_options.label
 
       unless bootstrap_label_options[:hide]
         label_text = bootstrap_label_options.delete(:text)
