@@ -5,6 +5,9 @@ ActiveRecord::Schema.define(version: 1) do
     t.string  :password
     t.boolean :terms, default: false
     t.string  :test
+    t.string  :bio
+    t.string  :color
+    t.string  :locale
     t.timestamps
   end
 

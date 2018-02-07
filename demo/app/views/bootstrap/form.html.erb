@@ -1,36 +1,29 @@
 <h3>Horizontal Form</h3>
 
 <%= bootstrap_form_with model: @user, url: "/", bootstrap: {layout: :horizontal} do |form| %>
-  <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>
-  <%= form.email_field :email, bootstrap: {prepend: "Prepend", append: "Append"} %>
-  <%= form.check_box :terms, bootstrap: {help: "You better check this"} %>
-  <%= form.collection_radio_buttons :test, ["1", "2", "3"], :to_s, :to_s, bootstrap: {help: "help text"} %>
-  <%= form.text_field :test, bootstrap: {label: {hide: true}} %>
-  <%= form.collection_check_boxes :test, ["11", "22", "33"], :to_s, :to_s, bootstrap: {help: "help text", inline: true, label: {hide: true}} %>
-  <%= form.form_group bootstrap: {label: {text: "Lorem", class: "lorem pt-0"}} do %>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua.
-  <% end %>
-  <%= form.primary "Smash That Button" do %>
-    <a href="/" class="btn btn-link">Unsubcribe</a>
+  <%= form.email_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
+  <%= form.email_field :email, placeholder: "you@example.com" %>
+  <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
+  <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {inline: true, help: "Choose your favorite color"} %>
+  <%= form.text_area :bio, placeholder: "Tell us your life story" %>
+  <%= form.select :locale, [["English", "en"], ["French", "fr"]], {}, bootstrap: {label: {text: "Language"}} %>
+  <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
+  <%= form.primary "Press to Register" do %>
+    <a href="/" class="btn btn-link">Maybe Later</a>
   <% end %>
 <% end %>
 
 <h3>Inline Form</h3>
 
-<%= bootstrap_form_with model: @user, url: "/", bootstrap: {layout: :inline} do |form| %>
-  <%= form.email_field :email, placeholder: "Enter Email" %>
-  <%= form.password_field :password, placeholder: "Password", bootstrap: {label: {hide: true}, prepend: "???", append: "???"} %>
-  <%= form.check_box :terms %>
-  <%= form.form_group do %>
-    Lorem
-  <% end %>
-  <%= form.primary "Submit" do %>
-    <a href="/" class="btn btn-link">Cancel</a>
-  <% end %>
+<%= bootstrap_form_with scope: :login, url: "/", bootstrap: {layout: :inline} do |form| %>
+  <%= form.email_field :username, placeholder: "Username", bootstrap: {label: {hide: true}, prepend: "@"} %>
+  <%= form.password_field :password, placeholder: "Password", bootstrap: {label: {hide: true}} %>
+  <%= form.check_box :remember_me %>
+  <%= form.primary "Sign in", class: "ml-3" %>
 <% end %>
 
-<h3>Simple Form</h3>
+
+<h3>Default Form</h3>
 
 <%= bootstrap_form_with model: @user, url: "/" do |form| %>
   <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {text: "Email address"}, help: "We'll never share your email with anyone else"} %>

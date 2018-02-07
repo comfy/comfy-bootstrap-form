@@ -251,6 +251,24 @@ messages show up (see: https://github.com/twbs/bootstrap/issues/25540):
 }
 ```
 
+## Screenshots
+
+#### Vertical
+
+![Vertical Form](/demo/form_preview_vertical.png)
+
+#### Horizontal
+
+![Horizontal Form](/demo/form_preview_horizontal.png)
+
+#### Horizontal With Errors
+
+![Horizontal Form With Errors](/demo/form_preview_horizontal_with_errors.png)
+
+#### Inline
+
+![Inline](/demo/form_preview_inline.png)
+
 ---
 
 Copyright 2018 Oleg Khabarov, Released under the [MIT License](LICENCE.md)
