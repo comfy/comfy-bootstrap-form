@@ -153,6 +153,43 @@ If you need to add a label:
 
 ## Bootstrap options
 
+Here's a list of all possible bootstrap options you can pass via `:bootstrap`
+option that can be attached to the `bootstrap_form_with` and any helpers inside
+of it.
+
+```
+layout:               "vertical"
+label_col_class:      "col-sm-2"
+control_col_class:    "col-sm-10"
+label_align_class:    "text-sm-right"
+inline_margin_class:  "mr-sm-2"
+label:                {}
+append:               nil
+prepend:              nil
+help:                 nil
+check_inline:         false
+```
+
+Options applied on the form level will apply to all field helpers. Options
+on field helpers will override form-level options. For example, here's a form
+where all labels are hidden:
+
+```erb
+<%= bootstrap_form_with model: @user, bootstrap: {label: {hide: true}} do |form| %>
+  <%= form.email_field :email %>
+  <%= form.text_field :username %>
+<% end %>
+```
+
+Here's an example of a form where one field uses different label alignment:
+
+```erb
+<%= bootstrap_form_with model: @user do |form| %>
+  <%= form.email_field :email, bootstrap: {label_align_class: "text-sm-left"} %>
+  <%= form.text_field :username %>
+<% end %>
+```
+
 #### Horizontal Form
 
 By default form is rendered as a stack. Labels are above inputs, and inputs
@@ -161,24 +198,7 @@ labels and corresponding inputs side by side:
 
 ```erb
 <%= bootstrap_form_with model: @user, bootstrap: {layout: :horizontal} do |form| %>
-  <%= form.text_field :email %>
-<% end %>
-```
-
-There are options that control column width and label alignment. Here's how it
-would look with all the defaults:
-
-```erb
-<%
-bootstrap_options = {
-  layout:             "horizontal",
-  label_col_class:    "col-sm-2",
-  control_col_class:  "col-sm-10",
-  label_align_class:  "text-sm-right"
-}
-%>
-<%= bootstrap_form_with model: @user, bootstrap: bootstrap_options do |form| %>
-  <%= form.text_field :email %>
+  <%= form.email_field :email %>
 <% end %>
 ```
 

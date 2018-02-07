@@ -325,8 +325,8 @@ module BootstrapForm
         concat prepend_html if prepend_html.present?
         concat capture(&block)
         concat append_html  if append_html.present?
+        concat errors       if errors.present?
       end
-      content << errors     if errors.present?
       content << help_text  if help_text.present?
       content
     end
