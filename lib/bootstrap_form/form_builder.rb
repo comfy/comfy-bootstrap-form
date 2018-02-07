@@ -15,7 +15,7 @@ module BootstrapForm
     attr_accessor :bootstrap
 
     def initialize(object_name, object, template, options)
-      @bootstrap = BootstrapForm::BootstrapOptions.new(options.delete(:bootstrap) || {})
+      @bootstrap = BootstrapForm::BootstrapOptions.new(options.delete(:bootstrap))
       super(object_name, object, template, options)
     end
 

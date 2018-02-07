@@ -55,4 +55,13 @@ class BootstrapOptionsTest < ActiveSupport::TestCase
     assert_equal "offset-md-4", options.offset_col_class
   end
 
+  def scoped
+    options = BootstrapForm::BootstrapOptions.new
+    refute options.horizontal?
+
+    scoped_options = options.scoped(layout: "vertical")
+    assert scoped_options.horizontal?
+    refute options.horizontal?
+  end
+
 end
