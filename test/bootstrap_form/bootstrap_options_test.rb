@@ -1,6 +1,12 @@
 require_relative "../test_helper"
 
-class BootstrapOptionsTest < ActiveSupport::TestCase
+class BootstrapOptionsTest < ActionView::TestCase
+
+  setup do
+    @builder = BootstrapForm::FormBuilder.new(:user, nil, self, {
+      bootstrap: {layout: "horizontal", label: {hide: true}}
+    })
+  end
 
   def test_defaults
     options = BootstrapForm::BootstrapOptions.new
@@ -77,6 +83,30 @@ class BootstrapOptionsTest < ActiveSupport::TestCase
     scoped_options = options.scoped(layout: "vertical")
     assert scoped_options.horizontal?
     refute options.horizontal?
+  end
+
+  def test_form_fields_global_options
+    actual = @builder.text_field :email
+    expected = <<-HTML
+      <div class="form-group row">
+        <label class="sr-only col-form-label col-sm-2 text-sm-right" for="user_email">Email</label>
+        <div class="col-sm-10 offset-sm-2">
+          <input class="form-control" id="user_email" name="user[email]" type="text"/>
+        </div>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_form_fields_global_options_override
+    actual = @builder.text_field :email, bootstrap: {layout: "vertical"}
+    expected = <<-HTML
+      <div class="form-group">
+        <label class="sr-only" for="user_email">Email</label>
+        <input class="form-control" id="user_email" name="user[email]" type="text"/>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
   end
 
 end

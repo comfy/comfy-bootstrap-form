@@ -87,7 +87,7 @@ class FieldsWithErrorsTest < ActionView::TestCase
   end
 
   def test_text_field_with_input_group_error
-    actual = @builder.text_field(:test, bootstrap: {prepend: "A", append: "Z"})
+    actual = @builder.text_field(:test, bootstrap: {prepend: "A", append: "Z", help: "help text"})
     expected = <<-HTML
       <div class="form-group">
         <label for="user_test">Test</label>
@@ -101,6 +101,7 @@ class FieldsWithErrorsTest < ActionView::TestCase
           </div>
           <div class="invalid-feedback">invalid</div>
         </div>
+        <small class="form-text text-muted">help text</small>
       </div>
     HTML
     assert_xml_equal expected, actual

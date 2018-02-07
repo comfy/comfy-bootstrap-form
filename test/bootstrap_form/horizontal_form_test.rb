@@ -123,8 +123,8 @@ class HorizontalFormTest < ActionView::TestCase
             <div class="input-group-append">
               <span class="input-group-text">append</span>
             </div>
-            <small class="form-text text-muted">help me</small>
           </div>
+          <small class="form-text text-muted">help me</small>
         </div>
       </div>
     HTML
