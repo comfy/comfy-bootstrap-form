@@ -154,8 +154,8 @@ If you need to add a label:
 ## Bootstrap options
 
 Here's a list of all possible bootstrap options you can pass via `:bootstrap`
-option that can be attached to the `bootstrap_form_with` and any helpers inside
-of it.
+option that can be attached to the `bootstrap_form_with` and any field helpers
+inside of it:
 
 ```
 layout:               "vertical"
@@ -197,7 +197,7 @@ take up 100% of the width. You can change form layout to `horizontal` to put
 labels and corresponding inputs side by side:
 
 ```erb
-<%= bootstrap_form_with model: @user, bootstrap: {layout: :horizontal} do |form| %>
+<%= bootstrap_form_with model: @user, bootstrap: {layout: "horizontal"} do |form| %>
   <%= form.email_field :email %>
 <% end %>
 ```
@@ -208,7 +208,7 @@ You may choose to render form elements in one line. Please note that this layout
 won't render all form elements. Things like errors messages won't show up right.
 
 ```erb
-<%= bootstrap_form_with url: "/search" do |form| %>
+<%= bootstrap_form_with url: "/search", bootstrap: {layout: "inline"} do |form| %>
   <%= form.text_field :query %>
   <%= form.submit "Search" %>
 <% end %>
