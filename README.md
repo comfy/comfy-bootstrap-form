@@ -253,10 +253,6 @@ messages show up (see: https://github.com/twbs/bootstrap/issues/25540):
 
 ## Screenshots
 
-#### Vertical
-
-![Vertical Form](/demo/form_preview_vertical.png)
-
 #### Horizontal
 
 ![Horizontal Form](/demo/form_preview_horizontal.png)
@@ -264,6 +260,10 @@ messages show up (see: https://github.com/twbs/bootstrap/issues/25540):
 #### Horizontal With Errors
 
 ![Horizontal Form With Errors](/demo/form_preview_horizontal_with_errors.png)
+
+#### Vertical
+
+![Vertical Form](/demo/form_preview_vertical.png)
 
 #### Inline
 
