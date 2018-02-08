@@ -1,11 +1,11 @@
 ENV["RAILS_ENV"] = "test"
 
-require 'coveralls'
+require "coveralls"
 Coveralls.wear!
 
-require 'diffy'
-require 'nokogiri'
-require 'equivalent-xml'
+require "diffy"
+require "nokogiri"
+require "equivalent-xml"
 
 require_relative "../demo/config/environment.rb"
 require "rails/test_help"
@@ -20,7 +20,7 @@ class ActionView::TestCase
     actual_xml   = Nokogiri::XML("<test-xml>\n#{actual}\n</test-xml>", &:noblanks)
 
     equivalent = EquivalentXml.equivalent?(expected_xml, actual_xml)
-    assert equivalent, lambda {
+    assert equivalent, -> {
       # using a lambda because diffing is expensive
       Diffy::Diff.new(
         sort_attributes(expected_xml.root).to_xml(indent: 2),

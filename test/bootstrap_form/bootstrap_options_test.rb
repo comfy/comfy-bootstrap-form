@@ -3,9 +3,11 @@ require_relative "../test_helper"
 class BootstrapOptionsTest < ActionView::TestCase
 
   setup do
-    @builder = BootstrapForm::FormBuilder.new(:user, nil, self, {
-      bootstrap: {layout: "horizontal", label: {hide: true}}
-    })
+    options = { bootstrap: {
+      layout: "horizontal",
+      label:  { hide: true }
+    } }
+    @builder = BootstrapForm::FormBuilder.new(:user, nil, self, options)
   end
 
   def test_defaults
@@ -29,7 +31,7 @@ class BootstrapOptionsTest < ActionView::TestCase
       control_col_class:    "col-md-8",
       label_align_class:    "text-md-left",
       inline_margin_class:  "mr-md-4",
-      label:                {text: "test"},
+      label:                { text: "test" },
       append:               "a",
       prepend:              "z",
       help:                 "help text",
@@ -40,7 +42,7 @@ class BootstrapOptionsTest < ActionView::TestCase
     assert_equal "col-md-8",        options.control_col_class
     assert_equal "text-md-left",    options.label_align_class
     assert_equal "mr-md-4",         options.inline_margin_class
-    assert_equal ({text: "test"}),  options.label
+    assert_equal ({ text: "test" }), options.label
     assert_equal "a",               options.append
     assert_equal "z",               options.prepend
     assert_equal "help text",       options.help
@@ -99,7 +101,7 @@ class BootstrapOptionsTest < ActionView::TestCase
   end
 
   def test_form_fields_global_options_override
-    actual = @builder.text_field :email, bootstrap: {layout: "vertical"}
+    actual = @builder.text_field :email, bootstrap: { layout: "vertical" }
     expected = <<-HTML
       <div class="form-group">
         <label class="sr-only" for="user_email">Email</label>

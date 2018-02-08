@@ -92,3 +92,12 @@ Style/ClassAndModuleChildren:
 
 Style/AsciiComments:
   Enabled: false
+
+# -- Exceptions ----------------------------------------------------------------
+Performance/RedundantMerge:
+  Exclude:
+    - 'lib/bootstrap_form/view_helper.rb'
+
+Naming/AccessorMethodName:
+  Exclude:
+    - 'lib/bootstrap_form/bootstrap_options.rb'

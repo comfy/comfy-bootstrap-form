@@ -10,9 +10,9 @@ group :development do
 end
 
 group :test do
-  gem "minitest"
+  gem "coveralls", require: false
   gem "diffy"
   gem "equivalent-xml"
+  gem "minitest"
   gem "sqlite3"
-  gem "coveralls", require: false
 end

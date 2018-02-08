@@ -4,7 +4,7 @@ class HorizontalFormTest < ActionView::TestCase
 
   setup do
     @user     = User.new
-    @builder  = BootstrapForm::FormBuilder.new(:user, @user, self, {bootstrap: {layout: :horizontal}})
+    @builder  = BootstrapForm::FormBuilder.new(:user, @user, self, bootstrap: { layout: :horizontal })
   end
 
   def test_text_field
@@ -21,7 +21,7 @@ class HorizontalFormTest < ActionView::TestCase
   end
 
   def test_text_field_with_no_label
-    actual = @builder.text_field(:email, bootstrap: {label: {hide: true}})
+    actual = @builder.text_field(:email, bootstrap: { label: { hide: true } })
     expected = <<-HTML
       <div class="form-group row">
         <label class="sr-only col-form-label col-sm-2 text-sm-right" for="user_email">Email</label>
@@ -50,7 +50,7 @@ class HorizontalFormTest < ActionView::TestCase
   end
 
   def test_collection_radio_buttons
-    actual = @builder.collection_radio_buttons(:test, ["a", "b"], :to_s, :titleize)
+    actual = @builder.collection_radio_buttons(:test, %w[a b], :to_s, :titleize)
     expected = <<-HTML
       <fieldset class="form-group">
         <div class="row">
@@ -72,7 +72,7 @@ class HorizontalFormTest < ActionView::TestCase
   end
 
   def test_collection_check_boxes_with_no_label
-    actual = @builder.collection_check_boxes(:test, ["a", "b"], :to_s, :titleize, bootstrap: {label: {hide: true}})
+    actual = @builder.collection_check_boxes(:test, %w[a b], :to_s, :titleize, bootstrap: { label: { hide: true } })
     expected = <<-HTML
       <input id="user_test" multiple="multiple" name="user[test][]" type="hidden" value=""/>
       <fieldset class="form-group">
@@ -106,11 +106,12 @@ class HorizontalFormTest < ActionView::TestCase
   end
 
   def test_input_group_with_options
-    actual = @builder.text_field(:test, bootstrap: {
+    options = { bootstrap: {
       prepend:  "prepend",
       append:   "append",
       help:     "help me"
-    })
+    } }
+    actual = @builder.text_field(:test, options)
     expected = <<-HTML
       <div class="form-group row">
         <label class="col-form-label col-sm-2 text-sm-right" for="user_test">Test</label>
@@ -144,7 +145,7 @@ class HorizontalFormTest < ActionView::TestCase
   end
 
   def test_form_group_with_label
-    actual = @builder.form_group(bootstrap: {label: {text: "Test"}}) do
+    actual = @builder.form_group(bootstrap: { label: { text: "Test" } }) do
       "test"
     end
     expected = <<-HTML

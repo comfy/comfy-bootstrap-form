@@ -9,9 +9,8 @@ class FormBuilderTest < ActionView::TestCase
   end
 
   def test_initialization_with_options
-    builder = BootstrapForm::FormBuilder.new(nil, nil, self, {
-      bootstrap: { layout: "horizontal"}
-    })
+    options = { bootstrap: { layout: "horizontal" } }
+    builder = BootstrapForm::FormBuilder.new(nil, nil, self, options)
     assert_equal "horizontal", builder.form_bootstrap.layout
   end
 
