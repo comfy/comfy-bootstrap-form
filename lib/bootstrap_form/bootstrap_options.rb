@@ -1,5 +1,4 @@
 module BootstrapForm
-
   # Container for bootstrap specific form builder options. It controls options
   # that define form layout and grid sizing. They are passed-in into form helper
   # and field helpers via `:bootstrap` option. For example:
@@ -73,7 +72,7 @@ module BootstrapForm
     end
 
     def offset_col_class
-      label_col_class.sub(/\Acol-(\w+)-(\d+)\z/, 'offset-\1-\2')
+      label_col_class.sub(%r{\Acol-(\w+)-(\d+)\z}, 'offset-\1-\2')
     end
 
     # This will return a copy of BootstrapOptions object with new options set
@@ -86,7 +85,7 @@ module BootstrapForm
     #   end
     #
     def scoped(options = {})
-      scope = self.clone
+      scope = clone
       scope.set_options(options)
       scope
     end
@@ -113,5 +112,4 @@ module BootstrapForm
     end
 
   end
-
 end

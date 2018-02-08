@@ -45,7 +45,7 @@ class SubmitTest < ActionView::TestCase
 
   def test_submit_with_block
     actual = @builder.submit do
-      %{<a href="/" class="btn btn-link">Cancel</a>}.html_safe
+      %(<a href="/" class="btn btn-link">Cancel</a>).html_safe
     end
     expected = <<-HTML
       <div class="form-group">

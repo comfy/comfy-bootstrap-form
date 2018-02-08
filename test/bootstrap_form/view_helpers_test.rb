@@ -5,7 +5,7 @@ class ViewHelpersTest < ActionView::TestCase
   include BootstrapForm::ViewHelper
 
   def test_bootstrap_form_with
-    actual = bootstrap_form_with(url: "/test"){}
+    actual = bootstrap_form_with(url: "/test") {}
     expected = <<-HTML
       <form action="/test" accept-charset="UTF-8" data-remote="true" method="post">
         <input name="utf8" type="hidden" value="&#x2713;" />
@@ -31,7 +31,7 @@ class ViewHelpersTest < ActionView::TestCase
   end
 
   def test_bootstrap_form_as_horizontal
-    actual = bootstrap_form_with(url: "/test", bootstrap: {layout: :horizontal}) do |form|
+    actual = bootstrap_form_with(url: "/test", bootstrap: { layout: :horizontal }) do |form|
       form.text_field :value
     end
     expected = <<-HTML
@@ -49,7 +49,7 @@ class ViewHelpersTest < ActionView::TestCase
   end
 
   def test_bootstrap_form_with_inline
-    actual = bootstrap_form_with(url: "/test", bootstrap: {layout: :inline}) do |form|
+    actual = bootstrap_form_with(url: "/test", bootstrap: { layout: :inline }) do |form|
       form.text_field :value
       form.submit
     end

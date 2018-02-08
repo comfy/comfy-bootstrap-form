@@ -4,7 +4,7 @@ class InlineFormTest < ActionView::TestCase
 
   setup do
     @user     = User.new
-    @builder  = BootstrapForm::FormBuilder.new(:user, @user, self, {bootstrap: {layout: :inline}})
+    @builder  = BootstrapForm::FormBuilder.new(:user, @user, self, bootstrap: { layout: :inline })
   end
 
   def test_text_field
@@ -53,7 +53,7 @@ class InlineFormTest < ActionView::TestCase
   end
 
   def test_form_group_with_label
-    actual = @builder.form_group(bootstrap: {label: {text: "Test"}}) do
+    actual = @builder.form_group(bootstrap: { label: { text: "Test" } }) do
       "test"
     end
     expected = <<-HTML

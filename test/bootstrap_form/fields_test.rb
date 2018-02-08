@@ -19,7 +19,7 @@ class FieldsTest < ActionView::TestCase
   end
 
   def test_text_field_label_text
-    actual = @builder.text_field(:email, bootstrap: {label: {text: "Custom Label"}})
+    actual = @builder.text_field(:email, bootstrap: { label: { text: "Custom Label" } })
     expected = <<-HTML
       <div class="form-group">
         <label for="user_email">Custom Label</label>
@@ -30,7 +30,7 @@ class FieldsTest < ActionView::TestCase
   end
 
   def test_text_field_label_css_class
-    actual = @builder.text_field(:email, bootstrap: {label: {class: "custom_class"}})
+    actual = @builder.text_field(:email, bootstrap: { label: { class: "custom_class" } })
     expected = <<-HTML
       <div class="form-group">
         <label class="custom_class" for="user_email">Email</label>
@@ -41,7 +41,7 @@ class FieldsTest < ActionView::TestCase
   end
 
   def test_text_field_label_hide
-    actual = @builder.text_field(:email, bootstrap: {label: {hide: true}})
+    actual = @builder.text_field(:email, bootstrap: { label: { hide: true } })
     expected = <<-HTML
       <div class="form-group">
         <label class="sr-only" for="user_email">Email</label>
@@ -63,7 +63,7 @@ class FieldsTest < ActionView::TestCase
   end
 
   def test_text_field_help_text
-    actual = @builder.text_field(:email, bootstrap: {help: "help text"})
+    actual = @builder.text_field(:email, bootstrap: { help: "help text" })
     expected = <<-HTML
       <div class="form-group">
         <label for="user_email">Email</label>
@@ -289,7 +289,7 @@ class FieldsTest < ActionView::TestCase
   end
 
   def test_form_group_with_label
-    actual = @builder.form_group(bootstrap: {label: {text: "Test"}}) do
+    actual = @builder.form_group(bootstrap: { label: { text: "Test" } }) do
       "test"
     end
     expected = <<-HTML

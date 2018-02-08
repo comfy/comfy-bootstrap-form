@@ -6,10 +6,10 @@ class FieldsWithErrorsTest < ActionView::TestCase
     @user = User.new
     @user.errors.add(:test, "invalid")
 
-    @builder  = BootstrapForm::FormBuilder.new(:user, @user, self, {})
+    @builder = BootstrapForm::FormBuilder.new(:user, @user, self, {})
 
     @original_proc = ActionView::Base.field_error_proc
-    ActionView::Base.field_error_proc = proc { |input, instance| input }
+    ActionView::Base.field_error_proc = proc { |input, _instance| input }
   end
 
   teardown do
@@ -44,7 +44,7 @@ class FieldsWithErrorsTest < ActionView::TestCase
   end
 
   def test_collection_radio_buttons_with_error_and_help
-    actual = @builder.collection_radio_buttons(:test, ["a", "b"], :to_s, :titleize, bootstrap: {help: "help text"})
+    actual = @builder.collection_radio_buttons(:test, %w[a b], :to_s, :titleize, bootstrap: { help: "help text" })
     expected = <<-HTML
       <fieldset class="form-group">
         <legend class="col-form-label pt-0">Test</legend>
@@ -64,10 +64,11 @@ class FieldsWithErrorsTest < ActionView::TestCase
   end
 
   def test_collection_radio_buttons_inline_with_error_and_help
-    actual = @builder.collection_radio_buttons(:test, ["a", "b"], :to_s, :titleize, bootstrap: {
+    options = { bootstrap: {
       check_inline: true,
       help:         "help text"
-    })
+    } }
+    actual = @builder.collection_radio_buttons(:test, %w[a b], :to_s, :titleize, options)
     expected = <<-HTML
       <fieldset class="form-group">
         <legend class="col-form-label pt-0">Test</legend>
@@ -87,7 +88,7 @@ class FieldsWithErrorsTest < ActionView::TestCase
   end
 
   def test_text_field_with_input_group_error
-    actual = @builder.text_field(:test, bootstrap: {prepend: "A", append: "Z", help: "help text"})
+    actual = @builder.text_field(:test, bootstrap: { prepend: "A", append: "Z", help: "help text" })
     expected = <<-HTML
       <div class="form-group">
         <label for="user_test">Test</label>

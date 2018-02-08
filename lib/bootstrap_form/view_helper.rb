@@ -24,10 +24,11 @@ module BootstrapForm
     # Bootstrap specific markup. So we need to bypass this.
     def supress_field_errors
       original_proc = ActionView::Base.field_error_proc
-      ActionView::Base.field_error_proc = proc { |input, instance| input }
+      ActionView::Base.field_error_proc = proc { |input, _instance| input }
       yield
     ensure
       ActionView::Base.field_error_proc = original_proc
     end
+
   end
 end
