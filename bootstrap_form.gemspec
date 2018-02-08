@@ -6,7 +6,7 @@ require "bootstrap_form/version"
 Gem::Specification.new do |s|
   s.name        = "comfy_bootstrap_form"
   s.version     = BootstrapForm::VERSION
-  s.authors     = ["Oleg Khabarov", "Stephen Potenza"]
+  s.authors     = ["Oleg Khabarov"]
   s.email       = ["oleg@khabarov.ca"]
   s.homepage    = "https://github.com/comfy/comfy-bootstrap-form"
   s.summary     = "Rails form builder that makes it easy to style forms using "\
