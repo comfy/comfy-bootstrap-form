@@ -78,7 +78,7 @@ class ViewHelpersTest < ActionView::TestCase
       form.submit
     end
     expected = <<-HTML
-      <form accept-charset="UTF-8" action="/test" class=" form-inline" data-remote="true" method="post">
+      <form accept-charset="UTF-8" action="/test" class="form-inline" data-remote="true" method="post">
         <input name="utf8" type="hidden" value="&#x2713;"/>
         <div class="form-group">
           <input class="btn" data-disable-with="Save " name="commit" type="submit" value="Save "/>
