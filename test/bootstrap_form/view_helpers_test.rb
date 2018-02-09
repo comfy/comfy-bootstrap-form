@@ -18,12 +18,20 @@ class ViewHelpersTest < ActionView::TestCase
     actual = bootstrap_form_with(url: "/test") do |form|
       form.text_field :value
     end
+
+    input =
+      if Rails.version < "5.2"
+        %(<input class="form-control" name="value" type="text"/>)
+      else
+        %(<input class="form-control" id="value" name="value" type="text"/>)
+      end
+
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/test" data-remote="true" method="post">
         <input name="utf8" type="hidden" value="&#x2713;"/>
         <div class="form-group">
           <label for="value">Value</label>
-          <input class="form-control" id="value" name="value" type="text"/>
+          #{input}
         </div>
       </form>
     HTML
@@ -34,13 +42,21 @@ class ViewHelpersTest < ActionView::TestCase
     actual = bootstrap_form_with(url: "/test", bootstrap: { layout: :horizontal }) do |form|
       form.text_field :value
     end
+
+    input =
+      if Rails.version < "5.2"
+        %(<input class="form-control" name="value" type="text"/>)
+      else
+        %(<input class="form-control" id="value" name="value" type="text"/>)
+      end
+
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/test" data-remote="true" method="post">
         <input name="utf8" type="hidden" value="&#x2713;"/>
         <div class="form-group row">
           <label class="col-form-label col-sm-2 text-sm-right" for="value">Value</label>
           <div class="col-sm-10">
-            <input class="form-control" id="value" name="value" type="text"/>
+            #{input}
           </div>
         </div>
       </form>
@@ -70,12 +86,20 @@ class ViewHelpersTest < ActionView::TestCase
     actual = bootstrap_form_with(model: user, url: "/test") do |form|
       form.text_field :test
     end
+
+    input =
+      if Rails.version < "5.2"
+        %(<input class="form-control is-invalid" name="user[test]" type="text"/>)
+      else
+        %(<input class="form-control is-invalid" id="user_test" name="user[test]" type="text"/>)
+      end
+
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/test" data-remote="true" method="post">
         <input name="utf8" type="hidden" value="&#x2713;"/>
         <div class="form-group">
           <label for="user_test">Test</label>
-          <input class="form-control is-invalid" id="user_test" name="user[test]" type="text"/>
+          #{input}
           <div class="invalid-feedback">invalid</div>
         </div>
       </form>
@@ -87,10 +111,18 @@ class ViewHelpersTest < ActionView::TestCase
     actual = bootstrap_form_with(url: "/test", builder: ActionView::Helpers::FormBuilder) do |form|
       form.text_field :value
     end
+
+    input =
+      if Rails.version < "5.2"
+        %(<input name="value" type="text"/>)
+      else
+        %(<input id="value" name="value" type="text"/>)
+      end
+
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/test" data-remote="true" method="post">
         <input name="utf8" type="hidden" value="&#x2713;"/>
-        <input id="value" name="value" type="text"/>
+        #{input}
       </form>
     HTML
     assert_xml_equal expected, actual

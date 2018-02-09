@@ -24,5 +24,5 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = ">= 2.2.2"
 
-  s.add_dependency "rails", ">= 5.2.rc1"
+  s.add_dependency "rails", ">= 5.1.0"
 end

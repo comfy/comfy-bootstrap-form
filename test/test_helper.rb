@@ -14,7 +14,7 @@ Rails.backtrace_cleaner.remove_silencers!
 
 class ActionView::TestCase
 
-  # Expected and actual are wrapped in a root tag to ensure proper XML structure
+  # Expected and actual are wrapped in a root tag to ensure proper XML structure.
   def assert_xml_equal(expected, actual)
     expected_xml = Nokogiri::XML("<test-xml>\n#{expected}\n</test-xml>", &:noblanks)
     actual_xml   = Nokogiri::XML("<test-xml>\n#{actual}\n</test-xml>", &:noblanks)
