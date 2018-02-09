@@ -75,7 +75,7 @@ for all kinds of different form configurations you can have.
 Wrapper around `form_with` helper that's available in Rails 5.1 and above.
 Here's an example:
 
-```ruby
+```erb
 <%= bootstrap_form_with model: @person, scope: :user do |form| %>
   <%= form.email_field :email %>
   <%= form.submit %>
@@ -87,7 +87,7 @@ Here's an example:
 Wrapper around `form_for` helper that's available in all Rails 5 versions.
 Here's an example:
 
-```ruby
+```erb
 <%= bootstrap_form_with @person, as: :user do |form| %>
   <%= form.email_field :email %>
   <%= form.submit %>
