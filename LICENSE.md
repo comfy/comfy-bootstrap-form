@@ -1,4 +1,4 @@
-Copyright 2018 Oleg Khabarov
+Copyright 2018 Oleg Khabarov, Stephen Potenza
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
