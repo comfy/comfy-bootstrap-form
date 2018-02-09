@@ -70,7 +70,7 @@ for all kinds of different form configurations you can have.
 
 ## Form helpers
 
-#### boostrap_form_with
+#### bootstrap_form_with
 
 Wrapper around `form_with` helper that's available in Rails 5.1 and above.
 Here's an example:
@@ -314,4 +314,4 @@ If you want to use something like a button, or other html content do this:
 
 ---
 
-Copyright 2018 Oleg Khabarov, Released under the [MIT License](LICENCE.md)
+Copyright 2018 Oleg Khabarov, Released under the [MIT License](LICENSE.md)
