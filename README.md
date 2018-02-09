@@ -13,7 +13,7 @@
 
 ## Requirements
 
-- Rails 5.2+
+- Rails 5.1+
 - Bootstrap 4.0.0+
 
 ## Installation
