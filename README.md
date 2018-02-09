@@ -263,7 +263,7 @@ If you want to use something like a button, or other html content do this:
 ### Gotchas
 
 - In Rails 5.1 `form_for` does not generate ids for inputs. If you want them
-  (you do) you'll need to override this method: [actionview/lib/action_view/helpers/form_helper.rb#L745](https://github.com/rails/rails/blob/bdc581616b760d1e2be3795c6f0f3ab4b1e125a5/actionview/lib/action_view/helpers/form_helper.rb#L745)
+  you'll need to override this method: [actionview/lib/action_view/helpers/form_helper.rb#L745](https://github.com/rails/rails/blob/bdc581616b760d1e2be3795c6f0f3ab4b1e125a5/actionview/lib/action_view/helpers/form_helper.rb#L745)
 - For inline radio buttons and check boxes you need to add custom css for error
   messages show up. See: [twbs/bootstrap/issues/25540](https://github.com/twbs/bootstrap/issues/25540)
   For now adding `.invalid-feeback { display: block }` will work.

@@ -3,17 +3,38 @@ module BootstrapForm
 
     # Wrapper for `form_with`. Passing in Bootstrap form builder.
     def bootstrap_form_with(**options, &block)
-      supress_field_errors do
-        css_classes       = options.delete(:class) || ""
-        bootstrap_options = options[:bootstrap] || {}
+      bootstrap_options = options[:bootstrap] || {}
 
-        if bootstrap_options[:layout].to_s == "inline"
-          css_classes << " form-inline"
-        end
+      css_classes = options.delete(:class)
 
-        form_options = options.reverse_merge(builder: BootstrapForm::FormBuilder)
-        form_options.merge!(class: css_classes) unless css_classes.blank?
+      if bootstrap_options[:layout].to_s == "inline"
+        css_classes = [css_classes, "form-inline"].compact.join(" ")
+      end
+
+      form_options = options.reverse_merge(builder: BootstrapForm::FormBuilder)
+      form_options.merge!(class: css_classes) unless css_classes.blank?
+
+      supress_form_field_errors do
         form_with(**form_options, &block)
+      end
+    end
+
+    def bootstrap_form_for(record, options = {}, &block)
+      options[:html] ||= {}
+
+      bootstrap_options = options[:bootstrap] || {}
+
+      css_classes = options[:html].delete(:class)
+
+      if bootstrap_options[:layout].to_s == "inline"
+        css_classes = [css_classes, "form-inline"].compact.join(" ")
+      end
+
+      options.reverse_merge!(builder: BootstrapForm::FormBuilder)
+      options[:html].merge!(class: css_classes) unless css_classes.blank?
+
+      supress_form_field_errors do
+        form_for(record, options, &block)
       end
     end
 
@@ -22,7 +43,7 @@ module BootstrapForm
     # By default, Rails will wrap form fields with extra html to indicate
     # inputs with errors. We need to handle this in the builder to render
     # Bootstrap specific markup. So we need to bypass this.
-    def supress_field_errors
+    def supress_form_field_errors
       original_proc = ActionView::Base.field_error_proc
       ActionView::Base.field_error_proc = proc { |input, _instance| input }
       yield
