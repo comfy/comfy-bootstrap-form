@@ -37,16 +37,16 @@ class BootstrapOptionsTest < ActionView::TestCase
       help:                 "help text",
       check_inline:         "true"
     )
-    assert_equal "horizontal",      options.layout
-    assert_equal "col-md-4",        options.label_col_class
-    assert_equal "col-md-8",        options.control_col_class
-    assert_equal "text-md-left",    options.label_align_class
-    assert_equal "mr-md-4",         options.inline_margin_class
-    assert_equal ({ text: "test" }), options.label
-    assert_equal "a",               options.append
-    assert_equal "z",               options.prepend
-    assert_equal "help text",       options.help
-    assert                          options.check_inline
+    assert_equal "horizontal",        options.layout
+    assert_equal "col-md-4",          options.label_col_class
+    assert_equal "col-md-8",          options.control_col_class
+    assert_equal "text-md-left",      options.label_align_class
+    assert_equal "mr-md-4",           options.inline_margin_class
+    assert_equal ({ text: "test" }),  options.label
+    assert_equal "a",                 options.append
+    assert_equal "z",                 options.prepend
+    assert_equal "help text",         options.help
+    assert                            options.check_inline
   end
 
   def test_with_set_invalid_options
