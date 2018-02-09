@@ -150,7 +150,7 @@ class ViewHelpersTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
-  def test_bootstrap_form_with_and_field
+  def test_bootstrap_form_for_and_field
     actual = bootstrap_form_for(User.new) do |form|
       form.email_field :email
     end
