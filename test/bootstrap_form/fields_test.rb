@@ -302,7 +302,7 @@ class FieldsTest < ActionView::TestCase
   end
 
   def test_text_field_with_label_attributes
-    actual = @builder.text_field(:test, bootstrap: { label: { text: "Custom", data: { foo: "bar"} } })
+    actual = @builder.text_field(:test, bootstrap: { label: { text: "Custom", data: { foo: "bar" } } })
     expected = <<-HTML
       <div class="form-group">
         <label data-foo="bar" for="user_test">Custom</label>
