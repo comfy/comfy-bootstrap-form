@@ -223,7 +223,7 @@ module BootstrapForm
 
     # form group wrapper for input fields
     def draw_form_group(bootstrap, method, options)
-      label  = draw_label(bootstrap, method)
+      label  = draw_label(bootstrap, method, options)
       errors = draw_errors(method)
 
       control = draw_control(bootstrap, errors, method, options) do
@@ -258,9 +258,11 @@ module BootstrapForm
     #
     #   text_field(:value, bootstrap: {label: {text: "Custom", class: "custom"}})
     #
-    def draw_label(bootstrap, method)
+    def draw_label(bootstrap, method, html_options = {})
       text    = nil
       options = {}
+
+      options[:for] = html_options[:id] if html_options[:id].present?
 
       if (custom_text = bootstrap.label[:text]).present?
         text = custom_text
