@@ -301,6 +301,17 @@ class FieldsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_text_field_with_label_attributes
+    actual = @builder.text_field(:test, bootstrap: { label: { text: "Custom", data: { foo: "bar"} } })
+    expected = <<-HTML
+      <div class="form-group">
+        <label data-foo="bar" for="user_test">Custom</label>
+        <input class="form-control" id="user_test" name="user[test]" type="text"/>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
   def test_text_field_with_custom_id
     actual = @builder.text_field(:test, id: "custom")
     expected = <<-HTML
