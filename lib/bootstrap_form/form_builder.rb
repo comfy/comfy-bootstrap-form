@@ -259,17 +259,12 @@ module BootstrapForm
     #   text_field(:value, bootstrap: {label: {text: "Custom", class: "custom"}})
     #
     def draw_label(bootstrap, method, html_options = {})
-      text    = nil
-      options = {}
+      options = bootstrap.label.dup
+      text    = options.delete(:text)
 
       options[:for] = html_options[:id] if html_options[:id].present?
 
-      if (custom_text = bootstrap.label[:text]).present?
-        text = custom_text
-      end
-
-      add_css_class!(options, bootstrap.label[:class])
-      add_css_class!(options, "sr-only") if bootstrap.label[:hide]
+      add_css_class!(options, "sr-only") if options.delete(:hide)
       add_css_class!(options, bootstrap.inline_margin_class) if bootstrap.inline?
 
       if bootstrap.horizontal?
