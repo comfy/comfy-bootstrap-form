@@ -6,7 +6,7 @@ gem "rails", "~> 5.1.0"
 
 group :test do
   gem "rubocop",  "~> 0.51.0", require: false
-  gem "minitest", "~> 5.10.3"
+  gem "minitest"
   gem "diffy"
   gem "equivalent-xml"
   gem "sqlite3"

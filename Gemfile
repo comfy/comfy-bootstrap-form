@@ -13,7 +13,6 @@ group :test do
   gem "coveralls", require: false
   gem "diffy"
   gem "equivalent-xml"
-  # gem "minitest", "~> 5.10.3"
   gem "minitest"
   gem "sqlite3"
 end
