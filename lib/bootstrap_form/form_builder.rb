@@ -366,7 +366,7 @@ module BootstrapForm
         add_css_class!(html_options, "is-invalid") if errors.present?
 
         content = "".html_safe
-        collection.each_with_index.map do |item, index|
+        collection.each_with_index do |item, index|
           item_value  = item.send(value_method)
           item_text   = item.send(text_method)
 
