@@ -63,7 +63,7 @@ module BootstrapForm
             label_text = options.delete(:placeholder)
             concat super(method, options)
 
-            label_options = {class: "custom-file-label"}
+            label_options = { class: "custom-file-label" }
             label_options[:for] = options[:id] if options[:id].present?
             concat label(method, label_text, label_options)
           end
