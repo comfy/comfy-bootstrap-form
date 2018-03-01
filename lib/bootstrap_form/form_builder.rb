@@ -4,7 +4,7 @@ module BootstrapForm
   class FormBuilder < ActionView::Helpers::FormBuilder
 
     FIELD_HELPERS = %w[
-      color_field date_field datetime_field email_field file_field month_field
+      color_field date_field datetime_field email_field month_field
       number_field password_field phone_field range_field search_field text_area
       text_field time_field url_field week_field
     ].freeze
@@ -46,6 +46,30 @@ module BootstrapForm
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
       draw_form_group(bootstrap, method, html_options) do
         super(method, choices, options, html_options, &block)
+      end
+    end
+
+    # Wrapper for file_field helper. It can accept `custom_control` option.
+    #
+    #   file_field :photo, bootstrap: {custom_control: true}
+    #
+    def file_field(method, options = {})
+      bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+
+      draw_form_group(bootstrap, method, options) do
+        if bootstrap.custom_control
+          content_tag(:div, class: "custom-file") do
+            remove_css_class!(options, "form-control")
+            label_text = options.delete(:placeholder)
+            concat super(method, options)
+
+            label_options = {class: "custom-file-label"}
+            label_options[:for] = options[:id] if options[:id].present?
+            concat label(method, label_text, label_options)
+          end
+        else
+          super(method, options)
+        end
       end
     end
 

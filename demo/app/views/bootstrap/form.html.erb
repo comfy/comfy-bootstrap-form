@@ -1,6 +1,6 @@
 <% if respond_to?(:form_with) %>
 
-<h2>form_with</h2>
+<h1>form_with</h1>
 
 <h3>Horizontal Form</h3>
 
@@ -127,12 +127,16 @@
       <% end %>
       <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {hide: true}, prepend: {html: prepend_button}, append: {html: append_button}} %>
     <% end %>
-  <div>
+  </div>
 </div>
 
+<h3>Custom Input Fields</h3>
+<%= bootstrap_form_with model: @user, scope: "user_x", url: "/", bootstrap: {layout: :horizontal} do |form| %>
+  <%= form.file_field :test_a, bootstrap: {label: {text: "Regular"}} %>
+  <%= form.file_field :test_b, placeholder: "Choose File", bootstrap: {label: {text: "Custom"}, custom_control: true} %><% end %>
 <% end %>
 
-<h2>form_for</h2>
+<h1>form_for</h1>
 
 <h3>Horizontal Form</h3>
 

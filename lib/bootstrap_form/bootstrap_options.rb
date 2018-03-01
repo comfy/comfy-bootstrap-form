@@ -58,6 +58,12 @@ module BootstrapForm
     #
     attr_reader :check_inline
 
+    # Enables special input styling for file_field, radio and checkboxes. Example:
+    #
+    #   form.file_file :photo, bootstrap: {custom_control: true}
+    #
+    attr_reader :custom_control
+
     def initialize(options = {})
       set_defaults
       set_options(options)
@@ -109,6 +115,7 @@ module BootstrapForm
       @prepend              = nil
       @help                 = nil
       @check_inline         = false
+      @custom_control       = false
     end
 
   end
