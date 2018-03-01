@@ -74,6 +74,28 @@ class FieldsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_text_field_with_label_attributes
+    actual = @builder.text_field(:test, bootstrap: { label: { text: "Custom", data: { foo: "bar" } } })
+    expected = <<-HTML
+      <div class="form-group">
+        <label data-foo="bar" for="user_test">Custom</label>
+        <input class="form-control" id="user_test" name="user[test]" type="text"/>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_text_field_with_custom_id
+    actual = @builder.text_field(:test, id: "custom")
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="custom">Test</label>
+        <input class="form-control" id="custom" name="user[test]" type="text"/>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
   def test_select
     actual = @builder.select(:test, %w[a b])
     expected = <<-HTML
@@ -152,6 +174,48 @@ class FieldsTest < ActionView::TestCase
       <div class="form-group">
         <label for="user_test">Test</label>
         <input class="form-control" type="file" name="user[test]" id="user_test"/>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_file_field_custom_control
+    actual = @builder.file_field(:test, bootstrap: {custom_control: true})
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_test">Test</label>
+        <div class="custom-file">
+          <input id="user_test" name="user[test]" type="file"/>
+          <label class="custom-file-label" for="user_test">Test</label>
+        </div>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_file_field_custom_control_with_placeholder
+    actual = @builder.file_field(:test, placeholder: "Choose File", bootstrap: {custom_control: true})
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_test">Test</label>
+        <div class="custom-file">
+          <input id="user_test" name="user[test]" type="file"/>
+          <label class="custom-file-label" for="user_test">Choose File</label>
+        </div>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_file_field_custom_control
+    actual = @builder.file_field(:test, id: "custom", bootstrap: {custom_control: true})
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="custom">Test</label>
+        <div class="custom-file">
+          <input id="custom" name="user[test]" type="file"/>
+          <label class="custom-file-label" for="custom">Test</label>
+        </div>
       </div>
     HTML
     assert_xml_equal expected, actual
@@ -296,28 +360,6 @@ class FieldsTest < ActionView::TestCase
       <div class="form-group">
         <label>Test</label>
         test
-      </div>
-    HTML
-    assert_xml_equal expected, actual
-  end
-
-  def test_text_field_with_label_attributes
-    actual = @builder.text_field(:test, bootstrap: { label: { text: "Custom", data: { foo: "bar" } } })
-    expected = <<-HTML
-      <div class="form-group">
-        <label data-foo="bar" for="user_test">Custom</label>
-        <input class="form-control" id="user_test" name="user[test]" type="text"/>
-      </div>
-    HTML
-    assert_xml_equal expected, actual
-  end
-
-  def test_text_field_with_custom_id
-    actual = @builder.text_field(:test, id: "custom")
-    expected = <<-HTML
-      <div class="form-group">
-        <label for="custom">Test</label>
-        <input class="form-control" id="custom" name="user[test]" type="text"/>
       </div>
     HTML
     assert_xml_equal expected, actual
