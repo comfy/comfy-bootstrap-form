@@ -63,4 +63,60 @@ class CustomFieldsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_collection_check_boxes
+    actual = @builder.collection_check_boxes(:test, %w[a b], :to_s, :to_s, bootstrap: { custom_control: true })
+    expected = <<-HTML
+    <input id="user_test" multiple="multiple" name="user[test][]" type="hidden" value=""/>
+    <fieldset class="form-group">
+      <legend class="col-form-label pt-0">Test</legend>
+      <div class="custom-control custom-checkbox">
+        <input class="custom-control-input" id="user_test_a" name="user[test][]" type="checkbox" value="a"/>
+        <label class="custom-control-label" for="user_test_a">a</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input class="custom-control-input" id="user_test_b" name="user[test][]" type="checkbox" value="b"/>
+        <label class="custom-control-label" for="user_test_b">b</label>
+      </div>
+    </fieldset>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_collection_radio_buttons
+    actual = @builder.collection_radio_buttons(:test, %w[a b], :to_s, :to_s, bootstrap: { custom_control: true })
+    expected = <<-HTML
+      <fieldset class="form-group">
+        <legend class="col-form-label pt-0">Test</legend>
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" id="user_test_a" name="user[test]" type="radio" value="a"/>
+          <label class="custom-control-label" for="user_test_a">a</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" id="user_test_b" name="user[test]" type="radio" value="b"/>
+          <label class="custom-control-label" for="user_test_b">b</label>
+        </div>
+      </fieldset>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_collection_radio_buttons_inline
+    options = { bootstrap: { custom_control: true, check_inline: true } }
+    actual = @builder.collection_radio_buttons(:test, %w[a b], :to_s, :to_s, options)
+    expected = <<-HTML
+      <fieldset class="form-group">
+        <legend class="col-form-label pt-0">Test</legend>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input class="custom-control-input" id="user_test_a" name="user[test]" type="radio" value="a"/>
+          <label class="custom-control-label" for="user_test_a">a</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input class="custom-control-input" id="user_test_b" name="user[test]" type="radio" value="b"/>
+          <label class="custom-control-label" for="user_test_b">b</label>
+        </div>
+      </fieldset>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
 end
