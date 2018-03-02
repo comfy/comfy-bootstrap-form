@@ -11,8 +11,11 @@ class BootstrapController < ApplicationController
     @user_with_error.errors.add(:bio, "Too much information")
     @user_with_error.errors.add(:locale, "It's fine, but here's another error")
     @user_with_error.errors.add(:terms, "You never agreed to Terms and Conditions")
-    @user_with_error.errors.add(:test, "Generic error message")
 
+    @user_with_error.errors.add(:test, "Generic error message")
+    ("a".."z").each do |letter|
+      @user_with_error.errors.add("test_#{letter}", "Generic error message")
+    end
   end
 
 end

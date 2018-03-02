@@ -59,6 +59,7 @@ module BootstrapForm
       draw_form_group(bootstrap, method, options) do
         if bootstrap.custom_control
           content_tag(:div, class: "custom-file") do
+            add_css_class!(options, "custom-file-input")
             remove_css_class!(options, "form-control")
             label_text = options.delete(:placeholder)
             concat super(method, options)
@@ -97,11 +98,22 @@ module BootstrapForm
 
       content_tag(:fieldset, class: fieldset_css_class) do
         draw_control_column(bootstrap, offset: true) do
-          content_tag(:div, class: "form-check") do
-            concat super(method, options, checked_value, unchecked_value)
-            concat label(method, label_text, class: "form-check-label")
-            concat errors     if errors.present?
-            concat help_text  if help_text.present?
+          if bootstrap.custom_control
+            content_tag(:div, class: "custom-control custom-checkbox") do
+              add_css_class!(options, "custom-control-input")
+              remove_css_class!(options, "form-check-input")
+              concat super(method, options, checked_value, unchecked_value)
+              concat label(method, label_text, class: "custom-control-label")
+              concat errors     if errors.present?
+              concat help_text  if help_text.present?
+            end
+          else
+            content_tag(:div, class: "form-check") do
+              concat super(method, options, checked_value, unchecked_value)
+              concat label(method, label_text, class: "form-check-label")
+              concat errors     if errors.present?
+              concat help_text  if help_text.present?
+            end
           end
         end
       end

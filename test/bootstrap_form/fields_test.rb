@@ -179,48 +179,6 @@ class FieldsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
-  def test_file_field_custom_control
-    actual = @builder.file_field(:test, bootstrap: { custom_control: true })
-    expected = <<-HTML
-      <div class="form-group">
-        <label for="user_test">Test</label>
-        <div class="custom-file">
-          <input id="user_test" name="user[test]" type="file"/>
-          <label class="custom-file-label" for="user_test">Test</label>
-        </div>
-      </div>
-    HTML
-    assert_xml_equal expected, actual
-  end
-
-  def test_file_field_custom_control_with_placeholder
-    actual = @builder.file_field(:test, placeholder: "Choose File", bootstrap: { custom_control: true })
-    expected = <<-HTML
-      <div class="form-group">
-        <label for="user_test">Test</label>
-        <div class="custom-file">
-          <input id="user_test" name="user[test]" type="file"/>
-          <label class="custom-file-label" for="user_test">Choose File</label>
-        </div>
-      </div>
-    HTML
-    assert_xml_equal expected, actual
-  end
-
-  def test_file_field_custom_control_with_custom_id
-    actual = @builder.file_field(:test, id: "custom", bootstrap: { custom_control: true })
-    expected = <<-HTML
-      <div class="form-group">
-        <label for="custom">Test</label>
-        <div class="custom-file">
-          <input id="custom" name="user[test]" type="file"/>
-          <label class="custom-file-label" for="custom">Test</label>
-        </div>
-      </div>
-    HTML
-    assert_xml_equal expected, actual
-  end
-
   def test_month_field
     actual = @builder.month_field(:test)
     expected = <<-HTML

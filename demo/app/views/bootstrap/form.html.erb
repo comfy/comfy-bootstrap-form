@@ -130,10 +130,23 @@
   </div>
 </div>
 
-<h3>Custom Input Fields</h3>
-<%= bootstrap_form_with model: @user, scope: "user_x", url: "/", bootstrap: {layout: :horizontal} do |form| %>
-  <%= form.file_field :test_a, bootstrap: {label: {text: "Regular"}} %>
-  <%= form.file_field :test_b, placeholder: "Choose File", bootstrap: {label: {text: "Custom"}, custom_control: true} %><% end %>
+<div class="row">
+  <div class="col-6">
+    <h3>Custom Input Fields</h3>
+    <%= bootstrap_form_with model: @user, scope: "user_x", url: "/" do |form| %>
+      <%= form.file_field :test_a, placeholder: "Choose File", bootstrap: {label: {text: "Custom"}, custom_control: true, help: "Help Text"} %>
+      <%= form.check_box :test_b, bootstrap: {label: {text: "Custom"}, custom_control: true, help: "Help Text"} %>
+    <% end %>
+  </div>
+  <div class="col-6">
+    <h3>With Errors</h3>
+    <%= bootstrap_form_with model: @user_with_error, scope: "user_y", url: "/" do |form| %>
+      <%= form.file_field :test_a, placeholder: "Choose File", bootstrap: {label: {text: "Custom"}, custom_control: true, help: "Help Text"} %>
+      <%= form.check_box :test_b, bootstrap: {label: {text: "Custom"}, custom_control: true, help: "Help Text"} %>
+    <% end %>
+  </div>
+</div>
+
 <% end %>
 
 <h1>form_for</h1>
