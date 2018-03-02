@@ -286,6 +286,16 @@ If you want to use something like a button, or other html content do this:
 <%= form.text_field :value, bootstrap: {append: {html: button_html}} %>
 ```
 
+#### Custom Forms
+
+Bootstrap can replace native browser form elements with custom ones for checkboxes,
+radio buttons and file input field. Example usage:
+
+```erb
+<%= form.file_field :photo, bootstrap: {custom_control: true} %>
+<%= form.collection_radio_buttons :choice, %w[yes no], :to_s, :to_s, bootstrap: {custom_control: true} %>
+```
+
 ### Gotchas
 
 - In Rails 5.1 `form_with` does not generate ids for inputs. If you want them
