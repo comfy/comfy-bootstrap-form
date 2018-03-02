@@ -194,6 +194,7 @@ append:               nil
 prepend:              nil
 help:                 nil
 check_inline:         false
+custom_control:       false
 ```
 
 Options applied on the form level will apply to all field helpers. Options
