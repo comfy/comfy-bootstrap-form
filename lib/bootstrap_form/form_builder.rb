@@ -133,7 +133,7 @@ module BootstrapForm
     def collection_radio_buttons(method, collection, value_method, text_method, options = {}, html_options = {})
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
 
-      args = [bootstrap, method, collection, value_method, text_method, options, html_options]
+      args = [bootstrap, :radio_button, method, collection, value_method, text_method, options, html_options]
       draw_choices(*args) do |m, v, opts|
         radio_button(m, v, opts)
       end
@@ -152,7 +152,7 @@ module BootstrapForm
         content << hidden_field(method, multiple: true, value: "")
       end
 
-      args = [bootstrap, method, collection, value_method, text_method, options, html_options]
+      args = [bootstrap, :check_box, method, collection, value_method, text_method, options, html_options]
       content << draw_choices(*args) do |m, v, opts|
         opts[:multiple]       = true
         opts[:include_hidden] = false
@@ -389,12 +389,30 @@ module BootstrapForm
     end
 
     # Rendering of choices for checkboxes and radio buttons
-    def draw_choices(bootstrap, method, collection, value_method, text_method, _options, html_options)
-      add_css_class!(html_options, "form-check-input")
+    def draw_choices(bootstrap, type, method, collection, value_method, text_method, _options, html_options)
+      draw_form_group_fieldset(bootstrap, method) do
+        if bootstrap.custom_control
+          label_css_class = "custom-control-label"
 
-      draw_form_group_fieldset(bootstrap, method, html_options) do
-        form_check_css_class = "form-check"
-        form_check_css_class << " form-check-inline" if bootstrap.check_inline
+          form_check_css_class = "custom-control"
+          form_check_css_class <<
+            case type
+            when :radio_button then " custom-radio"
+            when :check_box    then " custom-checkbox"
+            end
+
+          form_check_css_class << " custom-control-inline" if bootstrap.check_inline
+
+          add_css_class!(html_options, "custom-control-input")
+
+        else
+          label_css_class = "form-check-label"
+
+          form_check_css_class = "form-check"
+          form_check_css_class << " form-check-inline" if bootstrap.check_inline
+
+          add_css_class!(html_options, "form-check-input")
+        end
 
         errors    = draw_errors(method)
         help_text = draw_help(bootstrap.help)
@@ -408,7 +426,7 @@ module BootstrapForm
 
           content << content_tag(:div, class: form_check_css_class) do
             concat yield method, item_value, html_options
-            concat label(method, item_text, value: item_value, class: "form-check-label")
+            concat label(method, item_text, value: item_value, class: label_css_class)
             if ((collection.count - 1) == index) && !bootstrap.check_inline
               concat errors     if errors.present?
               concat help_text  if help_text.present?
@@ -426,7 +444,7 @@ module BootstrapForm
     end
 
     # Wrapper for collections of radio buttons and checkboxes
-    def draw_form_group_fieldset(bootstrap, method, _html_options)
+    def draw_form_group_fieldset(bootstrap, method)
       options = {}
 
       unless bootstrap.label[:hide]

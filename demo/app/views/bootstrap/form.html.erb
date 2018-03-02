@@ -134,15 +134,19 @@
   <div class="col-6">
     <h3>Custom Input Fields</h3>
     <%= bootstrap_form_with model: @user, scope: "user_x", url: "/" do |form| %>
-      <%= form.file_field :test_a, placeholder: "Choose File", bootstrap: {label: {text: "Custom"}, custom_control: true, help: "Help Text"} %>
-      <%= form.check_box :test_b, bootstrap: {label: {text: "Custom"}, custom_control: true, help: "Help Text"} %>
+      <%= form.file_field :test_a, placeholder: "Choose File", bootstrap: {label: {text: "Custom File Field"}, custom_control: true, help: "Help Text"} %>
+      <%= form.check_box :test_b, bootstrap: {label: {text: "Custom Checkbox"}, custom_control: true, help: "Help Text"} %>
+      <%= form.collection_radio_buttons :test_c, ["a", "b", "c"], :to_s, :to_s, bootstrap: {custom_control: true, label: {text: "Custom Radio Buttons"}, help: "Help text"} %>
+      <%= form.collection_check_boxes :test_d, ["x", "y", "z"], :to_s, :to_s, bootstrap: {custom_control: true, check_inline: true, label: {text: "Custom Checkboxes Inline"}, help: "Help Text"} %>
     <% end %>
   </div>
   <div class="col-6">
     <h3>With Errors</h3>
     <%= bootstrap_form_with model: @user_with_error, scope: "user_y", url: "/" do |form| %>
-      <%= form.file_field :test_a, placeholder: "Choose File", bootstrap: {label: {text: "Custom"}, custom_control: true, help: "Help Text"} %>
-      <%= form.check_box :test_b, bootstrap: {label: {text: "Custom"}, custom_control: true, help: "Help Text"} %>
+      <%= form.file_field :test_a, placeholder: "Choose File", bootstrap: {label: {text: "Custom File Field"}, custom_control: true, help: "Help Text"} %>
+      <%= form.check_box :test_b, bootstrap: {label: {text: "Custom Checkbox"}, custom_control: true, help: "Help Text"} %>
+      <%= form.collection_radio_buttons :test_c, ["a", "b", "c"], :to_s, :to_s, bootstrap: {custom_control: true, label: {text: "Custom Radio Buttons"}, help: "Help text"} %>
+      <%= form.collection_check_boxes :test_d, ["x", "y", "z"], :to_s, :to_s, bootstrap: {custom_control: true, check_inline: true, label: {text: "Custom Checkboxes Inline"}, help: "Help Text"} %>
     <% end %>
   </div>
 </div>
