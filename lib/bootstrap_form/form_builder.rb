@@ -224,13 +224,11 @@ module BootstrapForm
     def form_group(options = {})
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
 
-      label_text = bootstrap.label[:text]
+      label_options = bootstrap.label.clone
+      label_text = label_options.delete(:text)
 
       label =
         if label_text.present?
-          label_options = {}
-          add_css_class!(label_options, bootstrap.label[:class])
-
           if bootstrap.horizontal?
             add_css_class!(label_options, "col-form-label")
             add_css_class!(label_options, bootstrap.label_col_class)

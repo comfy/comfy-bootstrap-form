@@ -311,12 +311,12 @@ class FieldsTest < ActionView::TestCase
   end
 
   def test_form_group_with_label
-    actual = @builder.form_group(bootstrap: { label: { text: "Test" } }) do
+    actual = @builder.form_group(bootstrap: { label: { text: "Test", class: "custom", for: "input-id" } }) do
       "test"
     end
     expected = <<-HTML
       <div class="form-group">
-        <label>Test</label>
+        <label class="custom" for="input-id">Test</label>
         test
       </div>
     HTML
