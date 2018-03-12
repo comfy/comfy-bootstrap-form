@@ -95,8 +95,8 @@ module BootstrapForm
       end
 
       fieldset_css_class = "form-group"
-      fieldset_css_class << " row" if bootstrap.horizontal?
-      fieldset_css_class << " #{bootstrap.inline_margin_class}" if bootstrap.inline?
+      fieldset_css_class += " row" if bootstrap.horizontal?
+      fieldset_css_class += " #{bootstrap.inline_margin_class}" if bootstrap.inline?
 
       content_tag(:fieldset, class: fieldset_css_class) do
         draw_control_column(bootstrap, offset: true) do
@@ -199,7 +199,7 @@ module BootstrapForm
       add_css_class!(options, "btn")
 
       form_group_class = "form-group"
-      form_group_class << " row" if bootstrap.horizontal?
+      form_group_class += " row" if bootstrap.horizontal?
 
       content_tag(:div, class: form_group_class) do
         draw_control_column(bootstrap, offset: true) do
@@ -243,8 +243,8 @@ module BootstrapForm
         end
 
       form_group_class = "form-group"
-      form_group_class << " row"      if bootstrap.horizontal?
-      form_group_class << " mr-sm-2"  if bootstrap.inline?
+      form_group_class += " row"      if bootstrap.horizontal?
+      form_group_class += " mr-sm-2"  if bootstrap.inline?
 
       content_tag(:div, class: form_group_class) do
         content = "".html_safe
@@ -267,8 +267,8 @@ module BootstrapForm
       end
 
       form_group_class = "form-group"
-      form_group_class << " row"      if bootstrap.horizontal?
-      form_group_class << " mr-sm-2"  if bootstrap.inline?
+      form_group_class += " row"      if bootstrap.horizontal?
+      form_group_class += " mr-sm-2"  if bootstrap.inline?
 
       content_tag(:div, class: form_group_class) do
         concat label
@@ -330,7 +330,7 @@ module BootstrapForm
     def draw_control_column(bootstrap, offset:)
       return yield unless bootstrap.horizontal?
       css_class = bootstrap.control_col_class.to_s
-      css_class << " #{bootstrap.offset_col_class}" if offset
+      css_class += " #{bootstrap.offset_col_class}" if offset
       content_tag(:div, class: css_class) do
         yield
       end
@@ -396,13 +396,13 @@ module BootstrapForm
           label_css_class = "custom-control-label"
 
           form_check_css_class = "custom-control"
-          form_check_css_class <<
+          form_check_css_class +=
             case type
             when :radio_button then " custom-radio"
             when :check_box    then " custom-checkbox"
             end
 
-          form_check_css_class << " custom-control-inline" if bootstrap.check_inline
+          form_check_css_class += " custom-control-inline" if bootstrap.check_inline
 
           add_css_class!(html_options, "custom-control-input")
 
@@ -410,7 +410,7 @@ module BootstrapForm
           label_css_class = "form-check-label"
 
           form_check_css_class = "form-check"
-          form_check_css_class << " form-check-inline" if bootstrap.check_inline
+          form_check_css_class += " form-check-inline" if bootstrap.check_inline
 
           add_css_class!(html_options, "form-check-input")
         end
