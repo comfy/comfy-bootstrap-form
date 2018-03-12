@@ -277,7 +277,8 @@ module BootstrapForm
     end
 
     def draw_errors(method)
-      return unless (errors = object && object.errors[method]).present?
+      return unless object.present?
+      return unless (errors = object.errors[method]).present?
 
       content_tag(:div, class: "invalid-feedback") do
         errors.join(", ")

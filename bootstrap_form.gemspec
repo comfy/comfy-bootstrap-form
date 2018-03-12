@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
@@ -22,7 +24,7 @@ Gem::Specification.new do |s|
   s.bindir        = "exe"
   s.require_paths = ["lib"]
 
-  s.required_ruby_version = ">= 2.2.2"
+  s.required_ruby_version = ">= 2.3.0"
 
   s.add_dependency "rails", ">= 5.0.0"
 end
