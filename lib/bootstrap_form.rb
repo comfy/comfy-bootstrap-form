@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "bootstrap_form/form_builder"
 require "bootstrap_form/view_helper"
 
