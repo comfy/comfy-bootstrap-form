@@ -3,11 +3,11 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require "bootstrap_form/version"
+require "comfy_bootstrap_form/version"
 
 Gem::Specification.new do |s|
   s.name        = "comfy_bootstrap_form"
-  s.version     = BootstrapForm::VERSION
+  s.version     = ComfyBootstrapForm::VERSION
   s.authors     = ["Oleg Khabarov"]
   s.email       = ["oleg@khabarov.ca"]
   s.homepage    = "https://github.com/comfy/comfy-bootstrap-form"

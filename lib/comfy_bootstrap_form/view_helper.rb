@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module BootstrapForm
+module ComfyBootstrapForm
   module ViewHelper
 
     # Wrapper for `form_with`. Passing in Bootstrap form builder.
@@ -13,7 +13,7 @@ module BootstrapForm
         css_classes = [css_classes, "form-inline"].compact.join(" ")
       end
 
-      form_options = options.reverse_merge(builder: BootstrapForm::FormBuilder)
+      form_options = options.reverse_merge(builder: ComfyBootstrapForm::FormBuilder)
       form_options.merge!(class: css_classes) unless css_classes.blank?
 
       supress_form_field_errors do
@@ -32,7 +32,7 @@ module BootstrapForm
         css_classes = [css_classes, "form-inline"].compact.join(" ")
       end
 
-      options.reverse_merge!(builder: BootstrapForm::FormBuilder)
+      options.reverse_merge!(builder: ComfyBootstrapForm::FormBuilder)
       options[:html].merge!(class: css_classes) unless css_classes.blank?
 
       supress_form_field_errors do

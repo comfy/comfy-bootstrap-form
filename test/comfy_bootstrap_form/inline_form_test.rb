@@ -6,7 +6,7 @@ class InlineFormTest < ActionView::TestCase
 
   setup do
     @user     = User.new
-    @builder  = BootstrapForm::FormBuilder.new(:user, @user, self, bootstrap: { layout: :inline })
+    @builder  = ComfyBootstrapForm::FormBuilder.new(:user, @user, self, bootstrap: { layout: :inline })
   end
 
   def test_text_field

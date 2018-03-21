@@ -6,7 +6,7 @@ class InputGroupTest < ActionView::TestCase
 
   setup do
     @user     = User.new
-    @builder  = BootstrapForm::FormBuilder.new(:user, @user, self, {})
+    @builder  = ComfyBootstrapForm::FormBuilder.new(:user, @user, self, {})
   end
 
   def test_input_group

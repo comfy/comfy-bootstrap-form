@@ -9,11 +9,11 @@ class BootstrapOptionsTest < ActionView::TestCase
       layout: "horizontal",
       label:  { hide: true }
     } }
-    @builder = BootstrapForm::FormBuilder.new(:user, nil, self, options)
+    @builder = ComfyBootstrapForm::FormBuilder.new(:user, nil, self, options)
   end
 
   def test_defaults
-    options = BootstrapForm::BootstrapOptions.new
+    options = ComfyBootstrapForm::BootstrapOptions.new
     assert_equal "vertical",      options.layout
     assert_equal "col-sm-2",      options.label_col_class
     assert_equal "col-sm-10",     options.control_col_class
@@ -27,7 +27,7 @@ class BootstrapOptionsTest < ActionView::TestCase
   end
 
   def test_with_set_options
-    options = BootstrapForm::BootstrapOptions.new(
+    options = ComfyBootstrapForm::BootstrapOptions.new(
       layout:               "horizontal",
       label_col_class:      "col-md-4",
       control_col_class:    "col-md-8",
@@ -52,36 +52,36 @@ class BootstrapOptionsTest < ActionView::TestCase
   end
 
   def test_with_set_invalid_options
-    options = BootstrapForm::BootstrapOptions.new(invalid: "invalid")
+    options = ComfyBootstrapForm::BootstrapOptions.new(invalid: "invalid")
     refute options.respond_to?(:invalid)
   end
 
   def test_horizontal
-    options = BootstrapForm::BootstrapOptions.new
+    options = ComfyBootstrapForm::BootstrapOptions.new
     refute options.horizontal?
 
-    options = BootstrapForm::BootstrapOptions.new(layout: "horizontal")
+    options = ComfyBootstrapForm::BootstrapOptions.new(layout: "horizontal")
     assert options.horizontal?
   end
 
   def test_inline
-    options = BootstrapForm::BootstrapOptions.new
+    options = ComfyBootstrapForm::BootstrapOptions.new
     refute options.inline?
 
-    options = BootstrapForm::BootstrapOptions.new(layout: "inline")
+    options = ComfyBootstrapForm::BootstrapOptions.new(layout: "inline")
     assert options.inline?
   end
 
   def test_offset_col_class
-    options = BootstrapForm::BootstrapOptions.new
+    options = ComfyBootstrapForm::BootstrapOptions.new
     assert_equal "offset-sm-2", options.offset_col_class
 
-    options = BootstrapForm::BootstrapOptions.new(label_col_class: "col-md-4")
+    options = ComfyBootstrapForm::BootstrapOptions.new(label_col_class: "col-md-4")
     assert_equal "offset-md-4", options.offset_col_class
   end
 
   def scoped
-    options = BootstrapForm::BootstrapOptions.new
+    options = ComfyBootstrapForm::BootstrapOptions.new
     refute options.horizontal?
 
     scoped_options = options.scoped(layout: "vertical")

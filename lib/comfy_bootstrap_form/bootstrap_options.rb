@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module BootstrapForm
+module ComfyBootstrapForm
   # Container for bootstrap specific form builder options. It controls options
   # that define form layout and grid sizing. They are passed-in into form helper
   # and field helpers via `:bootstrap` option. For example:

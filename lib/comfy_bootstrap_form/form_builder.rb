@@ -2,7 +2,7 @@
 
 require_relative "bootstrap_options"
 
-module BootstrapForm
+module ComfyBootstrapForm
   class FormBuilder < ActionView::Helpers::FormBuilder
 
     FIELD_HELPERS = %w[
@@ -17,7 +17,7 @@ module BootstrapForm
     attr_accessor :form_bootstrap
 
     def initialize(object_name, object, template, options)
-      @form_bootstrap = BootstrapForm::BootstrapOptions.new(options.delete(:bootstrap))
+      @form_bootstrap = ComfyBootstrapForm::BootstrapOptions.new(options.delete(:bootstrap))
       super(object_name, object, template, options)
     end
 

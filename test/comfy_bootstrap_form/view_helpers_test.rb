@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class ViewHelpersTest < ActionView::TestCase
 
-  include BootstrapForm::ViewHelper
+  include ComfyBootstrapForm::ViewHelper
 
   def test_bootstrap_form_with
     skip if Rails.version < "5.1"

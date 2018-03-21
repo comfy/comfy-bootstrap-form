@@ -6,7 +6,7 @@ class HorizontalFormTest < ActionView::TestCase
 
   setup do
     @user     = User.new
-    @builder  = BootstrapForm::FormBuilder.new(:user, @user, self, bootstrap: { layout: :horizontal })
+    @builder  = ComfyBootstrapForm::FormBuilder.new(:user, @user, self, bootstrap: { layout: :horizontal })
   end
 
   def test_text_field
