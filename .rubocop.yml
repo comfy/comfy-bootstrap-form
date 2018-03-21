@@ -94,8 +94,8 @@ Style/AsciiComments:
 # -- Exceptions ----------------------------------------------------------------
 Performance/RedundantMerge:
   Exclude:
-    - 'lib/bootstrap_form/view_helper.rb'
+    - 'lib/comfy_bootstrap_form/view_helper.rb'
 
 Naming/AccessorMethodName:
   Exclude:
-    - 'lib/bootstrap_form/bootstrap_options.rb'
+    - 'lib/comfy_bootstrap_form/bootstrap_options.rb'
