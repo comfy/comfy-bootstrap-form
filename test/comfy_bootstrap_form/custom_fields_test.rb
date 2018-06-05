@@ -121,4 +121,17 @@ class CustomFieldsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_select
+    actual = @builder.select(:test, [%w[Foo foo]], bootstrap: { custom_control: true })
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_test">Test</label>
+        <select class="custom-select form-control" id="user_test" name="user[test]">
+          <option value="foo">Foo</option>
+        </select>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
 end

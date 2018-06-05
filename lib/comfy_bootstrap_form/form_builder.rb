@@ -46,6 +46,9 @@ module ComfyBootstrapForm
     #
     def select(method, choices = nil, options = {}, html_options = {}, &block)
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+
+      add_css_class!(html_options, "custom-select") if bootstrap.custom_control
+
       draw_form_group(bootstrap, method, html_options) do
         super(method, choices, options, html_options, &block)
       end
