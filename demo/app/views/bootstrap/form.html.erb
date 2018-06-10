@@ -138,6 +138,7 @@
       <%= form.check_box :test_b, bootstrap: {label: {text: "Custom Checkbox"}, custom_control: true, help: "Help Text"} %>
       <%= form.collection_radio_buttons :test_c, ["a", "b", "c"], :to_s, :to_s, bootstrap: {custom_control: true, label: {text: "Custom Radio Buttons"}, help: "Help text"} %>
       <%= form.collection_check_boxes :test_d, ["x", "y", "z"], :to_s, :to_s, bootstrap: {custom_control: true, check_inline: true, label: {text: "Custom Checkboxes Inline"}, help: "Help Text"} %>
+      <%= form.select :test_e, [%w[Foo foo], %w[Bar bar], %w[Baz baz]], bootstrap: {custom_control: true, label: {text: "Custom Select"}, help: "Help Text"} %>
     <% end %>
   </div>
   <div class="col-6">
@@ -147,6 +148,7 @@
       <%= form.check_box :test_b, bootstrap: {label: {text: "Custom Checkbox"}, custom_control: true, help: "Help Text"} %>
       <%= form.collection_radio_buttons :test_c, ["a", "b", "c"], :to_s, :to_s, bootstrap: {custom_control: true, label: {text: "Custom Radio Buttons"}, help: "Help text"} %>
       <%= form.collection_check_boxes :test_d, ["x", "y", "z"], :to_s, :to_s, bootstrap: {custom_control: true, check_inline: true, label: {text: "Custom Checkboxes Inline"}, help: "Help Text"} %>
+      <%= form.select :test_e, [%w[Foo foo], %w[Bar bar], %w[Baz baz]], bootstrap: {custom_control: true, label: {text: "Custom Select"}, help: "Help Text"} %>
     <% end %>
   </div>
 </div>
