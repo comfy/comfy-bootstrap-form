@@ -86,7 +86,7 @@ Wrapper around `form_for` helper that's available in all Rails 5 versions.
 Here's an example:
 
 ```erb
-<%= bootstrap_form_with @person, as: :user do |form| %>
+<%= bootstrap_form_for @person, as: :user do |form| %>
   <%= form.email_field :email %>
   <%= form.submit %>
 <% end %>
