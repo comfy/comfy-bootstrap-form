@@ -33,6 +33,7 @@ module ComfyBootstrapForm
       class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
         def #{field_helper}(method, options = {})
           bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+          return super if bootstrap.disabled
           draw_form_group(bootstrap, method, options) do
             super(method, options)
           end
@@ -46,6 +47,7 @@ module ComfyBootstrapForm
     #
     def select(method, choices = nil, options = {}, html_options = {}, &block)
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+      return super if bootstrap.disabled
 
       add_css_class!(html_options, "custom-select") if bootstrap.custom_control
 
@@ -60,6 +62,7 @@ module ComfyBootstrapForm
     #
     def file_field(method, options = {})
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+      return super if bootstrap.disabled
 
       draw_form_group(bootstrap, method, options) do
         if bootstrap.custom_control
@@ -85,6 +88,7 @@ module ComfyBootstrapForm
     #
     def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+      return super if bootstrap.disabled
 
       help_text = draw_help(bootstrap.help)
       errors    = draw_errors(method)
@@ -137,6 +141,7 @@ module ComfyBootstrapForm
     #
     def collection_radio_buttons(method, collection, value_method, text_method, options = {}, html_options = {})
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+      return super if bootstrap.disabled
 
       args = [bootstrap, :radio_button, method, collection, value_method, text_method, options, html_options]
       draw_choices(*args) do |m, v, opts|
@@ -151,6 +156,7 @@ module ComfyBootstrapForm
     #
     def collection_check_boxes(method, collection, value_method, text_method, options = {}, html_options = {})
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+      return super if bootstrap.disabled
 
       content = "".html_safe
       unless options[:include_hidden] == false
@@ -198,6 +204,7 @@ module ComfyBootstrapForm
       end
 
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+      return super if bootstrap.disabled
 
       add_css_class!(options, "btn")
 

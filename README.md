@@ -295,6 +295,15 @@ radio buttons and file input field. Example usage:
 <%= form.collection_radio_buttons :choice, %w[yes no], :to_s, :to_s, bootstrap: {custom_control: true} %>
 ```
 
+#### Disabling Bootstrap
+
+You may completely disable bootstrap and use default form builder by passing
+`disabled: true` option. For example:
+
+```erb
+<%= form.text_field :username, bootstrap: {disabled: true} %>
+```
+
 ### Gotchas
 
 - In Rails 5.1 `form_with` does not generate ids for inputs. If you want them

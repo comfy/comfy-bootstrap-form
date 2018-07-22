@@ -14,6 +14,7 @@ class BootstrapOptionsTest < ActionView::TestCase
 
   def test_defaults
     options = ComfyBootstrapForm::BootstrapOptions.new
+    assert_equal false,           options.disabled
     assert_equal "vertical",      options.layout
     assert_equal "col-sm-2",      options.label_col_class
     assert_equal "col-sm-10",     options.control_col_class
@@ -28,6 +29,7 @@ class BootstrapOptionsTest < ActionView::TestCase
 
   def test_with_set_options
     options = ComfyBootstrapForm::BootstrapOptions.new(
+      disabled:             true,
       layout:               "horizontal",
       label_col_class:      "col-md-4",
       control_col_class:    "col-md-8",
@@ -39,6 +41,7 @@ class BootstrapOptionsTest < ActionView::TestCase
       help:                 "help text",
       check_inline:         "true"
     )
+    assert_equal true,                options.disabled
     assert_equal "horizontal",        options.layout
     assert_equal "col-md-4",          options.label_col_class
     assert_equal "col-md-8",          options.control_col_class

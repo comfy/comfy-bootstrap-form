@@ -11,6 +11,9 @@ module ComfyBootstrapForm
   #
   class BootstrapOptions
 
+    # When set to `true` only default rails form builder element is rendered.
+    attr_reader :disabled
+
     # Controls form layout. Can be: "vertical" (default), "horizontal" or "inline"
     attr_reader :layout
 
@@ -107,6 +110,7 @@ module ComfyBootstrapForm
   private
 
     def set_defaults
+      @disabled             = false
       @layout               = "vertical"
       @label_col_class      = "col-sm-2"
       @control_col_class    = "col-sm-10"

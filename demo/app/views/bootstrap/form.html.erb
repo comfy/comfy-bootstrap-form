@@ -5,12 +5,12 @@
 <h3>Horizontal Form</h3>
 
 <%= bootstrap_form_with model: @user, scope: "user_a", url: "/", bootstrap: {layout: :horizontal} do |form| %>
-  <%= form.email_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
+  <%= form.text_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
   <%= form.email_field :email, placeholder: "you@example.com" %>
   <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
   <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
   <%= form.text_area :bio, placeholder: "Tell us your life story" %>
-  <%= form.select :locale, [["English", "en"], ["French", "fr"]], {}, bootstrap: {label: {text: "Language"}} %>
+  <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {label: {text: "Language"}} %>
   <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
   <%= form.primary "Press to Register" do %>
     <a href="/" class="btn btn-link">Maybe Later</a>
@@ -20,12 +20,12 @@
 <h3>Horizontal Form With Errors</h3>
 
 <%= bootstrap_form_with model: @user_with_error, scope: "user_b", url: "/", bootstrap: {layout: :horizontal} do |form| %>
-  <%= form.email_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
+  <%= form.text_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
   <%= form.email_field :email, placeholder: "you@example.com" %>
   <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
   <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
   <%= form.text_area :bio, placeholder: "Tell us your life story" %>
-  <%= form.select :locale, [["English", "en"], ["French", "fr"]], {}, bootstrap: {label: {text: "Language"}} %>
+  <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {label: {text: "Language"}} %>
   <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
   <%= form.primary "Press to Register" do %>
     <a href="/" class="btn btn-link">Maybe Later</a>
@@ -35,7 +35,7 @@
 <h3>Inline Form</h3>
 
 <%= bootstrap_form_with scope: :login, url: "/", bootstrap: {layout: :inline, label: {hide: true}} do |form| %>
-  <%= form.email_field :username, placeholder: "Username", bootstrap: {prepend: "@"} %>
+  <%= form.text_field :username, placeholder: "Username", bootstrap: {prepend: "@"} %>
   <%= form.password_field :password, placeholder: "Password" %>
   <%= form.check_box :remember_me %>
   <%= form.primary "Sign in", class: "ml-3" %>
@@ -46,12 +46,12 @@
     <h3>Vertical Form</h3>
 
     <%= bootstrap_form_with model: @user, scope: "user_c", url: "/" do |form| %>
-      <%= form.email_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
+      <%= form.text_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
       <%= form.email_field :email, placeholder: "you@example.com" %>
       <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
       <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
       <%= form.text_area :bio, placeholder: "Tell us your life story" %>
-      <%= form.select :locale, [["English", "en"], ["French", "fr"]], {}, bootstrap: {label: {text: "Language"}} %>
+      <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {label: {text: "Language"}} %>
       <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
       <%= form.primary "Press to Register" do %>
         <a href="/" class="btn btn-link">Maybe Later</a>
@@ -62,12 +62,12 @@
     <h3>With Errors</h3>
 
     <%= bootstrap_form_with model: @user_with_error, scope: "user_c", url: "/" do |form| %>
-      <%= form.email_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
+      <%= form.text_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
       <%= form.email_field :email, placeholder: "you@example.com" %>
       <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
       <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
       <%= form.text_area :bio, placeholder: "Tell us your life story" %>
-      <%= form.select :locale, [["English", "en"], ["French", "fr"]], {}, bootstrap: {label: {text: "Language"}} %>
+      <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {label: {text: "Language"}} %>
       <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
       <%= form.primary "Press to Register" do %>
         <a href="/" class="btn btn-link">Maybe Later</a>
@@ -160,12 +160,12 @@
 <h3>Horizontal Form</h3>
 
 <%= bootstrap_form_for @user, as: "user_h", url: "/", bootstrap: {layout: :horizontal} do |form| %>
-  <%= form.email_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
+  <%= form.text_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
   <%= form.email_field :email, placeholder: "you@example.com" %>
   <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
   <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
   <%= form.text_area :bio, placeholder: "Tell us your life story" %>
-  <%= form.select :locale, [["English", "en"], ["French", "fr"]], {}, bootstrap: {label: {text: "Language"}} %>
+  <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {label: {text: "Language"}} %>
   <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
   <%= form.primary "Press to Register" do %>
     <a href="/" class="btn btn-link">Maybe Later</a>
@@ -175,12 +175,12 @@
 <h3>Horizontal Form With Errors</h3>
 
 <%= bootstrap_form_for @user_with_error, as: "user_i", url: "/", bootstrap: {layout: :horizontal} do |form| %>
-  <%= form.email_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
+  <%= form.text_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
   <%= form.email_field :email, placeholder: "you@example.com" %>
   <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
   <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
   <%= form.text_area :bio, placeholder: "Tell us your life story" %>
-  <%= form.select :locale, [["English", "en"], ["French", "fr"]], {}, bootstrap: {label: {text: "Language"}} %>
+  <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {label: {text: "Language"}} %>
   <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
   <%= form.primary "Press to Register" do %>
     <a href="/" class="btn btn-link">Maybe Later</a>
@@ -190,7 +190,7 @@
 <h3>Inline Form</h3>
 
 <%= bootstrap_form_for @user, as: "user_k", url: "/", bootstrap: {layout: :inline, label: {hide: true}} do |form| %>
-  <%= form.email_field :username, placeholder: "Username", bootstrap: {prepend: "@"} %>
+  <%= form.text_field :username, placeholder: "Username", bootstrap: {prepend: "@"} %>
   <%= form.password_field :password, placeholder: "Password" %>
   <%= form.primary "Sign in", class: "ml-3" %>
 <% end %>
@@ -246,5 +246,16 @@
       <% end %>
       <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {hide: true}, prepend: {html: prepend_button}, append: {html: append_button}} %>
     <% end %>
-  <div>
+  </div>
 </div>
+
+<h3>Disabled Bootstrap</h3>
+<%= bootstrap_form_for @user, as: "user_p", url: "/", bootstrap: {layout: :horizontal} do |form| %>
+  <%= form.email_field :email, placeholder: "you@example.com", bootstrap: {disabled: true} %>
+  <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {disabled: true} %>
+  <%= form.file_field :test_a, bootstrap: {disabled: true} %>
+  <%= form.check_box :terms, bootstrap: {disabled: true} %>
+  <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {disabled: true} %>
+  <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {disabled: true} %>
+  <%= form.submit "Submit", bootstrap: {disabled: true} %>
+<% end %>
