@@ -86,12 +86,13 @@ class BootstrapOptionsTest < ActionView::TestCase
     assert_equal "offset-sm-4 offset-md-2", options.offset_col_class
   end
 
-  def scoped
+  def test_scoped
     options = ComfyBootstrapForm::BootstrapOptions.new
     refute options.horizontal?
 
-    scoped_options = options.scoped(layout: "vertical")
+    scoped_options = options.scoped(layout: "horizontal")
     assert scoped_options.horizontal?
+
     refute options.horizontal?
   end
 
