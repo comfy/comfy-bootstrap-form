@@ -83,7 +83,7 @@ module ComfyBootstrapForm
     end
 
     def offset_col_class
-      label_col_class.sub(%r{\Acol-(\w+)-(\d+)\z}, 'offset-\1-\2')
+      label_col_class.gsub(%r{col-(\w+)-(\d+)}, 'offset-\1-\2')
     end
 
     # This will return a copy of BootstrapOptions object with new options set

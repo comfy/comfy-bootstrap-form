@@ -81,6 +81,9 @@ class BootstrapOptionsTest < ActionView::TestCase
 
     options = ComfyBootstrapForm::BootstrapOptions.new(label_col_class: "col-md-4")
     assert_equal "offset-md-4", options.offset_col_class
+
+    options = ComfyBootstrapForm::BootstrapOptions.new(label_col_class: "col-sm-4 col-md-2")
+    assert_equal "offset-sm-4 offset-md-2", options.offset_col_class
   end
 
   def scoped

@@ -11,10 +11,9 @@ Gem::Specification.new do |s|
   s.authors     = ["Oleg Khabarov"]
   s.email       = ["oleg@khabarov.ca"]
   s.homepage    = "https://github.com/comfy/comfy-bootstrap-form"
-  s.summary     = "Rails form builder that makes it easy to style forms using "\
-                  "Bootstrap 4"
-  s.description = "bootstrap_form is a rails form builder that makes it super "\
-                  "easy to create beautiful-looking forms using Bootstrap 4"
+  s.summary     = "Rails form builder for Bootstrap 4 markup that actually works!"
+  s.description = "bootstrap_form is a Rails form builder that automatically wraps "\
+                  "form elements in Bootstrap 4 markup"
   s.license     = "MIT"
 
   s.files = `git ls-files -z`.split("\x0").reject do |f|
