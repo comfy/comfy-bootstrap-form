@@ -17,4 +17,5 @@ group :test do
   gem "equivalent-xml"
   gem "minitest"
   gem "sqlite3"
+  gem "timecop"
 end

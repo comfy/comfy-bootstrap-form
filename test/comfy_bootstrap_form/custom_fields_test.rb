@@ -134,4 +134,34 @@ class CustomFieldsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_datetime_select
+    Timecop.freeze(Time.utc(2012, 2, 3, 12, 0, 0)) do
+      actual = @builder.datetime_select(:test, bootstrap: { custom_control: true })
+      expected = <<-HTML
+        <div class="form-group">
+          <label for="user_test">Test</label>
+          <div class="datetime_select">
+            <select class="d-inline-block w-auto custom-select form-control" id="user_test_1i" name="user[test(1i)]">
+              #{options_range(start: 2007, stop: 2017, selected: 2012)}
+            </select>
+            <select class="d-inline-block w-auto custom-select form-control" id="user_test_2i" name="user[test(2i)]">
+              #{options_range(start: 1, stop: 12, selected: 2, months: true)}
+            </select>
+            <select class="d-inline-block w-auto custom-select form-control" id="user_test_3i" name="user[test(3i)]">
+              #{options_range(start: 1, stop: 31, selected: 3)}
+            </select>
+            <select class="d-inline-block w-auto custom-select form-control" id="user_test_4i" name="user[test(4i)]">
+              #{options_range(start: '00', stop: '23', selected: '12')}
+            </select>
+            :
+            <select class="d-inline-block w-auto custom-select form-control" id="user_test_5i" name="user[test(5i)]">
+              #{options_range(start: '00', stop: '59', selected: '00')}
+            </select>
+          </div>
+        </div>
+      HTML
+      assert_xml_equal expected, actual
+    end
+  end
+
 end

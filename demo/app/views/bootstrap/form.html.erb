@@ -11,6 +11,9 @@
   <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
   <%= form.text_area :bio, placeholder: "Tell us your life story" %>
   <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {label: {text: "Language"}} %>
+  <%= form.date_select :date %>
+  <%= form.datetime_select :datetime %>
+  <%= form.time_select :time %>
   <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
   <%= form.primary "Press to Register" do %>
     <a href="/" class="btn btn-link">Maybe Later</a>
@@ -26,6 +29,9 @@
   <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
   <%= form.text_area :bio, placeholder: "Tell us your life story" %>
   <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {label: {text: "Language"}} %>
+  <%= form.date_select :date %>
+  <%= form.datetime_select :datetime %>
+  <%= form.time_select :time %>
   <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
   <%= form.primary "Press to Register" do %>
     <a href="/" class="btn btn-link">Maybe Later</a>
@@ -42,7 +48,7 @@
 <% end %>
 
 <div class="row">
-  <div class="col-6">
+  <div class="col-md-6">
     <h3>Vertical Form</h3>
 
     <%= bootstrap_form_with model: @user, scope: "user_c", url: "/" do |form| %>
@@ -58,7 +64,7 @@
       <% end %>
     <% end %>
   </div>
-  <div class="col-6">
+  <div class="col-md-6">
     <h3>With Errors</h3>
 
     <%= bootstrap_form_with model: @user_with_error, scope: "user_c", url: "/" do |form| %>
@@ -77,7 +83,7 @@
 </div>
 
 <div class="row">
-  <div class="col-6">
+  <div class="col-md-6">
     <h3>Checkboxes and Radio buttons</h3>
     <% @user.test = "b" %>
     <%= bootstrap_form_with model: @user, scope: "user_d", url: "/" do |form| %>
@@ -87,7 +93,7 @@
       <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {inline: true, help: "help text", label: {hide: true}} %>
     <% end %>
   </div>
-  <div class="col-6">
+  <div class="col-md-6">
     <h3>With Errors</h3>
     <% @user_with_error.test = "b" %>
     <%= bootstrap_form_with model: @user_with_error, scope: "user_e", url: "/" do |form| %>
@@ -100,7 +106,7 @@
 </div>
 
 <div class="row">
-  <div class="col-6">
+  <div class="col-md-6">
     <h3>Input Group</h3>
 
     <%= bootstrap_form_with model: @user, scope: "user_f", url: "/" do |form| %>
@@ -114,7 +120,7 @@
       <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {hide: true}, prepend: {html: prepend_button}, append: {html: append_button}} %>
     <% end %>
   </div>
-  <div class="col-6">
+  <div class="col-md-6">
     <h3>With Errors</h3>
 
     <%= bootstrap_form_with model: @user_with_error, scope: "user_g", url: "/" do |form| %>
@@ -131,7 +137,7 @@
 </div>
 
 <div class="row">
-  <div class="col-6">
+  <div class="col-md-6">
     <h3>Custom Input Fields</h3>
     <%= bootstrap_form_with model: @user, scope: "user_x", url: "/" do |form| %>
       <%= form.file_field :test_a, placeholder: "Choose File", bootstrap: {label: {text: "Custom File Field"}, custom_control: true, help: "Help Text"} %>
@@ -139,9 +145,10 @@
       <%= form.collection_radio_buttons :test_c, ["a", "b", "c"], :to_s, :to_s, bootstrap: {custom_control: true, label: {text: "Custom Radio Buttons"}, help: "Help text"} %>
       <%= form.collection_check_boxes :test_d, ["x", "y", "z"], :to_s, :to_s, bootstrap: {custom_control: true, check_inline: true, label: {text: "Custom Checkboxes Inline"}, help: "Help Text"} %>
       <%= form.select :test_e, [%w[Foo foo], %w[Bar bar], %w[Baz baz]], bootstrap: {custom_control: true, label: {text: "Custom Select"}, help: "Help Text"} %>
+      <%= form.date_select :test_f, bootstrap: {custom_control: true, label: {text: "Custom Date Select"} } %>
     <% end %>
   </div>
-  <div class="col-6">
+  <div class="col-md-6">
     <h3>With Errors</h3>
     <%= bootstrap_form_with model: @user_with_error, scope: "user_y", url: "/" do |form| %>
       <%= form.file_field :test_a, placeholder: "Choose File", bootstrap: {label: {text: "Custom File Field"}, custom_control: true, help: "Help Text"} %>
@@ -149,6 +156,7 @@
       <%= form.collection_radio_buttons :test_c, ["a", "b", "c"], :to_s, :to_s, bootstrap: {custom_control: true, label: {text: "Custom Radio Buttons"}, help: "Help text"} %>
       <%= form.collection_check_boxes :test_d, ["x", "y", "z"], :to_s, :to_s, bootstrap: {custom_control: true, check_inline: true, label: {text: "Custom Checkboxes Inline"}, help: "Help Text"} %>
       <%= form.select :test_e, [%w[Foo foo], %w[Bar bar], %w[Baz baz]], bootstrap: {custom_control: true, label: {text: "Custom Select"}, help: "Help Text"} %>
+      <%= form.date_select :test_f, bootstrap: {custom_control: true, label: {text: "Custom Date Select"} } %>
     <% end %>
   </div>
 </div>
@@ -196,7 +204,7 @@
 <% end %>
 
 <div class="row">
-  <div class="col-6">
+  <div class="col-md-6">
     <h3>Checkboxes and Radio buttons</h3>
     <% @user.test = "b" %>
     <%= bootstrap_form_for @user, as: "user_l", url: "/" do |form| %>
@@ -206,7 +214,7 @@
       <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {inline: true, help: "help text", label: {hide: true}} %>
     <% end %>
   </div>
-  <div class="col-6">
+  <div class="col-md-6">
     <h3>With Errors</h3>
     <% @user_with_error.test = "b" %>
     <%= bootstrap_form_for @user_with_error, as: "user_m", url: "/" do |form| %>
@@ -219,7 +227,7 @@
 </div>
 
 <div class="row">
-  <div class="col-6">
+  <div class="col-md-6">
     <h3>Input Group</h3>
 
     <%= bootstrap_form_for @user, as: "user_n", url: "/" do |form| %>
@@ -233,7 +241,7 @@
       <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {hide: true}, prepend: {html: prepend_button}, append: {html: append_button}} %>
     <% end %>
   </div>
-  <div class="col-6">
+  <div class="col-md-6">
     <h3>With Errors</h3>
 
     <%= bootstrap_form_for @user_with_error, as: "user_o", url: "/" do |form| %>
@@ -257,5 +265,6 @@
   <%= form.check_box :terms, bootstrap: {disabled: true} %>
   <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {disabled: true} %>
   <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {disabled: true} %>
+  <%= form.datetime_select :datetime, bootstrap: {disabled: true} %>
   <%= form.submit "Submit", bootstrap: {disabled: true} %>
 <% end %>

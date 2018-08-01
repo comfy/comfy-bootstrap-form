@@ -9,6 +9,7 @@ ActiveRecord::Schema.define(version: 1) do
     t.string  :bio
     t.string  :color
     t.string  :locale
+    t.datetime :datetime
     t.timestamps
   end
 

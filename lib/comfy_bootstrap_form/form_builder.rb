@@ -11,6 +11,10 @@ module ComfyBootstrapForm
       text_field time_field url_field week_field
     ].freeze
 
+    DATE_SELECT_HELPERS = %w[
+      date_select datetime_select time_select
+    ].freeze
+
     delegate :content_tag, :capture, :concat, to: :@template
 
     # Bootstrap settings set on the form itself
@@ -41,9 +45,31 @@ module ComfyBootstrapForm
       RUBY_EVAL
     end
 
-    # Wrapper for select helper. Boostrap options are sent via html_options hash:
+    # Wrapper for datetime select helpers. Boostrap options are sent via options hash:
     #
-    #   select :choices, ["a", "b"], {}, bootstrap: {label: {text: "Custom"}}
+    #   date_select :birthday, bootstrap: {label: {text: "Custom"}}
+    #
+    DATE_SELECT_HELPERS.each do |select_helper|
+      class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
+        def #{select_helper}(method, options = {}, html_options = {}, &block)
+          bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+          return super if bootstrap.disabled
+
+          add_css_class!(html_options, "d-inline-block w-auto")
+          add_css_class!(html_options, "custom-select") if bootstrap.custom_control
+
+          draw_form_group(bootstrap, method, html_options) do
+            content_tag(:div, class: "#{select_helper}") do
+              super(method, options, html_options, &block)
+            end
+          end
+        end
+      RUBY_EVAL
+    end
+
+    # Wrapper for select helper. Boostrap options are sent via options hash:
+    #
+    #   select :choices, ["a", "b"], bootstrap: {label: {text: "Custom"}}
     #
     def select(method, choices = nil, options = {}, html_options = {}, &block)
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))

@@ -31,6 +31,15 @@ class ActionView::TestCase
     }
   end
 
+  # Helper to generate options
+  def options_range(start: 1, stop: 31, selected: nil, months: false)
+    (start..stop).map do |n|
+      attr = n == selected ? 'selected="selected"' : ""
+      label = months ? Date::MONTHNAMES[n] : n
+      "<option #{attr} value=\"#{n}\">#{label}</option>"
+    end.join("\n")
+  end
+
 private
 
   def sort_attributes(doc)

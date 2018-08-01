@@ -101,12 +101,9 @@ color_field     file_field      phone_field   text_field
 date_field      month_field     range_field   time_field
 datetime_field  number_field    search_field  url_field
 email_field     password_field  text_area     week_field
+date_select     time_select     datetime_select
 collection_radio_buttons        collection_check_boxes
 ```
-
-Helpers for DateTime selects are not implemented as it's better to choose one of
-many Javascript timepickers out there. For example, [Flatpickr](https://github.com/chmln/flatpickr)
-is a good one.
 
 Singular `radio_button` is not implemented as it doesn't make sense to wrap one
 radio button input in Bootstrap markup.
