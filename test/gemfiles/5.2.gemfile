@@ -13,4 +13,5 @@ group :test do
   gem "minitest"
   gem "rubocop", "~> 0.51.0", require: false
   gem "sqlite3"
+  gem "timecop"
 end
