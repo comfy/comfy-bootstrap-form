@@ -5,7 +5,7 @@ source "http://rubygems.org"
 gemspec
 
 # Uncomment and change rails version for testing purposes
-gem "rails", "~> 5.2.0.rc1"
+gem "rails", "~> 5.2.2"
 
 group :development do
   gem "rubocop", require: false
@@ -16,6 +16,6 @@ group :test do
   gem "diffy"
   gem "equivalent-xml"
   gem "minitest"
-  gem "sqlite3"
+  gem "sqlite3", "~> 1.3.6"
   gem "timecop"
 end
