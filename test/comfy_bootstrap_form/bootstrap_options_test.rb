@@ -121,4 +121,9 @@ class BootstrapOptionsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_label_shortcut_assignment
+    options = ComfyBootstrapForm::BootstrapOptions.new(label: "Custom Label")
+    assert ({ text: "Custom Label" }), options.label
+  end
+
 end
