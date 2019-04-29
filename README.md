@@ -256,6 +256,12 @@ Custom CSS class on the label tag? Sure:
 <%= form.text_field :value, bootstrap: {label: {class: "custom-label"}} %>
 ```
 
+If you want just to set label text, there's a shortcut:
+
+```erb
+<%= form.text_field :value, bootstrap: {label: "Custom Label"} %>
+```
+
 #### Help Text
 
 You may attach help text for pretty much any field type:

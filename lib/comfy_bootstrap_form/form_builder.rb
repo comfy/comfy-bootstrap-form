@@ -331,6 +331,10 @@ module ComfyBootstrapForm
     #
     #   text_field(:value, bootstrap: {label: {text: "Custom", class: "custom"}})
     #
+    # You may also just set the label text by passing a string instead of label hash:
+    #
+    #   text_field(:value, bootstrap: {label: "Custom Label"})
+    #
     def draw_label(bootstrap, method, for_attr: nil)
       options = bootstrap.label.dup
       text    = options.delete(:text)

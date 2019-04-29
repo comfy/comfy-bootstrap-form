@@ -31,6 +31,17 @@ class FieldsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_text_field_label_shorcut
+    actual = @builder.text_field(:email, bootstrap: { label: "Custom Label" })
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_email">Custom Label</label>
+        <input class="form-control" type="text" name="user[email]" id="user_email" />
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
   def test_text_field_label_css_class
     actual = @builder.text_field(:email, bootstrap: { label: { class: "custom_class" } })
     expected = <<-HTML
