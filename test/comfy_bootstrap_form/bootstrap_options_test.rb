@@ -55,11 +55,9 @@ class BootstrapOptionsTest < ActionView::TestCase
   end
 
   def test_with_set_invalid_options
-    begin
-      ComfyBootstrapForm::BootstrapOptions.new(invalid: "invalid")
-    rescue NoMethodError
-      assert true
-    end
+    ComfyBootstrapForm::BootstrapOptions.new(invalid: "invalid")
+  rescue NoMethodError
+    assert true
   end
 
   def test_horizontal
