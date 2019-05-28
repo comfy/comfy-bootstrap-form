@@ -109,9 +109,9 @@ class HorizontalFormTest < ActionView::TestCase
 
   def test_input_group_with_options
     options = { bootstrap: {
-      prepend:  "prepend",
-      append:   "append",
-      help:     "help me"
+      prepend: "prepend",
+      append:  "append",
+      help:    "help me"
     } }
     actual = @builder.text_field(:test, options)
     expected = <<-HTML

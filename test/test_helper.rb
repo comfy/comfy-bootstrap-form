@@ -44,6 +44,7 @@ private
 
   def sort_attributes(doc)
     return if doc.blank?
+
     doc.dup.traverse do |node|
       if node.is_a?(Nokogiri::XML::Element)
         attributes = node.attribute_nodes.sort_by(&:name)

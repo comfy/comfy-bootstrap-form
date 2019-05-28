@@ -36,6 +36,9 @@ Metrics/AbcSize:
   Enabled: false
 
 # -- Layout --------------------------------------------------------------------
+Layout/AlignHash:
+  EnforcedColonStyle: table
+
 Layout/MultilineOperationIndentation:
   Enabled: false
 
@@ -45,7 +48,7 @@ Layout/MultilineMethodCallIndentation:
 Layout/MultilineHashBraceLayout:
   Enabled: false
 
-Layout/IndentArray:
+Layout/IndentFirstArrayElement:
   EnforcedStyle: consistent
 
 Layout/EmptyLinesAroundModuleBody:

@@ -29,17 +29,17 @@ class BootstrapOptionsTest < ActionView::TestCase
 
   def test_with_set_options
     options = ComfyBootstrapForm::BootstrapOptions.new(
-      disabled:             true,
-      layout:               "horizontal",
-      label_col_class:      "col-md-4",
-      control_col_class:    "col-md-8",
-      label_align_class:    "text-md-left",
-      inline_margin_class:  "mr-md-4",
-      label:                { text: "test" },
-      append:               "a",
-      prepend:              "z",
-      help:                 "help text",
-      check_inline:         "true"
+      disabled:            true,
+      layout:              "horizontal",
+      label_col_class:     "col-md-4",
+      control_col_class:   "col-md-8",
+      label_align_class:   "text-md-left",
+      inline_margin_class: "mr-md-4",
+      label:               { text: "test" },
+      append:              "a",
+      prepend:             "z",
+      help:                "help text",
+      check_inline:        "true"
     )
     assert_equal true,                options.disabled
     assert_equal "horizontal",        options.layout

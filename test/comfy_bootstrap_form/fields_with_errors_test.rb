@@ -7,6 +7,7 @@ class FieldsWithErrorsTest < ActionView::TestCase
   setup do
     @user = User.new
     @user.errors.add(:test, "invalid")
+    @user.errors.add(:account, "invalid")
 
     @builder = ComfyBootstrapForm::FormBuilder.new(:user, @user, self, {})
 
@@ -24,6 +25,18 @@ class FieldsWithErrorsTest < ActionView::TestCase
       <div class="form-group">
         <label for="user_test">Test</label>
         <input class="form-control is-invalid" id="user_test" name="user[test]" type="text"/>
+        <div class="invalid-feedback">invalid</div>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_text_field_with_error_with_foreign_key
+    actual = @builder.text_field(:account_id)
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_account_id">Account</label>
+        <input class="form-control is-invalid" id="user_account_id" name="user[account_id]" type="text"/>
         <div class="invalid-feedback">invalid</div>
       </div>
     HTML

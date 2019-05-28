@@ -314,7 +314,16 @@ module ComfyBootstrapForm
 
     def draw_errors(method)
       return unless object.present?
-      return unless (errors = object.errors[method]).present?
+
+      errors = object.errors[method]
+
+      # If error os on association like `belongs_to :foo`, we need to render it
+      # on an input field with `:foo_id` name.
+      if errors.blank?
+        errors = object.errors[method.to_s.sub(%r{_id$}, "")]
+      end
+
+      return if errors.blank?
 
       content_tag(:div, class: "invalid-feedback") do
         errors.join(", ")
@@ -369,6 +378,7 @@ module ComfyBootstrapForm
     #
     def draw_control_column(bootstrap, offset:)
       return yield unless bootstrap.horizontal?
+
       css_class = bootstrap.control_col_class.to_s
       css_class += " #{bootstrap.offset_col_class}" if offset
       content_tag(:div, class: css_class) do
@@ -426,6 +436,7 @@ module ComfyBootstrapForm
     #
     def draw_help(text)
       return if text.blank?
+
       content_tag(:small, text, class: "form-text text-muted")
     end
 

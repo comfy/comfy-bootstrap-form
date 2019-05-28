@@ -34,8 +34,8 @@ class InputGroupTest < ActionView::TestCase
 
   def test_input_group_with_html
     options = { bootstrap: {
-      prepend:  { html: "<button>Go</button>".html_safe },
-      append:   { html: "<button>Stop</button>".html_safe }
+      prepend: { html: "<button>Go</button>".html_safe },
+      append:  { html: "<button>Stop</button>".html_safe }
     } }
     actual = @builder.text_field(:test, options)
     expected = <<-HTML
