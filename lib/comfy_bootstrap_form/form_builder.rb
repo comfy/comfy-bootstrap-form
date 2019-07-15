@@ -7,7 +7,7 @@ module ComfyBootstrapForm
 
     FIELD_HELPERS = %w[
       color_field date_field datetime_field email_field month_field
-      number_field password_field phone_field range_field search_field text_area
+      password_field phone_field range_field search_field text_area
       text_field time_field url_field week_field
     ].freeze
 
@@ -65,6 +65,20 @@ module ComfyBootstrapForm
           end
         end
       RUBY_EVAL
+    end
+
+    # Wrapper for the number field. It has default changed from `step: "1"` to `step: "any"`
+    # to prevent confusion when dealing with decimal numbers.
+    #
+    #   number_field :amount, step: 5
+    #
+    def number_field(method, options = {})
+      bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+      options.reverse_merge!(step: "any")
+      return super(method, options) if bootstrap.disabled
+      draw_form_group(bootstrap, method, options) do
+        super(method, options)
+      end
     end
 
     # Wrapper for select helper. Boostrap options are sent via options hash:

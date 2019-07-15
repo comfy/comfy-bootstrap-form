@@ -208,7 +208,18 @@ class FieldsTest < ActionView::TestCase
     expected = <<-HTML
       <div class="form-group">
         <label for="user_test">Test</label>
-        <input class="form-control" type="number" name="user[test]" id="user_test"/>
+        <input class="form-control" type="number" name="user[test]" id="user_test" step="any"/>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_number_field_with_custom_step
+    actual = @builder.number_field(:test, step: "5")
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_test">Test</label>
+        <input class="form-control" type="number" name="user[test]" id="user_test" step="5"/>
       </div>
     HTML
     assert_xml_equal expected, actual
