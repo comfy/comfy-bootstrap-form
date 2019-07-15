@@ -123,4 +123,28 @@ class FieldsWithErrorsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_text_field_with_manual_error
+    actual = @builder.text_field(:color, bootstrap: { error: "Custom Error" })
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_color">Color</label>
+        <input class="form-control is-invalid" id="user_color" name="user[color]" type="text"/>
+        <div class="invalid-feedback">Custom Error</div>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_text_field_with_manual_error_overriding
+    actual = @builder.text_field(:test, bootstrap: { error: "Custom Error" })
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_test">Test</label>
+        <input class="form-control is-invalid" id="user_test" name="user[test]" type="text"/>
+        <div class="invalid-feedback">Custom Error</div>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
 end

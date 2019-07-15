@@ -76,6 +76,7 @@ module ComfyBootstrapForm
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
       options.reverse_merge!(step: "any")
       return super(method, options) if bootstrap.disabled
+
       draw_form_group(bootstrap, method, options) do
         super(method, options)
       end
@@ -130,8 +131,8 @@ module ComfyBootstrapForm
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
       return super if bootstrap.disabled
 
-      help_text = draw_help(bootstrap.help)
-      errors    = draw_errors(method)
+      help_text = draw_help(bootstrap)
+      errors    = draw_errors(bootstrap, method)
 
       add_css_class!(options, "form-check-input")
       add_css_class!(options, "is-invalid") if errors.present?
@@ -310,7 +311,7 @@ module ComfyBootstrapForm
     # form group wrapper for input fields
     def draw_form_group(bootstrap, method, options)
       label  = draw_label(bootstrap, method, for_attr: options[:id])
-      errors = draw_errors(method)
+      errors = draw_errors(bootstrap, method)
 
       control = draw_control(bootstrap, errors, method, options) do
         yield
@@ -326,15 +327,21 @@ module ComfyBootstrapForm
       end
     end
 
-    def draw_errors(method)
-      return unless object.present?
+    def draw_errors(bootstrap, method)
+      errors = []
 
-      errors = object.errors[method]
+      if bootstrap.error.present?
+        errors = [bootstrap.error]
+      else
+        return if object.nil?
 
-      # If error os on association like `belongs_to :foo`, we need to render it
-      # on an input field with `:foo_id` name.
-      if errors.blank?
-        errors = object.errors[method.to_s.sub(%r{_id$}, "")]
+        errors = object.errors[method]
+
+        # If error is on association like `belongs_to :foo`, we need to render it
+        # on an input field with `:foo_id` name.
+        if errors.blank?
+          errors = object.errors[method.to_s.sub(%r{_id$}, "")]
+        end
       end
 
       return if errors.blank?
@@ -410,7 +417,7 @@ module ComfyBootstrapForm
       prepend_html  = draw_input_group_content(bootstrap, :prepend)
       append_html   = draw_input_group_content(bootstrap, :append)
 
-      help_text = draw_help(bootstrap.help)
+      help_text = draw_help(bootstrap)
 
       # Not prepending or appending anything. Bail.
       if prepend_html.blank? && append_html.blank?
@@ -448,7 +455,8 @@ module ComfyBootstrapForm
     #
     #   text_field(:value, bootstrap: {help: "help text"})
     #
-    def draw_help(text)
+    def draw_help(bootstrap)
+      text = bootstrap.help
       return if text.blank?
 
       content_tag(:small, text, class: "form-text text-muted")
@@ -480,8 +488,8 @@ module ComfyBootstrapForm
           add_css_class!(html_options, "form-check-input")
         end
 
-        errors    = draw_errors(method)
-        help_text = draw_help(bootstrap.help)
+        errors    = draw_errors(bootstrap, method)
+        help_text = draw_help(bootstrap)
 
         add_css_class!(html_options, "is-invalid") if errors.present?
 

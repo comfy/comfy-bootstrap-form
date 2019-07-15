@@ -69,6 +69,12 @@ module ComfyBootstrapForm
     #
     attr_accessor :custom_control
 
+    # Manually rendering the error message. Example:
+    #
+    #   form.text_field :foo, bootstrap: {error: "Error Message"}
+    #
+    attr_accessor :error
+
     def initialize(options = {})
       set_defaults
       set_options(options)
@@ -124,6 +130,7 @@ module ComfyBootstrapForm
       @append               = nil
       @prepend              = nil
       @help                 = nil
+      @error                = nil
       @check_inline         = false
       @custom_control       = false
     end
