@@ -188,6 +188,7 @@ label:                {}
 append:               nil
 prepend:              nil
 help:                 nil
+error:                nil
 check_inline:         false
 custom_control:       false
 ```
