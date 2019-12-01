@@ -1,13 +1,14 @@
 language: ruby
 rvm:
   - 2.3.8
-  - 2.4.5
-  - 2.5.3
-  - 2.6.1
+  - 2.4.9
+  - 2.5.7
+  - 2.6.5
 gemfile:
   - test/gemfiles/5.0.gemfile
   - test/gemfiles/5.1.gemfile
   - test/gemfiles/5.2.gemfile
+  - test/gemfiles/6.0.gemfile
 branches:
   only:
     - master
