@@ -9,6 +9,7 @@ class ViewHelpersTest < ActionView::TestCase
   # Rails 6 doesn't use utf8 input anymore
   def utf8_input
     return if Rails.version > "5.2"
+
     <<~HTML
       <input name="utf8" type="hidden" value="&#x2713;" />
     HTML

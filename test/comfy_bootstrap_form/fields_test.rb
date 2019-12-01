@@ -4,7 +4,9 @@ require_relative "../test_helper"
 
 class FieldsTest < ActionView::TestCase
 
-  include ActionText::TagHelper
+  if Rails.version >= "6.0"
+    include ActionText::TagHelper
+  end
 
   setup do
     @user     = User.new
@@ -283,6 +285,8 @@ class FieldsTest < ActionView::TestCase
   end
 
   def test_rich_text_area
+    skip unless Rails.version >= "6.0"
+
     actual = @builder.rich_text_area(:rich_content)
     expected = <<-HTML
       <div class="form-group">
