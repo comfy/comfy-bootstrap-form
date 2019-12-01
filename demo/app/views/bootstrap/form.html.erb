@@ -89,8 +89,8 @@
     <%= bootstrap_form_with model: @user, scope: "user_d", url: "/" do |form| %>
       <%= form.collection_radio_buttons :test, [["a", "Label A"], ["b", "Label B"]], :first, :second %>
       <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {help: "help text"} %>
-      <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {inline: true, label: {text: "Custom Label"}} %>
-      <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {inline: true, help: "help text", label: {hide: true}} %>
+      <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {check_inline: true, label: {text: "Custom Label"}} %>
+      <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {check_inline: true, help: "help text", label: {hide: true}} %>
     <% end %>
   </div>
   <div class="col-md-6">
@@ -99,8 +99,8 @@
     <%= bootstrap_form_with model: @user_with_error, scope: "user_e", url: "/" do |form| %>
       <%= form.collection_radio_buttons :test, [["a", "Label A"], ["b", "Label B"]], :first, :second %>
       <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {help: "help text"} %>
-      <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {inline: true, label: {text: "Custom Label"}} %>
-      <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {inline: true, help: "help text", label: {hide: true}} %>
+      <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {check_inline: true, label: {text: "Custom Label"}} %>
+      <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {check_inline: true, help: "help text", label: {hide: true}} %>
     <% end %>
   </div>
 </div>
@@ -210,8 +210,8 @@
     <%= bootstrap_form_for @user, as: "user_l", url: "/" do |form| %>
       <%= form.collection_radio_buttons :test, [["a", "Label A"], ["b", "Label B"]], :first, :second %>
       <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {help: "help text"} %>
-      <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {inline: true, label: {text: "Custom Label"}} %>
-      <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {inline: true, help: "help text", label: {hide: true}} %>
+      <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {check_inline: true, label: {text: "Custom Label"}} %>
+      <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {check_inline: true, help: "help text", label: {hide: true}} %>
     <% end %>
   </div>
   <div class="col-md-6">
@@ -220,8 +220,8 @@
     <%= bootstrap_form_for @user_with_error, as: "user_m", url: "/" do |form| %>
       <%= form.collection_radio_buttons :test, [["a", "Label A"], ["b", "Label B"]], :first, :second %>
       <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {help: "help text"} %>
-      <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {inline: true, label: {text: "Custom Label"}} %>
-      <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {inline: true, help: "help text", label: {hide: true}} %>
+      <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {check_inline: true, label: {text: "Custom Label"}} %>
+      <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {check_inline: true, help: "help text", label: {hide: true}} %>
     <% end %>
   </div>
 </div>
@@ -268,3 +268,5 @@
   <%= form.datetime_select :datetime, bootstrap: {disabled: true} %>
   <%= form.submit "Submit", bootstrap: {disabled: true} %>
 <% end %>
+
+<%= debug Rails.version %>

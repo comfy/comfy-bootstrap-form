@@ -1,9 +1,9 @@
-# DEMO APP (Rails 5.2)
+# DEMO APP (Rails 6.0)
 
 ### Usage
 
 - `bundle`
-- `bundle exec rake db:schema:load`
+- `bundle exec rails db:schema:load`
 - `bundle exec rails s`
 - Navigate to http://localhost:3000
 - Start changing stuff in [/demo/app/views/bootstrap/form.html.erb](/demo/app/views/bootstrap/form.html.erb)
