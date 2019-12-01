@@ -8,7 +8,7 @@ module ComfyBootstrapForm
     FIELD_HELPERS = %w[
       color_field date_field datetime_field email_field month_field
       password_field phone_field range_field search_field text_area
-      text_field time_field url_field week_field
+      text_field rich_text_area time_field url_field week_field
     ].freeze
 
     DATE_SELECT_HELPERS = %w[

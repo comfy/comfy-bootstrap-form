@@ -14,6 +14,7 @@
   <%= form.date_select :date %>
   <%= form.datetime_select :datetime %>
   <%= form.time_select :time %>
+  <%= form.rich_text_area :rich_content, bootstrap: {label: "ActiveText Input", help: "Help Text"} %>
   <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
   <%= form.primary "Press to Register" do %>
     <a href="/" class="btn btn-link">Maybe Later</a>

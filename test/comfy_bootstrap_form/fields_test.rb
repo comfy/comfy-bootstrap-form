@@ -4,6 +4,8 @@ require_relative "../test_helper"
 
 class FieldsTest < ActionView::TestCase
 
+  include ActionText::TagHelper
+
   setup do
     @user     = User.new
     @builder  = ComfyBootstrapForm::FormBuilder.new(:user, @user, self, {})
@@ -275,6 +277,23 @@ class FieldsTest < ActionView::TestCase
       <div class="form-group">
         <label for="user_test">Test</label>
         <textarea class="form-control" name="user[test]" id="user_test"/></textarea>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_rich_text_area
+    actual = @builder.rich_text_area(:rich_content)
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_rich_content">Rich content</label>
+        <input id="user_rich_content_trix_input_user" name="user[rich_content]" type="hidden"/>
+        <trix-editor class="form-control"
+          data-blob-url-template="http://test.host/rails/active_storage/blobs/:signed_id/:filename"
+          data-direct-upload-url="http://test.host/rails/active_storage/direct_uploads"
+          id="user_rich_content"
+          input="user_rich_content_trix_input_user"
+        />
       </div>
     HTML
     assert_xml_equal expected, actual

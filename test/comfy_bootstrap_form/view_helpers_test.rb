@@ -6,13 +6,21 @@ class ViewHelpersTest < ActionView::TestCase
 
   include ComfyBootstrapForm::ViewHelper
 
+  # Rails 6 doesn't use utf8 input anymore
+  def utf8_input
+    return if Rails.version > "5.2"
+    <<~HTML
+      <input name="utf8" type="hidden" value="&#x2713;" />
+    HTML
+  end
+
   def test_bootstrap_form_with
     skip if Rails.version < "5.1"
 
     actual = bootstrap_form_with(url: "/test") {}
     expected = <<-HTML
       <form action="/test" accept-charset="UTF-8" data-remote="true" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;" />
+        #{utf8_input}
       </form>
     HTML
     assert_xml_equal expected, actual
@@ -34,7 +42,7 @@ class ViewHelpersTest < ActionView::TestCase
 
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/test" data-remote="true" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;"/>
+        #{utf8_input}
         <div class="form-group">
           <label for="value">Value</label>
           #{input}
@@ -60,7 +68,7 @@ class ViewHelpersTest < ActionView::TestCase
 
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/test" data-remote="true" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;"/>
+        #{utf8_input}
         <div class="form-group row">
           <label class="col-form-label col-sm-2 text-sm-right" for="value">Value</label>
           <div class="col-sm-10">
@@ -81,7 +89,7 @@ class ViewHelpersTest < ActionView::TestCase
     end
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/test" class="form-inline" data-remote="true" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;"/>
+        #{utf8_input}
         <div class="form-group">
           <input class="btn" data-disable-with="Save " name="commit" type="submit" value="Save "/>
         </div>
@@ -108,7 +116,7 @@ class ViewHelpersTest < ActionView::TestCase
 
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/test" data-remote="true" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;"/>
+        #{utf8_input}
         <div class="form-group">
           <label for="user_test">Test</label>
           #{input}
@@ -135,7 +143,7 @@ class ViewHelpersTest < ActionView::TestCase
 
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/test" data-remote="true" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;"/>
+        #{utf8_input}
         #{input}
       </form>
     HTML
@@ -146,7 +154,7 @@ class ViewHelpersTest < ActionView::TestCase
     actual = bootstrap_form_for(User.new) {}
     expected = <<-HTML
       <form action="/users" class="new_user" id="new_user" accept-charset="UTF-8" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;" />
+        #{utf8_input}
       </form>
     HTML
     assert_xml_equal expected, actual
@@ -158,7 +166,7 @@ class ViewHelpersTest < ActionView::TestCase
     end
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;"/>
+        #{utf8_input}
         <div class="form-group">
           <label for="user_email">Email</label>
           <input class="form-control" id="user_email" name="user[email]" type="email"/>
@@ -174,7 +182,7 @@ class ViewHelpersTest < ActionView::TestCase
     end
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;"/>
+        #{utf8_input}
         <div class="form-group row">
           <label class="col-form-label col-sm-2 text-sm-right" for="user_email">Email</label>
           <div class="col-sm-10">
@@ -192,7 +200,7 @@ class ViewHelpersTest < ActionView::TestCase
     end
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/users" class="form-inline" id="new_user" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;"/>
+        #{utf8_input}
         <div class="form-group mr-sm-2">
           <label class="mr-sm-2" for="user_email">Email</label>
           <input class="form-control" id="user_email" name="user[email]" type="email"/>
@@ -210,7 +218,7 @@ class ViewHelpersTest < ActionView::TestCase
     end
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;"/>
+        #{utf8_input}
         <div class="form-group">
           <label for="user_email">Email</label>
           <input class="form-control is-invalid" id="user_email" name="user[email]" type="email"/>
@@ -227,7 +235,7 @@ class ViewHelpersTest < ActionView::TestCase
     end
     expected = <<-HTML
       <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post">
-        <input name="utf8" type="hidden" value="&#x2713;"/>
+        #{utf8_input}
         <input id="user_email" name="user[email]" type="email"/>
       </form>
     HTML
