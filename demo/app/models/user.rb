@@ -1,3 +1,5 @@
 class User < ActiveRecord::Base
-  has_rich_text :rich_content
+  if Rails.version >= "6.0"
+    has_rich_text :rich_content
+  end
 end
