@@ -314,7 +314,7 @@ You may completely disable bootstrap and use default form builder by passing
 
 ## Demo Screenshots
 
-![Demo Preview](/demo/demo.png)
+![Demo Preview](/demo.png)
 
 ---
 
