@@ -9,7 +9,7 @@ class FieldsWithErrorsTest < ActionView::TestCase
     @user.errors.add(:test, "invalid")
     @user.errors.add(:account, "invalid")
 
-    @builder = ComfyBootstrapForm::FormBuilder.new(:user, @user, self, {})
+    @builder = ComfyBootstrapForm::FormBuilder.new(:user, @user, self, bootstrap: { custom_control: false })
 
     @original_proc = ActionView::Base.field_error_proc
     ActionView::Base.field_error_proc = proc { |input, _instance| input }

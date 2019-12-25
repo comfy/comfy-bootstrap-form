@@ -5,8 +5,10 @@ require_relative "../test_helper"
 class InlineFormTest < ActionView::TestCase
 
   setup do
-    @user     = User.new
-    @builder  = ComfyBootstrapForm::FormBuilder.new(:user, @user, self, bootstrap: { layout: :inline })
+    @user = User.new
+
+    options = { bootstrap: { custom_control: false, layout: :inline } }
+    @builder = ComfyBootstrapForm::FormBuilder.new(:user, @user, self, options)
   end
 
   def test_text_field

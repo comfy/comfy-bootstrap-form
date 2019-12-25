@@ -10,7 +10,7 @@ class FieldsTest < ActionView::TestCase
 
   setup do
     @user     = User.new
-    @builder  = ComfyBootstrapForm::FormBuilder.new(:user, @user, self, {})
+    @builder  = ComfyBootstrapForm::FormBuilder.new(:user, @user, self, bootstrap: { custom_control: false })
   end
 
   def test_text_field

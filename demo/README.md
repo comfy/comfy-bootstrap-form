@@ -3,8 +3,8 @@
 ### Usage
 
 - `bundle`
-- `bundle exec rails db:schema:load`
-- `bundle exec rails s`
+- `cd demo/`
+- `./bin/rails s`
 - Navigate to http://localhost:3000
 - Start changing stuff in [/demo/app/views/bootstrap/form.html.erb](/demo/app/views/bootstrap/form.html.erb)
 

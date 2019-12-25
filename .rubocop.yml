@@ -3,15 +3,8 @@ AllCops:
   Exclude:
     - demo/**/*
 
-# -- Performance ---------------------------------------------------------------
-Performance/Casecmp:
-  Enabled: false
-
 # -- Metrics -------------------------------------------------------------------
 Metrics/PerceivedComplexity:
-  Enabled: false
-
-Metrics/MethodLength:
   Enabled: false
 
 Metrics/MethodLength:
@@ -95,10 +88,6 @@ Style/AsciiComments:
   Enabled: false
 
 # -- Exceptions ----------------------------------------------------------------
-Performance/RedundantMerge:
-  Exclude:
-    - 'lib/comfy_bootstrap_form/view_helper.rb'
-
 Naming/AccessorMethodName:
   Exclude:
     - 'lib/comfy_bootstrap_form/bootstrap_options.rb'

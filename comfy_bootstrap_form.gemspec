@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Oleg Khabarov"]
   s.email       = ["oleg@khabarov.ca"]
   s.homepage    = "https://github.com/comfy/comfy-bootstrap-form"
-  s.summary     = "Rails form builder for Bootstrap 4 markup that actually works!"
+  s.summary     = "Rails form builder for Bootstrap 4 markup that works!"
   s.description = "bootstrap_form is a Rails form builder that automatically wraps "\
                   "form elements in Bootstrap 4 markup"
   s.license     = "MIT"

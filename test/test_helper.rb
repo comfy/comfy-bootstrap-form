@@ -2,6 +2,8 @@
 
 ENV["RAILS_ENV"] = "test"
 
+require "bundler/setup"
+
 require "coveralls"
 Coveralls.wear!
 

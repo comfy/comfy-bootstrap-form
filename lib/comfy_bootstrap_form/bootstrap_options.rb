@@ -132,7 +132,7 @@ module ComfyBootstrapForm
       @help                 = nil
       @error                = nil
       @check_inline         = false
-      @custom_control       = false
+      @custom_control       = true
     end
 
   end
