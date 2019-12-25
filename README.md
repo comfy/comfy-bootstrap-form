@@ -312,24 +312,10 @@ You may completely disable bootstrap and use default form builder by passing
   messages show up. See: [twbs/bootstrap/issues/25540](https://github.com/twbs/bootstrap/issues/25540)
   For now adding `.invalid-feeback { display: block }` will work.
 
-## Screenshots
+## Demo Screenshots
 
-#### Horizontal
-
-![Horizontal Form](/demo/form_preview_horizontal.png)
-
-#### Horizontal With Errors
-
-![Horizontal Form With Errors](/demo/form_preview_horizontal_with_errors.png)
-
-#### Vertical
-
-![Vertical Form](/demo/form_preview_vertical.png)
-
-#### Inline
-
-![Inline](/demo/form_preview_inline.png)
+![Demo Preview](/demo/demo.png)
 
 ---
 
-Copyright 2018-19 Oleg Khabarov, Released under the [MIT License](LICENSE.md)
+Copyright 2018-20 Oleg Khabarov, Released under the [MIT License](LICENSE.md)

@@ -13,9 +13,6 @@ Metrics/MethodLength:
 Metrics/ParameterLists:
   Enabled: false
 
-Metrics/LineLength:
-  Max: 120
-
 Metrics/CyclomaticComplexity:
   Enabled: false
 
@@ -29,7 +26,10 @@ Metrics/AbcSize:
   Enabled: false
 
 # -- Layout --------------------------------------------------------------------
-Layout/AlignHash:
+Layout/LineLength:
+  Max: 120
+
+Layout/HashAlignment:
   EnforcedColonStyle: table
 
 Layout/MultilineOperationIndentation:
@@ -41,7 +41,7 @@ Layout/MultilineMethodCallIndentation:
 Layout/MultilineHashBraceLayout:
   Enabled: false
 
-Layout/IndentFirstArrayElement:
+Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
 
 Layout/EmptyLinesAroundModuleBody:
@@ -53,7 +53,7 @@ Layout/EmptyLinesAroundExceptionHandlingKeywords:
 Layout/EmptyLinesAroundClassBody:
   EnforcedStyle: empty_lines_except_namespace
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   Enabled: false
 
 Layout/AccessModifierIndentation:

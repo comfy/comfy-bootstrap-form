@@ -11,7 +11,7 @@ group :test do
   gem "diffy"
   gem "equivalent-xml"
   gem "minitest"
-  gem "rubocop", "~> 0.51.0", require: false
+  gem "rubocop", "0.78.0", require: false
   gem "sqlite3"
   gem "timecop"
 end
