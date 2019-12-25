@@ -314,7 +314,7 @@ Feel free to take a look at the [Demo App](/demo) to see how everything renders.
 Specifically see [form.html.erb](/demo/app/views/bootstrap/form.html.erb) template
 for all kinds of different form configurations you can have.
 
-![Demo Preview](/demo.png)
+![Demo Preview](/demo/preview.png)
 
 ---
 
