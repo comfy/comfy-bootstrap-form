@@ -62,10 +62,6 @@ This will generate HTML similar to this:
 </form>
 ```
 
-Feel free to take a look at the [Demo App](/demo) to see how everything renders.
-Specifically see [form.html.erb](/demo/app/views/bootstrap/form.html.erb) template
-for all kinds of different form configurations you can have.
-
 ## Form helpers
 
 #### bootstrap_form_with
@@ -312,7 +308,11 @@ You may completely disable bootstrap and use default form builder by passing
   messages show up. See: [twbs/bootstrap/issues/25540](https://github.com/twbs/bootstrap/issues/25540)
   For now adding `.invalid-feeback { display: block }` will work.
 
-## Demo Screenshots
+## Demo App
+
+Feel free to take a look at the [Demo App](/demo) to see how everything renders.
+Specifically see [form.html.erb](/demo/app/views/bootstrap/form.html.erb) template
+for all kinds of different form configurations you can have.
 
 ![Demo Preview](/demo.png)
 
