@@ -123,6 +123,52 @@ module ComfyBootstrapForm
       end
     end
 
+    # Wrapper around radio button. Example usage:
+    #
+    #   radio_button :choice, "value", bootstrap: {label: {text: "Do you agree?"}}
+    #
+    def radio_button(method, tag_value, options = {})
+      bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+      return super if bootstrap.disabled
+
+      help_text = draw_help(bootstrap)
+      errors    = draw_errors(bootstrap, method)
+
+      add_css_class!(options, "form-check-input")
+      add_css_class!(options, "is-invalid") if errors.present?
+
+      label_text = nil
+      if (custom_text = bootstrap.label[:text]).present?
+        label_text = custom_text
+      end
+
+      fieldset_css_class = "form-group"
+      fieldset_css_class += " row" if bootstrap.horizontal?
+      fieldset_css_class += " #{bootstrap.inline_margin_class}" if bootstrap.inline?
+
+      content_tag(:fieldset, class: fieldset_css_class) do
+        draw_control_column(bootstrap, offset: true) do
+          if bootstrap.custom_control
+            content_tag(:div, class: "custom-control custom-radio") do
+              add_css_class!(options, "custom-control-input")
+              remove_css_class!(options, "form-check-input")
+              concat super(method, tag_value, options)
+              concat label(method, label_text, value: tag_value, class: "custom-control-label")
+              concat errors     if errors.present?
+              concat help_text  if help_text.present?
+            end
+          else
+            content_tag(:div, class: "form-check") do
+              concat super(method, tag_value, options)
+              concat label(method, label_text, value: tag_value, class: "form-check-label")
+              concat errors     if errors.present?
+              concat help_text  if help_text.present?
+            end
+          end
+        end
+      end
+    end
+
     # Wrapper around checkbox. Example usage:
     #
     #   checkbox :agree, bootstrap: {label: {text: "Do you agree?"}}
@@ -186,7 +232,7 @@ module ComfyBootstrapForm
 
       args = [bootstrap, :radio_button, method, collection, value_method, text_method, options, html_options]
       draw_choices(*args) do |m, v, opts|
-        radio_button(m, v, opts)
+        radio_button(m, v, opts.merge(bootstrap: { disabled: true }))
       end
     end
 
@@ -208,7 +254,7 @@ module ComfyBootstrapForm
       content << draw_choices(*args) do |m, v, opts|
         opts[:multiple]       = true
         opts[:include_hidden] = false
-        ActionView::Helpers::FormBuilder.instance_method(:check_box).bind(self).call(m, opts, v)
+        check_box(m, opts.merge(bootstrap: { disabled: true }), v)
       end
     end
 

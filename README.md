@@ -98,12 +98,10 @@ date_field      month_field     range_field   time_field
 datetime_field  number_field    search_field  url_field
 email_field     password_field  text_area     week_field
 date_select     time_select     datetime_select
-collection_radio_buttons        collection_check_boxes
-rich_text_area
+check_box       radio_button    rich_text_area
+collection_check_boxes
+collection_radio_buttons
 ```
-
-Singular `radio_button` is not implemented as it doesn't make sense to wrap one
-radio button input in Bootstrap markup.
 
 #### Radio Buttons and Checkboxes
 

@@ -51,6 +51,19 @@ class CustomFieldsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_radio_button
+    actual = @builder.radio_button(:test, "value", bootstrap: { custom_control: true })
+    expected = <<-HTML
+      <fieldset class="form-group">
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" id="user_test_value" name="user[test]" type="radio" value="value"/>
+          <label class="custom-control-label" for="user_test_value">Value</label>
+        </div>
+      </fieldset>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
   def test_check_box
     actual = @builder.check_box(:test, bootstrap: { custom_control: true })
     expected = <<-HTML

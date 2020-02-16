@@ -89,6 +89,9 @@
     <h3>Checkboxes and Radio buttons</h3>
     <% @user.test = "b" %>
     <%= bootstrap_form_with model: @user, scope: "user_d", url: "/" do |form| %>
+      <%= form.check_box :test, bootstrap: { label: "Singular Checkbox"} %>
+      <%= form.radio_button :test, "value_a", bootstrap: { label: "Singular Radio A"} %>
+      <%= form.radio_button :test, "value_b", bootstrap: { label: "Singular Radio B"} %>
       <%= form.collection_radio_buttons :test, [["a", "Label A"], ["b", "Label B"]], :first, :second %>
       <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {help: "help text"} %>
       <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {check_inline: true, label: {text: "Custom Label"}} %>
@@ -99,6 +102,9 @@
     <h3>With Errors</h3>
     <% @user_with_error.test = "b" %>
     <%= bootstrap_form_with model: @user_with_error, scope: "user_e", url: "/" do |form| %>
+      <%= form.check_box :test, bootstrap: { label: "Singular Checkbox"} %>
+      <%= form.radio_button :test, "value_a", bootstrap: { label: "Singular Radio A"} %>
+      <%= form.radio_button :test, "value_b", bootstrap: { label: "Singular Radio B"} %>
       <%= form.collection_radio_buttons :test, [["a", "Label A"], ["b", "Label B"]], :first, :second %>
       <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {help: "help text"} %>
       <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {check_inline: true, label: {text: "Custom Label"}} %>

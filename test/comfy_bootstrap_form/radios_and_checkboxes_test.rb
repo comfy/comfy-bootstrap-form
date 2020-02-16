@@ -89,7 +89,20 @@ class RadiosAndCheckboxessTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
-  def test_radio_buttons
+  def test_radio_button
+    actual = @builder.radio_button(:test, "value")
+    expected = <<-HTML
+      <fieldset class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" id="user_test_value" name="user[test]" type="radio" value="value"/>
+          <label class="form-check-label" for="user_test_value">Value</label>
+        </div>
+      </fieldset>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
+  def test_collection_radio_buttons
     actual = @builder.collection_radio_buttons(:test, %w[a b], :to_s, :titleize)
     expected = <<-HTML
       <fieldset class="form-group">

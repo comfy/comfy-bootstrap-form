@@ -4,6 +4,7 @@
 
 - `bundle`
 - `cd demo/`
+- `./bin/rails db:schema:load`
 - `./bin/rails s`
 - Navigate to http://localhost:3000
 - Start changing stuff in [/demo/app/views/bootstrap/form.html.erb](/demo/app/views/bootstrap/form.html.erb)
