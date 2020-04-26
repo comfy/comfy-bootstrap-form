@@ -99,7 +99,7 @@ module ComfyBootstrapForm
 
     # Wrapper for collection_select helper. Boostrap options are sent via options hash:
     #
-    #   collection_select :collection, [[a, aa], [b, bb]], :first, :last, bootstrap: {label: {text: "Custom"}}
+    #   collection_select :collection, [["a", "aa"], ["b", "bb"]], :first, :last, bootstrap: {label: {text: "Custom"}}
     #
     def collection_select(method, collection, value_method, text_method, options = {}, html_options = {})
       bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))

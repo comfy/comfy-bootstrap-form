@@ -142,7 +142,7 @@ class FieldsTest < ActionView::TestCase
   end
 
   def test_collection_select
-    actual = @builder.collection_select(:test, [%w(a aa), %w(b bb)], :first, :last)
+    actual = @builder.collection_select(:test, [["a", "aa"], ["b", "bb"]], :first, :last)
     expected = <<-HTML
       <div class="form-group">
         <label for="user_test">Test</label>
