@@ -141,6 +141,20 @@ class FieldsTest < ActionView::TestCase
     assert_xml_equal expected, actual
   end
 
+  def test_collection_select
+    actual = @builder.collection_select(:test, [%w(a aa), %w(b bb)], :first, :last)
+    expected = <<-HTML
+      <div class="form-group">
+        <label for="user_test">Test</label>
+        <select class="form-control" id="user_test" name="user[test]">
+          <option value="a">aa</option>
+          <option value="b">bb</option>
+        </select>
+      </div>
+    HTML
+    assert_xml_equal expected, actual
+  end
+
   def test_color_field
     actual = @builder.color_field(:test)
     expected = <<-HTML
