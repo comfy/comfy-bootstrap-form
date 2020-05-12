@@ -11,6 +11,7 @@
   <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
   <%= form.text_area :bio, placeholder: "Tell us your life story" %>
   <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {label: {text: "Language"}} %>
+  <%= form.collection_select :locale, [["English", "en"], ["French", "fr"]], :last, :first, bootstrap: {label: {text: "Language 2"}} %>
   <%= form.date_select :date %>
   <%= form.datetime_select :datetime %>
   <%= form.time_select :time %>
@@ -30,6 +31,7 @@
   <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
   <%= form.text_area :bio, placeholder: "Tell us your life story" %>
   <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {label: {text: "Language"}} %>
+  <%= form.collection_select :locale, [["English", "en"], ["French", "fr"]], :last, :first, bootstrap: {label: {text: "Language 2"}} %>
   <%= form.date_select :date %>
   <%= form.datetime_select :datetime %>
   <%= form.time_select :time %>

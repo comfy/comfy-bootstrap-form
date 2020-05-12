@@ -99,6 +99,7 @@ datetime_field  number_field    search_field  url_field
 email_field     password_field  text_area     week_field
 date_select     time_select     datetime_select
 check_box       radio_button    rich_text_area
+collection_select
 collection_check_boxes
 collection_radio_buttons
 ```

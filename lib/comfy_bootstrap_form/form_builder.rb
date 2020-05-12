@@ -97,6 +97,21 @@ module ComfyBootstrapForm
       end
     end
 
+    # Wrapper for collection_select helper. Boostrap options are sent via options hash:
+    #
+    #   collection_select :collection, [["a", "aa"], ["b", "bb"]], :first, :last, bootstrap: {label: {text: "Custom"}}
+    #
+    def collection_select(method, collection, value_method, text_method, options = {}, html_options = {})
+      bootstrap = form_bootstrap.scoped(options.delete(:bootstrap))
+      return super if bootstrap.disabled
+
+      add_css_class!(html_options, "custom-select") if bootstrap.custom_control
+
+      draw_form_group(bootstrap, method, html_options) do
+        super(method, collection, value_method, text_method, options, html_options)
+      end
+    end
+
     # Wrapper for file_field helper. It can accept `custom_control` option.
     #
     #   file_field :photo, bootstrap: {custom_control: true}
