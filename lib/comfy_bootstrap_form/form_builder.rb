@@ -394,7 +394,7 @@ module ComfyBootstrapForm
       if bootstrap.error.present?
         errors = [bootstrap.error]
       else
-        return if object.nil?
+        return if object.nil? || object.errors.nil?
 
         errors = object.errors[method]
 
