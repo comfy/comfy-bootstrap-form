@@ -92,7 +92,7 @@ module ComfyBootstrapForm
 
       add_css_class!(html_options, "custom-select") if bootstrap.custom_control
 
-      draw_form_group(bootstrap, method, html_options) do
+      draw_form_group(bootstrap, method, html_options, true) do
         super(method, choices, options, html_options, &block)
       end
     end
@@ -107,7 +107,7 @@ module ComfyBootstrapForm
 
       add_css_class!(html_options, "custom-select") if bootstrap.custom_control
 
-      draw_form_group(bootstrap, method, html_options) do
+      draw_form_group(bootstrap, method, html_options, true) do
         super(method, collection, value_method, text_method, options, html_options)
       end
     end
@@ -371,11 +371,11 @@ module ComfyBootstrapForm
   private
 
     # form group wrapper for input fields
-    def draw_form_group(bootstrap, method, options)
+    def draw_form_group(bootstrap, method, options, select = false)
       label  = draw_label(bootstrap, method, for_attr: options[:id])
       errors = draw_errors(bootstrap, method)
 
-      control = draw_control(bootstrap, errors, method, options) do
+      control = draw_control(bootstrap, errors, method, options, select) do
         yield
       end
 
@@ -452,8 +452,9 @@ module ComfyBootstrapForm
     end
 
     # Renders control for a given field
-    def draw_control(bootstrap, errors, _method, options)
-      add_css_class!(options, "form-control")
+    def draw_control(bootstrap, errors, _method, options, select)
+      add_css_class!(options, "form-control") unless select
+      add_css_class!(options, "form-select") if select
       add_css_class!(options, "is-invalid") if errors.present?
 
       draw_control_column(bootstrap, offset: bootstrap.label[:hide]) do
