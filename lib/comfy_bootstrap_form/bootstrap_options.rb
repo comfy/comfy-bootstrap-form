@@ -90,6 +90,10 @@ module ComfyBootstrapForm
     def inline?
       @layout.to_s == "inline"
     end
+    
+    def floating?
+      floating
+    end
 
     def offset_col_class
       label_col_class.gsub(%r{col-(\w+)-(\d+)}, 'offset-\1-\2')
