@@ -122,7 +122,8 @@ module ComfyBootstrapForm
 
       draw_form_group(bootstrap, method, options) do
         if bootstrap.custom_control
-          content_tag(:div, class: "custom-file") do
+          content_tag(:div, class: "custom-file") do      form_group_class += " form-floating" if bootstrap.floating?
+
             add_css_class!(options, "custom-file-input")
             remove_css_class!(options, "form-control")
             label_text = options.delete(:placeholder)
@@ -379,12 +380,18 @@ module ComfyBootstrapForm
       end
 
       form_group_class = "form-group"
-      form_group_class += " row"      if bootstrap.horizontal?
-      form_group_class += " mr-sm-2"  if bootstrap.inline?
+      form_group_class += " row"           if bootstrap.horizontal?
+      form_group_class += " mr-sm-2"       if bootstrap.inline?
+      form_group_class += " form-floating" if bootstrap.floating?
 
       content_tag(:div, class: form_group_class) do
-        concat label
-        concat control
+        unless bootstrap.floating?
+          concat label
+          concat control
+        else
+          concat control
+          concat label
+        end
       end
     end
 
