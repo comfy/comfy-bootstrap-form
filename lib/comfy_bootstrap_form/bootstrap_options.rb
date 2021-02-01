@@ -74,6 +74,9 @@ module ComfyBootstrapForm
     #   form.text_field :foo, bootstrap: {error: "Error Message"}
     #
     attr_accessor :error
+    
+    # Use Bootstrap 5 floating labels
+    attr_accessor :floating
 
     def initialize(options = {})
       set_defaults
@@ -132,7 +135,8 @@ module ComfyBootstrapForm
       @help                 = nil
       @error                = nil
       @check_inline         = false
-      @custom_control       = true
+      @custom_control       = false
+      @floating             = false
     end
 
   end
