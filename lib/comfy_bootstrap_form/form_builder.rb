@@ -382,7 +382,7 @@ module ComfyBootstrapForm
       form_group_class = "form-group"
       form_group_class += " row"           if bootstrap.horizontal?
       form_group_class += " mr-sm-2"       if bootstrap.inline?
-      form_group_class += " form-floating mb-2" if bootstrap.floating
+      form_group_class += " form-floating" if bootstrap.floating
 
       content_tag(:div, class: form_group_class) do
         if bootstrap.floating
