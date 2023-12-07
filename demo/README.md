@@ -1,24 +1,19 @@
-# README
+# DEMO APP (Rails 7)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Usage
 
-Things you may want to cover:
+- `bundle`
+- `cd demo/`
+- `./bin/rails db:schema:load`
+- `./bin/rails s`
+- Navigate to http://localhost:3000
+- Start changing stuff in [/demo/app/views/bootstrap/form.html.erb](/demo/app/views/bootstrap/form.html.erb)
 
-* Ruby version
+### Following files were added or changed:
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- db/schema.rb
+- config/{routes, boot}.rb
+- app/models/user.rb
+- app/controllers/bootstrap_controller.rb
+- app/views/layouts/application.html.erb
+- app/views/bootstrap/form.html.erb
