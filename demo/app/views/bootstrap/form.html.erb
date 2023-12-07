@@ -1,7 +1,3 @@
-<% if respond_to?(:form_with) %>
-
-<h1>form_with</h1>
-
 <h3>Horizontal Form</h3>
 
 <%= bootstrap_form_with model: @user, scope: "user_a", url: "/", bootstrap: {layout: :horizontal} do |form| %>
@@ -171,104 +167,8 @@
   </div>
 </div>
 
-<% end %>
-
-<h1>form_for</h1>
-
-<h3>Horizontal Form</h3>
-
-<%= bootstrap_form_for @user, as: "user_h", url: "/", bootstrap: {layout: :horizontal} do |form| %>
-  <%= form.text_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
-  <%= form.email_field :email, placeholder: "you@example.com" %>
-  <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
-  <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
-  <%= form.text_area :bio, placeholder: "Tell us your life story" %>
-  <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {label: {text: "Language"}} %>
-  <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
-  <%= form.primary "Press to Register" do %>
-    <a href="/" class="btn btn-link">Maybe Later</a>
-  <% end %>
-<% end %>
-
-<h3>Horizontal Form With Errors</h3>
-
-<%= bootstrap_form_for @user_with_error, as: "user_i", url: "/", bootstrap: {layout: :horizontal} do |form| %>
-  <%= form.text_field :username, placeholder: "AzureDiamond", bootstrap: {prepend: "@"} %>
-  <%= form.email_field :email, placeholder: "you@example.com" %>
-  <%= form.password_field :password, placeholder: "hunter2", bootstrap: {help: "Password should be at least 12 characters long"}  %>
-  <%= form.collection_radio_buttons :color, ["red", "green", "blue"], :to_s, :titleize, bootstrap: {check_inline: true, help: "Choose your favorite color"} %>
-  <%= form.text_area :bio, placeholder: "Tell us your life story" %>
-  <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {label: {text: "Language"}} %>
-  <%= form.check_box :terms, bootstrap: {label: {text: "I agree to Terms and Conditions"}, help: "By clicking Agree you're also acknowledging that Apple may sew your mouth to a ... "} %>
-  <%= form.primary "Press to Register" do %>
-    <a href="/" class="btn btn-link">Maybe Later</a>
-  <% end %>
-<% end %>
-
-<h3>Inline Form</h3>
-
-<%= bootstrap_form_for @user, as: "user_k", url: "/", bootstrap: {layout: :inline, label: {hide: true}} do |form| %>
-  <%= form.text_field :username, placeholder: "Username", bootstrap: {prepend: "@"} %>
-  <%= form.password_field :password, placeholder: "Password" %>
-  <%= form.primary "Sign in", class: "ml-3" %>
-<% end %>
-
-<div class="row">
-  <div class="col-md-6">
-    <h3>Checkboxes and Radio buttons</h3>
-    <% @user.test = "b" %>
-    <%= bootstrap_form_for @user, as: "user_l", url: "/" do |form| %>
-      <%= form.collection_radio_buttons :test, [["a", "Label A"], ["b", "Label B"]], :first, :second %>
-      <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {help: "help text"} %>
-      <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {check_inline: true, label: {text: "Custom Label"}} %>
-      <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {check_inline: true, help: "help text", label: {hide: true}} %>
-    <% end %>
-  </div>
-  <div class="col-md-6">
-    <h3>With Errors</h3>
-    <% @user_with_error.test = "b" %>
-    <%= bootstrap_form_for @user_with_error, as: "user_m", url: "/" do |form| %>
-      <%= form.collection_radio_buttons :test, [["a", "Label A"], ["b", "Label B"]], :first, :second %>
-      <%= form.collection_check_boxes :test, [["e", "Label E"], ["f", "Label F"]], :first, :second, bootstrap: {help: "help text"} %>
-      <%= form.collection_radio_buttons :test, ["u", "v", "w"], :to_s, :to_s, bootstrap: {check_inline: true, label: {text: "Custom Label"}} %>
-      <%= form.collection_check_boxes :test, ["x", "y", "z"], :to_s, :to_s, bootstrap: {check_inline: true, help: "help text", label: {hide: true}} %>
-    <% end %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-6">
-    <h3>Input Group</h3>
-
-    <%= bootstrap_form_for @user, as: "user_n", url: "/" do |form| %>
-      <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {prepend: "Prepend", append: "Append", help: "help text"} %>
-      <% prepend_button = capture do %>
-        <button class="btn btn-success">Go</button>
-      <% end %>
-      <% append_button = capture do %>
-        <button class="btn btn-danger">Stop</button>
-      <% end %>
-      <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {hide: true}, prepend: {html: prepend_button}, append: {html: append_button}} %>
-    <% end %>
-  </div>
-  <div class="col-md-6">
-    <h3>With Errors</h3>
-
-    <%= bootstrap_form_for @user_with_error, as: "user_o", url: "/" do |form| %>
-      <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {prepend: "Prepend", append: "Append", help: "help text"} %>
-      <% prepend_button = capture do %>
-        <button class="btn btn-success">Go</button>
-      <% end %>
-      <% append_button = capture do %>
-        <button class="btn btn-danger">Stop</button>
-      <% end %>
-      <%= form.email_field :email, placeholder: "Enter Email", bootstrap: {label: {hide: true}, prepend: {html: prepend_button}, append: {html: append_button}} %>
-    <% end %>
-  </div>
-</div>
-
 <h3>Disabled Bootstrap</h3>
-<%= bootstrap_form_for @user, as: "user_p", url: "/", bootstrap: {layout: :horizontal} do |form| %>
+<%= bootstrap_form_with model: @user, scope: "user_p", url: "/", bootstrap: {layout: :horizontal} do |form| %>
   <%= form.email_field :email, placeholder: "you@example.com", bootstrap: {disabled: true} %>
   <%= form.select :locale, [["English", "en"], ["French", "fr"]], bootstrap: {disabled: true} %>
   <%= form.file_field :test_a, bootstrap: {disabled: true} %>

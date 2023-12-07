@@ -21,25 +21,6 @@ module ComfyBootstrapForm
       end
     end
 
-    def bootstrap_form_for(record, options = {}, &block)
-      options[:html] ||= {}
-
-      bootstrap_options = options[:bootstrap] || {}
-
-      css_classes = options[:html].delete(:class)
-
-      if bootstrap_options[:layout].to_s == "inline"
-        css_classes = [css_classes, "form-inline"].compact.join(" ")
-      end
-
-      options.reverse_merge!(builder: ComfyBootstrapForm::FormBuilder)
-      options[:html].merge!(class: css_classes) unless css_classes.blank?
-
-      supress_form_field_errors do
-        form_for(record, options, &block)
-      end
-    end
-
   private
 
     # By default, Rails will wrap form fields with extra html to indicate
