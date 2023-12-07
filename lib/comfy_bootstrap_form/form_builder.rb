@@ -378,7 +378,7 @@ module ComfyBootstrapForm
         yield
       end
 
-      form_group_class = "form-group"
+      form_group_class = "mb-3"
       form_group_class += " row"      if bootstrap.horizontal?
       form_group_class += " mr-sm-2"  if bootstrap.inline?
 
